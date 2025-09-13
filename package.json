@@ -1,0 +1,29 @@
+{
+  "name": "bento",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^2.0.14",
+    "@ai-sdk/groq": "^2.0.18",
+    "@ai-sdk/openai": "^2.0.30",
+    "@ai-sdk/react": "^2.0.42",
+    "ai": "^5.0.44",
+    "next": "15.5.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-textarea-autosize": "^8.5.9"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.3",
+    "tailwindcss": "^4"
+  }
+}
