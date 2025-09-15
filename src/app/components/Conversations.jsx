@@ -42,8 +42,8 @@ const Conversation = ({ messages, isChecked, onToggle }) => {
                   ))
                 : ""}
             {!isChecked && (
-                <button className="h-max flex border">
-                    <label className="flex items-center cursor-pointer">
+                <button className="h-max flex flex-col-reverse gap-8">
+                    <label className="flex items-center cursor-pointer m-auto -rotate-90">
                         <input
                             type="checkbox"
                             checked={isChecked}
@@ -52,7 +52,7 @@ const Conversation = ({ messages, isChecked, onToggle }) => {
                         />
                         <div className="relative w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
                     </label>
-                    <span className="border">Turn On</span>
+                    <span className="-rotate-90">Turn On</span>
                 </button>
             )}
         </div>
