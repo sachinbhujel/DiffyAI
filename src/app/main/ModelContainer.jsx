@@ -4,9 +4,9 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import MessageModel from "../components/ModelPanel";
+import ModelPanel from "../components/ModelPanel";
 
-function Search() {
+function ModelContainer() {
     const [prompt, setPrompt] = useState("");
     const [activeModel, setActiveModel] = useState({
         openai: false,
@@ -147,9 +147,9 @@ function Search() {
     };
 
     return (
-        <div className="relative border p-2 w-full h-full">
+        <div className="relative border w-full h-full">
             <div className="flex gap-3 border w-full overflow-auto">
-                <MessageModel
+                <ModelPanel
                     messages={llamaChat.messages}
                     model="llama"
                     modelIcons={modelIcons.llama}
@@ -162,7 +162,7 @@ function Search() {
                     }
                 />
 
-                <MessageModel
+                <ModelPanel
                     messages={deepseekChat.messages}
                     model="deepseek"
                     isActive={activeModel.deepseek}
@@ -175,7 +175,7 @@ function Search() {
                     }
                 />
 
-                <MessageModel
+                <ModelPanel
                     messages={openaiGptOss120bChat.messages}
                     model="GPT OSS"
                     modelIcons={modelIcons.openai}
@@ -188,7 +188,7 @@ function Search() {
                     }
                 />
 
-                <MessageModel
+                <ModelPanel
                     messages={openaiChat.messages}
                     model="Openai"
                     modelIcons={modelIcons.openai}
@@ -201,7 +201,7 @@ function Search() {
                     }
                 />
 
-                <MessageModel
+                <ModelPanel
                     messages={claudeChat.messages}
                     model="Claude"
                     modelIcons={modelIcons.claude}
@@ -214,7 +214,7 @@ function Search() {
                     }
                 />
 
-                <MessageModel
+                <ModelPanel
                     messages={geminiChat.messages}
                     model="Gemini"
                     modelIcons={modelIcons.gemini}
@@ -261,4 +261,4 @@ function Search() {
     );
 }
 
-export default Search;
+export default ModelContainer;

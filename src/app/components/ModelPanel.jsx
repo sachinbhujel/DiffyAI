@@ -1,15 +1,15 @@
 import React from "react";
 import Conversation from "./Conversations";
 
-function MessageModel({ messages, model, modelIcons, isActive, onToggle }) {
+function ModelPanel({ messages, model, modelIcons, isActive, onToggle }) {
     return (
         <div
             className={`border transition-all duration-300 ${
                 isActive ? "w-90 min-w-90" : "w-max min-w-max"
-            }`}
+            } overflow-auto`}
         >
             <div
-                className={`border h-10 p-2 flex items-center justify-between`}
+                className={`border h-10 p-2 flex items-center justify-between sticky top-0 bg-white`}
             >
                 <div className="flex items-center gap-1">
                     {modelIcons}
@@ -60,4 +60,4 @@ function MessageModel({ messages, model, modelIcons, isActive, onToggle }) {
     );
 }
 
-export default MessageModel;
+export default ModelPanel;

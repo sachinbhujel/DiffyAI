@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
             >
                 <div className="flex p-2 h-screen gap-2">
                     <Sidebar />
-                    <div className="flex flex-1 overflow-auto">{children}</div>
+                    <div className="flex flex-1 overflow-hidden">{children}</div>
                 </div>
             </body>
         </html>
