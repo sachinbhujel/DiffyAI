@@ -1,35 +1,36 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Conversation from "./Conversations";
 
-function MessageModel({ messages, model, modelIcons }) {
-    const [isChecked, setIsChecked] = useState(true);
-    const handleCheck = () => {
-        setIsChecked(!isChecked);
-    };
+function MessageModel({ messages, model, modelIcons, isActive, onToggle }) {
     return (
-        <div className={`border ${isChecked ? "w-80 min-w-80" : "w-25"}`}>
-            <div className="border h-10 p-2 flex items-center justify-between">
+        <div
+            className={`border transition-all duration-300 ${
+                isActive ? "w-90 min-w-90" : "w-max min-w-max"
+            }`}
+        >
+            <div
+                className={`border h-10 p-2 flex items-center justify-between`}
+            >
                 <div className="flex items-center gap-1">
                     {modelIcons}
-
-                    {isChecked && <p className="font-bold">{model}</p>}
+                    {isActive && <p className="font-bold">{model}</p>}
                 </div>
                 <div className="flex items-center gap-2">
-                    <button>
-                        <label className="flex items-center cursor-pointer">
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={handleCheck}
-                                className="sr-only peer"
-                            />
-                            <div className="relative w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                        </label>
-                    </button>
+                    {isActive && (
+                        <button>
+                            <label className="flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={isActive}
+                                    onChange={onToggle}
+                                    className="sr-only peer"
+                                />
+                                <div className="relative w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
+                            </label>
+                        </button>
+                    )}
 
-                    {isChecked && (
+                    {isActive && (
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
@@ -50,7 +51,11 @@ function MessageModel({ messages, model, modelIcons }) {
                     )}
                 </div>
             </div>
-            <Conversation messages={messages} isChecked={isChecked} />
+            <Conversation
+                messages={messages}
+                isChecked={isActive}
+                onToggle={onToggle}
+            />
         </div>
     );
 }

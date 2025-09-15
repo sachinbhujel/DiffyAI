@@ -29,7 +29,9 @@ function Sidebar() {
                             )}
                         </div>
                         <div
-                            className={`cursor-pointer border p-2 flex justify-center ${dockClicked ? "mt-5" : ""}`}
+                            className={`cursor-pointer border p-2 flex justify-center ${
+                                dockClicked ? "mt-5" : ""
+                            }`}
                             onClick={handleDock}
                         >
                             <svg
@@ -218,7 +220,10 @@ function Sidebar() {
                                             Eric Frusciante
                                         </strong>
 
-                                        <span className="text-xs"> eric@frusciante.com </span>
+                                        <span className="text-xs">
+                                            {" "}
+                                            eric@frusciante.com{" "}
+                                        </span>
                                     </p>
                                 </div>
                             )}

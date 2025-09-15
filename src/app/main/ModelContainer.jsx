@@ -8,6 +8,14 @@ import MessageModel from "../components/ModelPanel";
 
 function Search() {
     const [prompt, setPrompt] = useState("");
+    const [activeModel, setActiveModel] = useState({
+        openai: false,
+        claude: false,
+        gemini: false,
+        llama: true,
+        deepseek: true,
+        openaiGptOss120b: true,
+    });
 
     const claudeChat = useChat({
         transport: new DefaultChatTransport({
@@ -47,12 +55,18 @@ function Search() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!prompt.trim()) return;
-
-        llamaChat.sendMessage({ text: prompt });
-        deepseekChat.sendMessage({ text: prompt });
-        openaiGptOss120bChat.sendMessage({ text: prompt });
-
+        if (prompt.trim()) {
+            if (activeModel.openai) openaiChat.sendMessage({ text: prompt });
+            if (activeModel.claude) claudeChat.sendMessage({ text: prompt });
+            if (activeModel.gemini) geminiChat.sendMessage({ text: prompt });
+            if (activeModel.llama) llamaChat.sendMessage({ text: prompt });
+            if (activeModel.deepseek)
+                deepseekChat.sendMessage({ text: prompt });
+            if (activeModel.openaiGptOss120b)
+                openaiGptOss120bChat.sendMessage({ text: prompt });
+        } else {
+            alert("Write something!!");
+        }
         setPrompt("");
     };
 
@@ -135,40 +149,82 @@ function Search() {
     return (
         <div className="relative border p-2 w-full h-full">
             <div className="flex gap-3 border w-full overflow-auto">
-                {/*  <MessageModel
-                    messages={openaiChat.messages}
-                    model="Openai"
-                    modelIcons={modelIcons.openai}
-                /> */}
-
-                {/* <MessageModel
-                    messages={claudeChat.messages}
-                    model="Claude"
-                    modelIcons={modelIcons.claude}
-                /> */}
-
-                {/* <MessageModel
-                    messages={geminiChat.messages}
-                    model="Gemini"
-                    modelIcons={modelIcons.gemini}
-                /> */}
-
                 <MessageModel
                     messages={llamaChat.messages}
                     model="llama"
                     modelIcons={modelIcons.llama}
+                    isActive={activeModel.llama}
+                    onToggle={() =>
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            llama: !prev.llama,
+                        }))
+                    }
                 />
 
                 <MessageModel
                     messages={deepseekChat.messages}
                     model="deepseek"
+                    isActive={activeModel.deepseek}
                     modelIcons={modelIcons.deepseek}
+                    onToggle={() =>
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            deepseek: !prev.deepseek,
+                        }))
+                    }
                 />
 
                 <MessageModel
                     messages={openaiGptOss120bChat.messages}
                     model="GPT OSS"
                     modelIcons={modelIcons.openai}
+                    isActive={activeModel.openaiGptOss120b}
+                    onToggle={() =>
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            openaiGptOss120b: !prev.openaiGptOss120b,
+                        }))
+                    }
+                />
+
+                <MessageModel
+                    messages={openaiChat.messages}
+                    model="Openai"
+                    modelIcons={modelIcons.openai}
+                    isActive={activeModel.openai}
+                    onToggle={() =>
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            openai: !prev.openai,
+                        }))
+                    }
+                />
+
+                <MessageModel
+                    messages={claudeChat.messages}
+                    model="Claude"
+                    modelIcons={modelIcons.claude}
+                    isActive={activeModel.claude}
+                    onToggle={() =>
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            claude: !prev.claude,
+                        }))
+                    }
+                />
+
+                <MessageModel
+                    messages={geminiChat.messages}
+                    model="Gemini"
+                    modelIcons={modelIcons.gemini}
+                    isActive={activeModel.gemini}
+                    onToggle={() =>
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            gemini: !prev.gemini,
+                        }))
+                    }
                 />
             </div>
             <form onSubmit={handleSubmit}>
@@ -188,7 +244,15 @@ function Search() {
                             }
                         }}
                     />
-                    <button type="submit" className="border w-20 rounded-lg">
+                    <button
+                        type="submit"
+                        className={`border w-20 p-1.5 flex justify-center items-center rounded-lg text-gray-300 ${
+                            !prompt
+                                ? "bg-[#7585a2] cursor-none"
+                                : "bg-[#155dfc] text-white cursor-pointer"
+                        }`}
+                        disabled={!prompt}
+                    >
                         Enter
                     </button>
                 </div>
