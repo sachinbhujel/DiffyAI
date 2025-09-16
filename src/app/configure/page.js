@@ -37,7 +37,7 @@ function Configure() {
     };
 
     return (
-        <div className="w-full">
+        <div className="w-full flex flex-col gap-4">
             <div className="border py-4 flex flex-col gap-4 justify-center items-center text-center">
                 <h1 className="text-5xl font-bold">Configure</h1>
                 <p className="text-lg">
@@ -46,50 +46,52 @@ function Configure() {
                     device.
                 </p>
             </div>
-            <form
-                onSubmit={handleSubmit}
-                className="border sm:w-[80%] m-auto flex flex-col gap-4 justify-center items-center p-4 mt-4"
-            >
-                <input
-                    type="password"
-                    className="border w-full p-2"
-                    value={keys.groq}
-                    placeholder="Enter your Groq API key"
-                    onChange={(e) => {
-                        handleChange("groq", e.target.value);
-                    }}
-                />
-                <input
-                    type="password"
-                    className="border w-full p-2"
-                    value={keys.openai}
-                    placeholder="Enter your OpenAI API key"
-                    onChange={(e) => {
-                        handleChange("openai", e.target.value);
-                    }}
-                />
-                <input
-                    type="password"
-                    className="border w-full p-2"
-                    value={keys.openrouter}
-                    onChange={(e) => {
-                        handleChange("openrouter", e.target.value);
-                    }}
-                    placeholder="Enter your Openrouter API key"
-                />
-                <input
-                    type="password"
-                    className="border w-full p-2"
-                    value={keys.gemini}
-                    onChange={(e) => {
-                        handleChange("gemini", e.target.value);
-                    }}
-                    placeholder="Enter your Gemini API key"
-                />
-                <button type="submit" className="border w-[90%] p-2">
-                    Save
-                </button>
-            </form>
+            <div className="border">
+                <form
+                    onSubmit={handleSubmit}
+                    className="border sm:w-[80%] m-auto flex flex-col gap-4 justify-center items-center p-4"
+                >
+                    <input
+                        type="password"
+                        className="border w-full p-2"
+                        value={keys.groq}
+                        placeholder="Enter your Groq API key"
+                        onChange={(e) => {
+                            handleChange("groq", e.target.value);
+                        }}
+                    />
+                    <input
+                        type="password"
+                        className="border w-full p-2"
+                        value={keys.openai}
+                        placeholder="Enter your OpenAI API key"
+                        onChange={(e) => {
+                            handleChange("openai", e.target.value);
+                        }}
+                    />
+                    <input
+                        type="password"
+                        className="border w-full p-2"
+                        value={keys.openrouter}
+                        onChange={(e) => {
+                            handleChange("openrouter", e.target.value);
+                        }}
+                        placeholder="Enter your Openrouter API key"
+                    />
+                    <input
+                        type="password"
+                        className="border w-full p-2"
+                        value={keys.gemini}
+                        onChange={(e) => {
+                            handleChange("gemini", e.target.value);
+                        }}
+                        placeholder="Enter your Gemini API key"
+                    />
+                    <button type="submit" className="border w-[90%] p-2">
+                        Save
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }
