@@ -145,7 +145,14 @@ function ModelContainer() {
             </svg>
         ),
     };
-
+    const [modelShow, setModelShow] = useState({
+        openai: false,
+        claude: false,
+        gemini: false,
+        llama: false,
+        deepseek: false,
+        openaiGptOss120b: false,
+    });
     return (
         <div className="relative border w-full h-full">
             <div className="flex gap-3 border w-full overflow-auto">
@@ -154,6 +161,13 @@ function ModelContainer() {
                     model="llama"
                     modelIcons={modelIcons.llama}
                     isActive={activeModel.llama}
+                    isModelActive={modelShow.llama}
+                    onToggleShowModel={() =>
+                        setModelShow((prev) => ({
+                            ...prev,
+                            llama: !prev.llama,
+                        }))
+                    }
                     onToggle={() =>
                         setActiveModel((prev) => ({
                             ...prev,
@@ -167,6 +181,13 @@ function ModelContainer() {
                     model="deepseek"
                     isActive={activeModel.deepseek}
                     modelIcons={modelIcons.deepseek}
+                    isModelActive={modelShow.deepseek}
+                    onToggleShowModel={() =>
+                        setModelShow((prev) => ({
+                            ...prev,
+                            llama: !prev.deepseek,
+                        }))
+                    }
                     onToggle={() =>
                         setActiveModel((prev) => ({
                             ...prev,
