@@ -7,14 +7,14 @@ function ModelPanel({
     modelIcons,
     isActive,
     onToggle,
-    onToggleShowModel,
+    onToggleExpandModel,
     isModelActive,
 }) {
     return (
         <div
             className={`border transition-all duration-300 ${
                 isActive ? "w-90 min-w-90" : "w-max min-w-max"
-            } ${isModelActive ? "min-w-full" : ""}`}
+            } ${isModelActive ? "min-w-[80%] w-[80%]" : ""}`}
         >
             <div
                 className={`border h-10 p-2 flex items-center justify-between sticky top-0 bg-white`}
@@ -40,7 +40,7 @@ function ModelPanel({
 
                     {isActive && (
                         <div
-                            onClick={onToggleShowModel}
+                            onClick={onToggleExpandModel}
                             className="border cursor-pointer"
                         >
                             <svg

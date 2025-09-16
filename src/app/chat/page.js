@@ -1,7 +1,7 @@
 "use client";
 
 import TextareaAutosize from "react-textarea-autosize";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import ModelPanel from "../components/ModelPanel";
@@ -145,7 +145,8 @@ function ModelContainer() {
             </svg>
         ),
     };
-    const [modelShow, setModelShow] = useState({
+
+    const [modelExpand, setModelExpand] = useState({
         openai: false,
         claude: false,
         gemini: false,
@@ -153,6 +154,7 @@ function ModelContainer() {
         deepseek: false,
         openaiGptOss120b: false,
     });
+
     return (
         <div className="relative border w-full h-full">
             <div className="flex gap-3 border w-full overflow-auto">
@@ -161,13 +163,21 @@ function ModelContainer() {
                     model="llama"
                     modelIcons={modelIcons.llama}
                     isActive={activeModel.llama}
-                    isModelActive={modelShow.llama}
-                    onToggleShowModel={() =>
-                        setModelShow((prev) => ({
+                    isModelActive={modelExpand.llama}
+                    onToggleExpandModel={() => {
+                        setModelExpand((prev) => ({
                             ...prev,
                             llama: !prev.llama,
-                        }))
-                    }
+                        }));
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            deepseek: false,
+                            openaiGptOss120b: false,
+                            openai: false,
+                            claude: false,
+                            gemini: false,
+                        }));
+                    }}
                     onToggle={() =>
                         setActiveModel((prev) => ({
                             ...prev,
@@ -181,13 +191,21 @@ function ModelContainer() {
                     model="deepseek"
                     isActive={activeModel.deepseek}
                     modelIcons={modelIcons.deepseek}
-                    isModelActive={modelShow.deepseek}
-                    onToggleShowModel={() =>
-                        setModelShow((prev) => ({
+                    isModelActive={modelExpand.deepseek}
+                    onToggleExpandModel={() => {
+                        setModelExpand((prev) => ({
                             ...prev,
-                            llama: !prev.deepseek,
-                        }))
-                    }
+                            deepseek: !prev.deepseek,
+                        }));
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            llama: false,
+                            openaiGptOss120b: false,
+                            openai: false,
+                            claude: false,
+                            gemini: false,
+                        }));
+                    }}
                     onToggle={() =>
                         setActiveModel((prev) => ({
                             ...prev,
@@ -201,6 +219,21 @@ function ModelContainer() {
                     model="GPT OSS"
                     modelIcons={modelIcons.openai}
                     isActive={activeModel.openaiGptOss120b}
+                    isModelActive={modelExpand.openaiGptOss120b}
+                    onToggleExpandModel={() => {
+                        setModelExpand((prev) => ({
+                            ...prev,
+                            openaiGptOss120b: !prev.openaiGptOss120b,
+                        }));
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            llama: false,
+                            deepseek: false,
+                            openai: false,
+                            claude: false,
+                            gemini: false,
+                        }));
+                    }}
                     onToggle={() =>
                         setActiveModel((prev) => ({
                             ...prev,
@@ -214,6 +247,21 @@ function ModelContainer() {
                     model="Openai"
                     modelIcons={modelIcons.openai}
                     isActive={activeModel.openai}
+                    isModelActive={modelExpand.openai}
+                    onToggleExpandModel={() => {
+                        setModelExpand((prev) => ({
+                            ...prev,
+                            openai: !prev.openai,
+                        }));
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            llama: false,
+                            deepseek: false,
+                            openaiGptOss120b: false,
+                            claude: false,
+                            gemini: false,
+                        }));
+                    }}
                     onToggle={() =>
                         setActiveModel((prev) => ({
                             ...prev,
@@ -227,6 +275,21 @@ function ModelContainer() {
                     model="Claude"
                     modelIcons={modelIcons.claude}
                     isActive={activeModel.claude}
+                    isModelActive={modelExpand.claude}
+                    onToggleExpandModel={() => {
+                        setModelExpand((prev) => ({
+                            ...prev,
+                            claude: !prev.claude,
+                        }));
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            llama: false,
+                            deepseek: false,
+                            openaiGptOss120b: false,
+                            openai: false,
+                            gemini: false,
+                        }));
+                    }}
                     onToggle={() =>
                         setActiveModel((prev) => ({
                             ...prev,
@@ -240,6 +303,21 @@ function ModelContainer() {
                     model="Gemini"
                     modelIcons={modelIcons.gemini}
                     isActive={activeModel.gemini}
+                    isModelActive={modelExpand.gemini}
+                    onToggleExpandModel={() => {
+                        setModelExpand((prev) => ({
+                            ...prev,
+                            gemini: !prev.gemini,
+                        }));
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            llama: false,
+                            deepseek: false,
+                            openaiGptOss120b: false,
+                            openai: false,
+                            claude: false,
+                        }));
+                    }}
                     onToggle={() =>
                         setActiveModel((prev) => ({
                             ...prev,

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 function Sidebar() {
     const [dockClicked, setDockClicked] = useState(false);
@@ -65,7 +66,7 @@ function Sidebar() {
                             }`}
                         >
                             <li>
-                                <a
+                                <Link
                                     href="/"
                                     className="block border px-2 py-2 flex items-center gap-2"
                                 >
@@ -85,12 +86,12 @@ function Sidebar() {
                                         <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                                     </svg>
                                     {!dockClicked && "Home"}
-                                </a>
+                                </Link>
                             </li>
 
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/chat"
                                     className="block border px-2 py-2 flex items-center gap-2"
                                 >
                                     <svg
@@ -110,7 +111,7 @@ function Sidebar() {
                                         <path d="M9 11h6" />
                                     </svg>
                                     {!dockClicked && "New Chat"}
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                         <div
@@ -180,8 +181,8 @@ function Sidebar() {
                                 dockClicked ? "flex flex-col items-center" : ""
                             }`}
                         >
-                            <a
-                                href="/"
+                            <Link
+                                href="/configure"
                                 className="block border px-2 py-2 flex items-center gap-2"
                             >
                                 <svg
@@ -200,7 +201,7 @@ function Sidebar() {
                                     <circle cx="12" cy="12" r="3" />
                                 </svg>
                                 {!dockClicked && "Configure"}
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                     <div className="border p-2">
