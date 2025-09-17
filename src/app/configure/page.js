@@ -37,7 +37,7 @@ function Configure() {
     };
 
     return (
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4 border overflow-auto custom-scrollbar">
             <div className="border py-4 flex flex-col gap-4 justify-center items-center text-center">
                 <h1 className="text-5xl font-bold">Configure</h1>
                 <p className="text-lg">

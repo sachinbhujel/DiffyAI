@@ -23,11 +23,11 @@ function Sidebar({ isVisible, setIsVisible }) {
                         <div className="flex items-center">
                             <img
                                 src="/logo.svg"
-                                className="w-10 h-10 object-cover"
+                                className="w-9 h-9 object-cover"
                             />
                             {!sidebarWidth && (
                                 <span className="text-base font-bold">
-                                    AnyChatAI
+                                    AIChatVerse
                                 </span>
                             )}
                         </div>
