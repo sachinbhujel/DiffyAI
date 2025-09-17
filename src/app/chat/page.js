@@ -20,36 +20,54 @@ function ModelContainer() {
     const claudeChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/claude",
+            headers: () => ({
+                "X-OPENROUTER-API-KEY": localStorage.getItem("openrouter"),
+            }),
         }),
     });
 
     const deepseekChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/deepseek",
+            headers: () => ({
+                "X-GROQ-API-KEY": localStorage.getItem("groq"),
+            }),
         }),
     });
 
     const geminiChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/gemini",
+            headers: () => ({
+                "X-GEMINI-API-KEY": localStorage.getItem("gemini"),
+            }),
         }),
     });
 
     const llamaChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/llama",
+            headers: () => ({
+                "X-GROQ-API-KEY": localStorage.getItem("groq"),
+            }),
         }),
     });
 
     const openaiChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/openai",
+            headers: () => ({
+                "X-OPENAI-API-KEY": localStorage.getItem("openai"),
+            }),
         }),
     });
 
     const openaiGptOss120bChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/openai-gpt-oss-120b",
+            headers: () => ({
+                "X-GROQ-API-KEY": localStorage.getItem("groq"),
+            }),
         }),
     });
 

@@ -5,7 +5,7 @@ function Sidebar({ isVisible, setIsVisible }) {
     return (
         <div
             className={`flex flex-col ${
-                isVisible ? "fixed h-full" : ""
+                isVisible ? "fixed sm:static h-full" : ""
             } border ${sidebarWidth ? "w-max" : "w-[250px]"}`}
         >
             <div className="flex gap-5">
@@ -22,7 +22,6 @@ function Sidebar({ isVisible, setIsVisible }) {
                     -
                 </button>
             </div>
-            <button>fsg tfesrf g</button>
         </div>
     );
 }

@@ -13,6 +13,7 @@
     "@ai-sdk/groq": "^2.0.18",
     "@ai-sdk/openai": "^2.0.30",
     "@ai-sdk/react": "^2.0.42",
+    "@openrouter/ai-sdk-provider": "^1.2.0",
     "ai": "^5.0.44",
     "next": "15.5.3",
     "react": "19.1.0",
