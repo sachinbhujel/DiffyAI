@@ -78,7 +78,7 @@ export default function Home() {
     };
     return (
         <div className="h-[calc(100dvh-16px)] border p-2 w-full">
-            <div>
+            <div className="my-10 border">
                 <p className="text-center text-lg">
                     Start by adding your API keys on the{" "}
                     <Link className="underline" href="/configure">
