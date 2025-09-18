@@ -15,7 +15,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                 sidebarWidth ? "w-max" : "w-[250px]"
             } overflow-y-auto custom-scrollbar`}
         >
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col gap-10 justify-between h-full">
                 <div>
                     <div
                         className={`items-center gap-20 justify-between ${

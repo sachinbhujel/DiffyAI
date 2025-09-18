@@ -37,23 +37,23 @@ function Configure() {
     };
 
     return (
-        <div className="w-full flex flex-col gap-4 border overflow-auto custom-scrollbar">
-            <div className="border py-4 flex flex-col gap-4 justify-center items-center text-center">
-                <h1 className="text-5xl font-bold">Configure</h1>
-                <p className="text-lg">
+        <div className="w-full p-2 flex flex-col gap-4 text-text border-2 border-primary rounded-md overflow-auto custom-scrollbar">
+            <div className="my-10 flex flex-col gap-4 justify-center items-center text-center">
+                <h1 className="text-5xl font-bold text-primary">Configure</h1>
+                <p className="text-lg text-text">
                     Your API keys will be stored in your browser so you do not
                     have to re-enter it every time — it never leaves your
                     device.
                 </p>
             </div>
-            <div className="border">
+            <div className="">
                 <form
                     onSubmit={handleSubmit}
-                    className="border sm:w-[80%] m-auto flex flex-col gap-4 justify-center items-center p-4"
+                    className="border rounded-md border-primary sm:w-[80%] m-auto flex flex-col gap-4 justify-center items-center p-4"
                 >
                     <input
                         type="password"
-                        className="border w-full p-2"
+                        className="border rounded-sm w-full p-2"
                         value={keys.groq}
                         placeholder="Enter your Groq API key"
                         onChange={(e) => {
@@ -62,7 +62,7 @@ function Configure() {
                     />
                     <input
                         type="password"
-                        className="border w-full p-2"
+                        className="border rounded-sm w-full p-2"
                         value={keys.openai}
                         placeholder="Enter your OpenAI API key"
                         onChange={(e) => {
@@ -71,7 +71,7 @@ function Configure() {
                     />
                     <input
                         type="password"
-                        className="border w-full p-2"
+                        className="border rounded-sm w-full p-2"
                         value={keys.openrouter}
                         onChange={(e) => {
                             handleChange("openrouter", e.target.value);
@@ -80,14 +80,17 @@ function Configure() {
                     />
                     <input
                         type="password"
-                        className="border w-full p-2"
+                        className="border rounded-sm w-full p-2"
                         value={keys.gemini}
                         onChange={(e) => {
                             handleChange("gemini", e.target.value);
                         }}
                         placeholder="Enter your Gemini API key"
                     />
-                    <button type="submit" className="border w-[90%] p-2">
+                    <button
+                        type="submit"
+                        className="border shadow-lg border-primary text-background bg-primary rounded-lg w-[90%] p-2"
+                    >
                         Save
                     </button>
                 </form>

@@ -14,10 +14,12 @@ function ModelPanel({
         <div
             className={`border-2 rounded-lg border-primary transition-all duration-300 ${
                 isActive ? "w-90 min-w-90" : "w-max min-w-max"
-            } ${isModelActive ? "min-w-[80%] w-[80%]" : ""} overflow-auto`}
+            } ${
+                isModelActive ? "min-w-[80%] w-[80%]" : ""
+            } overflow-auto all-model-scrollbar`}
         >
             <div
-                className={`h-10 p-2 flex items-center justify-between sticky top-0 bg-primary/30`}
+                className={`h-10 p-2 w-full flex backdrop-blur-xs items-center justify-between sticky top-0 bg-primary/30`}
             >
                 <div className="flex justify-center items-center gap-1">
                     {modelIcons}

@@ -199,7 +199,7 @@ function ModelContainer() {
 
     return (
         <div className="relative rounded-md gap-4 p-2 flex flex-col border-2 border-primary w-full h-full">
-            <div className="flex gap-3 overflow-auto">
+            <div className="flex gap-3 h-95 overflow-auto my-10">
                 <ModelPanel
                     messages={llamaChat.messages}
                     model="llama"
