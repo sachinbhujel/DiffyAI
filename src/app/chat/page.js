@@ -198,8 +198,8 @@ function ModelContainer() {
     });
 
     return (
-        <div className="relative gap-4 flex flex-col border w-full h-full">
-            <div className="flex gap-3 border overflow-auto">
+        <div className="relative rounded-md gap-4 p-2 flex flex-col border-2 border-primary w-full h-full">
+            <div className="flex gap-3 overflow-auto">
                 <ModelPanel
                     messages={llamaChat.messages}
                     model="llama"
@@ -369,7 +369,7 @@ function ModelContainer() {
                 />
             </div>
             <form onSubmit={handleSubmit} className="flex justify-center">
-                <div className="absolute bg-white bottom-3 border left-1/2 transform -translate-x-1/2 shadow-lg w-[90%] rounded-xl flex flex-col items-end p-2 gap-2 justify-center">
+                <div className="absolute bg-background bottom-3 border border-primary left-1/2 transform -translate-x-1/2 shadow-lg w-[90%] rounded-xl flex flex-col items-end p-2 gap-2 justify-center">
                     <TextareaAutosize
                         rows={1}
                         minRows={1}
@@ -390,7 +390,7 @@ function ModelContainer() {
                         className={`border w-20 p-1.5 flex justify-center items-center rounded-lg text-gray-300 ${
                             !prompt
                                 ? "bg-[#7585a2] cursor-not-allowed"
-                                : "bg-[#155dfc] text-white cursor-pointer"
+                                : "bg-primary text-white cursor-pointer"
                         }`}
                         disabled={disabledButton}
                     >

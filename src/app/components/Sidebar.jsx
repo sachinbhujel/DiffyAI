@@ -2,12 +2,14 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
+    const pathname = usePathname();
     return (
         <div
-            className={`rounded-md border-primary border-2 flex flex-col p-2 h-[calc(100vh-16px)] ${
+            className={`rounded-md border-primary border-2 bg-background flex flex-col p-2 h-[calc(100vh-16px)] ${
                 isVisible ? "fixed sm:static h-full" : ""
             } border ${
                 sidebarWidth ? "w-max" : "w-[250px]"
@@ -16,7 +18,7 @@ function Sidebar({ isVisible, setIsVisible }) {
             <div className="flex flex-col justify-between h-full">
                 <div>
                     <div
-                        className={`border items-center gap-20 justify-between ${
+                        className={`items-center gap-20 justify-between ${
                             sidebarWidth ? "flex-col" : "flex"
                         }`}
                     >
@@ -30,13 +32,13 @@ function Sidebar({ isVisible, setIsVisible }) {
                                 className="w-9 h-9 object-cover cusror-pointer"
                             />
                             {!sidebarWidth && (
-                                <span className="text-base text-text font-bold">
+                                <span className="text-lg text-text font-bold">
                                     AIChatVerse
                                 </span>
                             )}
                         </div>
                         <div
-                            className={`text-primary rounded-sm cursor-pointer flex justify-center text-center hidden sm:flex ${
+                            className={`text-text rounded-sm cursor-pointer flex justify-center text-center hidden sm:flex ${
                                 sidebarWidth ? "mt-4" : ""
                             }`}
                             onClick={() => setSidebarWidth(!sidebarWidth)}
@@ -103,7 +105,11 @@ function Sidebar({ isVisible, setIsVisible }) {
                             <li>
                                 <Link
                                     href="/"
-                                    className="block rounded-sm bg-accent text-white px-2 py-2 flex items-center gap-2"
+                                    className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
+                                        pathname === "/"
+                                            ? "bg-primary text-white"
+                                            : ""
+                                    } px-2 py-2 flex items-center gap-2`}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +133,11 @@ function Sidebar({ isVisible, setIsVisible }) {
                             <li>
                                 <Link
                                     href="/chat"
-                                    className="rounded-sm hover:bg-accent hover:text-white block px-2 py-2 flex items-center gap-2"
+                                    className={`hover:bg-primary hover:text-white border-2 border-primary rounded-sm ${
+                                        pathname === "/chat"
+                                            ? "bg-primary text-white"
+                                            : ""
+                                    } block px-2 py-2 flex items-center gap-2`}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -158,8 +168,12 @@ function Sidebar({ isVisible, setIsVisible }) {
                             {!sidebarWidth && (
                                 <li className="list-none">
                                     <a
-                                        href="#"
-                                        className="block rounded-sm hover:bg-accent hover:text-white px-2 py-2 flex items-center gap-2"
+                                        href="/chat/1"
+                                        className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
+                                            pathname === "/chat/1"
+                                                ? "bg-primary text-white"
+                                                : ""
+                                        } px-2 py-2 flex items-center gap-2`}
                                     >
                                         Chat 1
                                     </a>
@@ -168,8 +182,12 @@ function Sidebar({ isVisible, setIsVisible }) {
                             {!sidebarWidth && (
                                 <li className="list-none">
                                     <a
-                                        href="#"
-                                        className="rounded-sm hover:bg-accent hover:text-white block px-2 py-2 flex items-center gap-2"
+                                        href="/chat/2"
+                                        className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
+                                            pathname === "/chat/2"
+                                                ? "bg-primary text-white"
+                                                : ""
+                                        } px-2 py-2 flex items-center gap-2`}
                                     >
                                         Chat 2
                                     </a>
@@ -184,7 +202,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                                   setSidebarWidth(!sidebarWidth)
                                             : undefined
                                     }
-                                    className="rounded-sm hover:bg-accent hover:text-white p-2 cursor-pointer"
+                                    className="border-2 border-primary block rounded-sm hover:bg-primary hover:text-white px-2 py-2"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +233,11 @@ function Sidebar({ isVisible, setIsVisible }) {
                         >
                             <Link
                                 href="/configure"
-                                className="rounded-sm hover:bg-accent hover:text-white block px-2 py-2 flex items-center gap-2"
+                                className={`hover:bg-primary hover:text-background border-2 border-primary ${
+                                    pathname === "/configure"
+                                        ? "bg-primary text-white"
+                                        : ""
+                                } rounded-sm block px-2 py-2 flex items-center gap-2`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -236,10 +258,12 @@ function Sidebar({ isVisible, setIsVisible }) {
                             </Link>
                         </li>
                     </ul>
-                    <div className="rounded-sm p-2">
+
+                    {/* User Profile */}
+                    {/*<div className="rounded-sm">
                         <a
-                            href="#"
-                            className={`flex items-center ${
+                            href="/"
+                            className={`border-2 p-2 border-primary flex items-center ${
                                 sidebarWidth ? "justify-center" : ""
                             } gap-2`}
                         >
@@ -266,7 +290,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                 </div>
                             )}
                         </a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

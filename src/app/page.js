@@ -77,11 +77,11 @@ export default function Home() {
         ),
     };
     return (
-        <div className="h-[calc(100dvh-16px)] border p-2 w-full">
-            <div className="my-10 border">
+        <div className="h-[calc(100dvh-16px)] border-2 border-primary rounded-md p-2 w-full">
+            <div className="my-10">
                 <p className="text-center text-lg">
                     Start by adding your API keys on the{" "}
-                    <Link className="underline" href="/configure">
+                    <Link className="underline text-primary" href="/configure">
                         Configure
                     </Link>{" "}
                     page, and then select your default AI models.

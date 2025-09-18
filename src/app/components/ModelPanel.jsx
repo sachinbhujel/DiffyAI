@@ -12,12 +12,12 @@ function ModelPanel({
 }) {
     return (
         <div
-            className={`border transition-all duration-300 ${
+            className={`border-2 rounded-lg border-primary transition-all duration-300 ${
                 isActive ? "w-90 min-w-90" : "w-max min-w-max"
             } ${isModelActive ? "min-w-[80%] w-[80%]" : ""} overflow-auto`}
         >
             <div
-                className={`border h-10 p-2 flex items-center justify-between sticky top-0 bg-white`}
+                className={`h-10 p-2 flex items-center justify-between sticky top-0 bg-primary/30`}
             >
                 <div className="flex justify-center items-center gap-1">
                     {modelIcons}
@@ -33,7 +33,7 @@ function ModelPanel({
                                     onChange={onToggle}
                                     className="sr-only peer"
                                 />
-                                <div className="relative w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
+                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
                             </label>
                         </button>
                     )}
@@ -41,7 +41,7 @@ function ModelPanel({
                     {isActive && (
                         <div
                             onClick={onToggleExpandModel}
-                            className="border cursor-pointer"
+                            className="p-1 cursor-pointer"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
