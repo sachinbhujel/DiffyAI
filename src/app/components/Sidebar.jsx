@@ -7,23 +7,27 @@ function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
     return (
         <div
-            className={`bg-white flex flex-col p-2 border h-[calc(100vh-16px)] ${
+            className={`bg-white flex flex-col h-[calc(100vh-16px)] ${
                 isVisible ? "fixed sm:static h-full" : ""
-            } border ${
-                sidebarWidth ? "w-15" : "w-[250px]"
+            } ${
+                sidebarWidth ? "w-max" : "w-[250px]"
             } overflow-y-auto custom-scrollbar`}
         >
             <div className="flex flex-col justify-between h-full">
                 <div>
                     <div
                         className={`items-center gap-20 border justify-between ${
-                            sidebarWidth ? "flex-col" : "flex"
+                            sidebarWidth ? "flex-col border" : "flex"
                         }`}
                     >
-                        <div className="flex items-center">
+                        <div
+                            className={`flex items-center ${
+                                sidebarWidth ? "justify-center" : ""
+                            }`}
+                        >
                             <img
                                 src="/logo.svg"
-                                className="w-9 h-9 object-cover"
+                                className="w-9 h-9 object-cover border cusror-pointer"
                             />
                             {!sidebarWidth && (
                                 <span className="text-base font-bold">
@@ -93,9 +97,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                     <div className="flex flex-col gap-10">
                         <ul
                             className={`mt-6 space-y-1 ${
-                                sidebarWidth
-                                    ? "flex flex-col items-center border"
-                                    : ""
+                                sidebarWidth ? "flex flex-col items-center" : ""
                             }`}
                         >
                             <li>
@@ -235,12 +237,17 @@ function Sidebar({ isVisible, setIsVisible }) {
                         </li>
                     </ul>
                     <div className="border p-2">
-                        <a href="#" className="flex items-center gap-2">
+                        <a
+                            href="#"
+                            className={`flex items-center ${
+                                sidebarWidth ? "justify-center" : ""
+                            } gap-2`}
+                        >
                             <img
                                 alt=""
                                 src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
                                 className={`${
-                                    sidebarWidth ? "size-6" : "size-8"
+                                    sidebarWidth ? "size-6 flex" : "size-8"
                                 } rounded-full object-cover`}
                             />
 
