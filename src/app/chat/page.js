@@ -1,7 +1,7 @@
 "use client";
 
 import TextareaAutosize from "react-textarea-autosize";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import ModelPanel from "../components/ModelPanel";
@@ -13,7 +13,7 @@ function ModelContainer() {
         claude: false,
         gemini: false,
         llama: true,
-        deepseek: true,
+        deepseek: false,
         openaiGptOss120b: true,
     });
 
@@ -73,6 +73,7 @@ function ModelContainer() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (disabledButton) return;
         if (prompt.trim()) {
             if (activeModel.openai) openaiChat.sendMessage({ text: prompt });
             if (activeModel.claude) claudeChat.sendMessage({ text: prompt });
@@ -87,6 +88,29 @@ function ModelContainer() {
         }
         setPrompt("");
     };
+
+    const [disabledButton, setDisabledButton] = useState(false);
+    useEffect(() => {
+        if (
+            llamaChat.status.includes("streaming") ||
+            deepseekChat.status.includes("streaming") ||
+            claudeChat.status.includes("streaming") ||
+            geminiChat.status.includes("streaming") ||
+            openaiGptOss120bChat.status.includes("streaming") ||
+            openaiChat.status.includes("streaming")
+        ) {
+            setDisabledButton(true);
+        } else {
+            setDisabledButton(false);
+        }
+    }, [
+        llamaChat.status,
+        deepseekChat.status,
+        claudeChat.status,
+        geminiChat.status,
+        openaiGptOss120bChat.status,
+        openaiChat.status,
+    ]);
 
     const modelIcons = {
         openai: (
@@ -174,8 +198,8 @@ function ModelContainer() {
     });
 
     return (
-        <div className="relative border w-full h-full">
-            <div className="flex gap-3 border w-full overflow-auto">
+        <div className="relative gap-4 flex flex-col border w-full h-full">
+            <div className="flex gap-3 border overflow-auto">
                 <ModelPanel
                     messages={llamaChat.messages}
                     model="llama"
@@ -205,34 +229,6 @@ function ModelContainer() {
                 />
 
                 <ModelPanel
-                    messages={deepseekChat.messages}
-                    model="deepseek"
-                    isActive={activeModel.deepseek}
-                    modelIcons={modelIcons.deepseek}
-                    isModelActive={modelExpand.deepseek}
-                    onToggleExpandModel={() => {
-                        setModelExpand((prev) => ({
-                            ...prev,
-                            deepseek: !prev.deepseek,
-                        }));
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            llama: false,
-                            openaiGptOss120b: false,
-                            openai: false,
-                            claude: false,
-                            gemini: false,
-                        }));
-                    }}
-                    onToggle={() =>
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            deepseek: !prev.deepseek,
-                        }))
-                    }
-                />
-
-                <ModelPanel
                     messages={openaiGptOss120bChat.messages}
                     model="GPT OSS"
                     modelIcons={modelIcons.openai}
@@ -256,6 +252,34 @@ function ModelContainer() {
                         setActiveModel((prev) => ({
                             ...prev,
                             openaiGptOss120b: !prev.openaiGptOss120b,
+                        }))
+                    }
+                />
+
+                <ModelPanel
+                    messages={deepseekChat.messages}
+                    model="deepseek"
+                    isActive={activeModel.deepseek}
+                    modelIcons={modelIcons.deepseek}
+                    isModelActive={modelExpand.deepseek}
+                    onToggleExpandModel={() => {
+                        setModelExpand((prev) => ({
+                            ...prev,
+                            deepseek: !prev.deepseek,
+                        }));
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            llama: false,
+                            openaiGptOss120b: false,
+                            openai: false,
+                            claude: false,
+                            gemini: false,
+                        }));
+                    }}
+                    onToggle={() =>
+                        setActiveModel((prev) => ({
+                            ...prev,
+                            deepseek: !prev.deepseek,
                         }))
                     }
                 />
@@ -344,7 +368,7 @@ function ModelContainer() {
                     }
                 />
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="flex justify-center">
                 <div className="absolute bg-white bottom-3 border left-1/2 transform -translate-x-1/2 shadow-lg w-[90%] rounded-xl flex flex-col items-end p-2 gap-2 justify-center">
                     <TextareaAutosize
                         rows={1}
@@ -365,12 +389,12 @@ function ModelContainer() {
                         type="submit"
                         className={`border w-20 p-1.5 flex justify-center items-center rounded-lg text-gray-300 ${
                             !prompt
-                                ? "bg-[#7585a2] cursor-none"
+                                ? "bg-[#7585a2] cursor-not-allowed"
                                 : "bg-[#155dfc] text-white cursor-pointer"
                         }`}
-                        disabled={!prompt}
+                        disabled={disabledButton}
                     >
-                        Enter
+                        {!prompt ? "Disabled" : "Enter"}
                     </button>
                 </div>
             </form>
