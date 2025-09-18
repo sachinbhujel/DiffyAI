@@ -7,37 +7,37 @@ function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
     return (
         <div
-            className={`bg-white flex flex-col h-[calc(100vh-16px)] ${
+            className={`rounded-md border-primary border-2 flex flex-col p-2 h-[calc(100vh-16px)] ${
                 isVisible ? "fixed sm:static h-full" : ""
-            } ${
+            } border ${
                 sidebarWidth ? "w-max" : "w-[250px]"
             } overflow-y-auto custom-scrollbar`}
         >
             <div className="flex flex-col justify-between h-full">
                 <div>
                     <div
-                        className={`items-center gap-20 border justify-between ${
-                            sidebarWidth ? "flex-col border" : "flex"
+                        className={`border items-center gap-20 justify-between ${
+                            sidebarWidth ? "flex-col" : "flex"
                         }`}
                     >
                         <div
-                            className={`flex items-center ${
+                            className={`flex items-center gap-1 ${
                                 sidebarWidth ? "justify-center" : ""
                             }`}
                         >
                             <img
                                 src="/logo.svg"
-                                className="w-9 h-9 object-cover border cusror-pointer"
+                                className="w-9 h-9 object-cover cusror-pointer"
                             />
                             {!sidebarWidth && (
-                                <span className="text-base font-bold">
+                                <span className="text-base text-text font-bold">
                                     AIChatVerse
                                 </span>
                             )}
                         </div>
                         <div
-                            className={`cursor-pointer border p-2 flex justify-center hidden sm:block ${
-                                sidebarWidth ? "mt-5" : ""
+                            className={`text-primary rounded-sm cursor-pointer flex justify-center text-center hidden sm:flex ${
+                                sidebarWidth ? "mt-4" : ""
                             }`}
                             onClick={() => setSidebarWidth(!sidebarWidth)}
                         >
@@ -65,7 +65,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                             </svg>
                         </div>
                         <div
-                            className={`cursor-pointer border p-2 flex justify-center block sm:hidden ${
+                            className={`text-primary cursor-pointer p-2 flex justify-center block sm:hidden ${
                                 sidebarWidth ? "mt-5" : ""
                             }`}
                             onClick={() => setIsVisible(false)}
@@ -103,7 +103,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                             <li>
                                 <Link
                                     href="/"
-                                    className="block border px-2 py-2 flex items-center gap-2"
+                                    className="block rounded-sm bg-accent text-white px-2 py-2 flex items-center gap-2"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +127,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                             <li>
                                 <Link
                                     href="/chat"
-                                    className="block border px-2 py-2 flex items-center gap-2"
+                                    className="rounded-sm hover:bg-accent hover:text-white block px-2 py-2 flex items-center gap-2"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +159,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                 <li className="list-none">
                                     <a
                                         href="#"
-                                        className="block border px-2 py-2 flex items-center gap-2"
+                                        className="block rounded-sm hover:bg-accent hover:text-white px-2 py-2 flex items-center gap-2"
                                     >
                                         Chat 1
                                     </a>
@@ -169,7 +169,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                 <li className="list-none">
                                     <a
                                         href="#"
-                                        className="block border px-2 py-2 flex items-center gap-2"
+                                        className="rounded-sm hover:bg-accent hover:text-white block px-2 py-2 flex items-center gap-2"
                                     >
                                         Chat 2
                                     </a>
@@ -184,7 +184,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                                   setSidebarWidth(!sidebarWidth)
                                             : undefined
                                     }
-                                    className="border p-2 cursor-pointer"
+                                    className="rounded-sm hover:bg-accent hover:text-white p-2 cursor-pointer"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +215,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                         >
                             <Link
                                 href="/configure"
-                                className="block border px-2 py-2 flex items-center gap-2"
+                                className="rounded-sm hover:bg-accent hover:text-white block px-2 py-2 flex items-center gap-2"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -236,7 +236,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                             </Link>
                         </li>
                     </ul>
-                    <div className="border p-2">
+                    <div className="rounded-sm p-2">
                         <a
                             href="#"
                             className={`flex items-center ${
@@ -254,7 +254,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                             {!sidebarWidth && (
                                 <div>
                                     <p className="text-xs">
-                                        <strong className="block font-medium text-base">
+                                        <strong className="block font-bold text-base">
                                             Eric Frusciante
                                         </strong>
 
