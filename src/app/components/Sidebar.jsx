@@ -27,10 +27,12 @@ function Sidebar({ isVisible, setIsVisible }) {
                                 sidebarWidth ? "justify-center" : ""
                             }`}
                         >
-                            <img
-                                src="/logo.svg"
-                                className="w-7 h-7 object-cover cusror-pointer"
-                            />
+                            <Link href="/">
+                                <img
+                                    src="/logo.svg"
+                                    className="w-7 h-7 object-cover cursor-pointer"
+                                />
+                            </Link>
                             {!sidebarWidth && (
                                 <span className="text-lg text-text font-bold">
                                     diffyAI

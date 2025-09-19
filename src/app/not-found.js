@@ -19,7 +19,7 @@ export default function NotFound() {
                         <div className="flex gap-2 justify-center">
                             <Link
                                 href="/"
-                                className="bg-primary/50 inline-flex font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
+                                className="border border-primary text-primary inline-flex font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
                             >
                                 Back to Homepage
                             </Link>
