@@ -77,8 +77,8 @@ export default function Home() {
         ),
     };
     return (
-        <div className="h-[calc(100dvh-16px)] border-2 border-primary rounded-md p-2 w-full">
-            <div className="my-10">
+        <div className="h-[calc(100vh-16px)] overflow-auto border-2 border-primary rounded-md p-2 w-full">
+            <div className="my-8 sm:my-4">
                 <p className="text-center text-lg">
                     Start by adding your API keys on the{" "}
                     <Link className="underline text-primary" href="/configure">
@@ -86,6 +86,147 @@ export default function Home() {
                     </Link>{" "}
                     page, and then select your default AI models.
                 </p>
+            </div>
+            <div className="h-100 sm:w-[80%] w-[100%] mx-auto flex flex-col gap-2">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-20 border p-2">
+                    <div className="flex items-center gap-4">
+                        {modelIcons.llama}
+                        <div>
+                            <h3>Meta llama</h3>
+                            <p>
+                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
+                                fsnd fgs{" "}
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <button>
+                            <label className="flex items-center cursor-pointer">
+                                <input
+                                checked={false}
+                                    type="checkbox"
+                                    className="sr-only peer"
+                                />
+                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                            </label>
+                        </button>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center gap-20 border p-2">
+                    <div className="flex items-center gap-4">
+                        {modelIcons.openai}
+                        <div>
+                            <h3>OpenAI</h3>
+                            <p>
+                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
+                                fsnd fgs{" "}
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <button>
+                            <label className="flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="sr-only peer"
+                                />
+                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                            </label>
+                        </button>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center gap-20 border p-2">
+                    <div className="flex items-center gap-4">
+                        {modelIcons.claude}
+                        <div>
+                            <h3>Claude</h3>
+                            <p>
+                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
+                                fsnd fgs{" "}
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <button>
+                            <label className="flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="sr-only peer"
+                                />
+                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                            </label>
+                        </button>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center gap-20 border p-2">
+                    <div className="flex items-center gap-4">
+                        {modelIcons.gemini}
+                        <div>
+                            <h3>Gemini</h3>
+                            <p>
+                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
+                                fsnd fgs{" "}
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <button>
+                            <label className="flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="sr-only peer"
+                                />
+                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                            </label>
+                        </button>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center gap-20 border p-2">
+                    <div className="flex items-center gap-4">
+                        {modelIcons.deepseek}
+                        <div>
+                            <h3>Deepseek</h3>
+                            <p>
+                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
+                                fsnd fgs{" "}
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <button>
+                            <label className="flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="sr-only peer"
+                                />
+                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                            </label>
+                        </button>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center gap-20 border p-2">
+                    <div className="flex items-center gap-4">
+                        {modelIcons.openai}
+                        <div>
+                            <h3>GPT OSS</h3>
+                            <p>
+                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
+                                fsnd fgs{" "}
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <button>
+                            <label className="flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="sr-only peer"
+                                />
+                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                            </label>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

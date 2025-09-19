@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SidebarWrapper from "./components/SidebarWrapper";
@@ -40,11 +41,11 @@ export default function RootLayout({ children }) {
                 />
             </head>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
             >
-                <div className="flex p-1 sm:gap-2 gap-0 h-screen">
+                <div className="flex p-2 sm:gap-2 gap-0 h-screen">
                     <SidebarWrapper />
-                    <div className="flex flex-1 overflow-hidden">
+                    <div className="flex flex-1 overflow-auto">
                         {children}
                     </div>
                 </div>
