@@ -28,7 +28,7 @@ const Conversation = ({ messages, isChecked, onToggle }) => {
                                                       className={`bg-base-100 rounded-2xl p-2 max-w-[90%] border-2 shadow-sm ${
                                                           message.role == "user"
                                                               ? "rounded-tr-sm border-primary"
-                                                              : "rounded-tl-sm border-base-content/30"
+                                                              : "rounded-tl-sm border-text"
                                                       } `}
                                                       key={`${message.id}-${index}`}
                                                   >

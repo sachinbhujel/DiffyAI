@@ -9,7 +9,7 @@ function Sidebar({ isVisible, setIsVisible }) {
     const pathname = usePathname();
     return (
         <div
-            className={`rounded-md border-primary border-2 bg-background flex flex-col p-2 h-[calc(100vh-16px)] ${
+            className={`rounded-md border-primary border-2 bg-background z-10 flex flex-col p-2 h-[calc(100vh-16px)] ${
                 isVisible ? "fixed sm:static h-full" : ""
             } border ${
                 sidebarWidth ? "w-max" : "w-[250px]"
@@ -23,17 +23,17 @@ function Sidebar({ isVisible, setIsVisible }) {
                         }`}
                     >
                         <div
-                            className={`flex items-center gap-1 ${
+                            className={`flex items-center gap-1.5 ${
                                 sidebarWidth ? "justify-center" : ""
                             }`}
                         >
                             <img
                                 src="/logo.svg"
-                                className="w-9 h-9 object-cover cusror-pointer"
+                                className="w-7 h-7 object-cover cusror-pointer"
                             />
                             {!sidebarWidth && (
                                 <span className="text-lg text-text font-bold">
-                                    AIChatVerse
+                                    diffyAI
                                 </span>
                             )}
                         </div>

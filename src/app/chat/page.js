@@ -198,8 +198,8 @@ function ModelContainer() {
     });
 
     return (
-        <div className="relative rounded-md gap-4 p-2 flex flex-col border-2 border-primary w-full h-full">
-            <div className="flex gap-3 h-95 overflow-auto my-10">
+        <div className="relative pt-10 rounded-md gap-4 p-2 flex flex-col border-2 border-primary w-full h-full">
+            <div className="flex gap-3 overflow-auto">
                 <ModelPanel
                     messages={llamaChat.messages}
                     model="llama"
@@ -374,7 +374,7 @@ function ModelContainer() {
                         rows={1}
                         minRows={1}
                         maxRows={3}
-                        className="w-full p-2 focus:outline-none resize-none text-lg"
+                        className="w-full p-2 focus:outline-none resize-none text-base"
                         placeholder="Ask me anything..."
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}

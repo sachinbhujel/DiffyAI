@@ -8,7 +8,7 @@ function SidebarWrapper() {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsVisible(window.innerWidth >= 768);
+            setIsVisible(window.innerWidth >= 641);
         };
 
         handleResize();
@@ -23,7 +23,7 @@ function SidebarWrapper() {
                 <Sidebar isVisible={isVisible} setIsVisible={setIsVisible} />
             ) : (
                 <div
-                    className="fixed top-4 left-6 z-99 cursor-pointer"
+                    className="fixed top-4 left-4 z-99 cursor-pointer"
                     onClick={() => setIsVisible(true)}
                 >
                     <svg

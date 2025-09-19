@@ -1,7 +1,9 @@
 import React from "react";
 
 function page() {
-    return <div>Page Data Here</div>;
+    return <div>
+        
+    </div>;
 }
 
 export default page;
