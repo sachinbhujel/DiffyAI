@@ -17,6 +17,20 @@ function ModelContainer() {
         openaiGptOss120b: false,
     });
 
+    useEffect(() => {
+        setActiveModel({
+            llama: localStorage.getItem("llama") === "true" || false,
+            openai: localStorage.getItem("openai") === "true" || false,
+
+            deepseek: localStorage.getItem("deepseek") === "true" || false,
+            openaiGptOss120b:
+                localStorage.getItem("openaiGptOss120b") === "true" || false,
+
+            claude: localStorage.getItem("claude") === "true" || false,
+            gemini: localStorage.getItem("gemini") === "true" || false,
+        });
+    }, []);
+
     const claudeChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/claude",

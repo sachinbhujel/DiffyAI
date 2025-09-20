@@ -91,28 +91,23 @@ export default function Home() {
     });
 
     useEffect(() => {
-        setModelOpen({
-            openai: localStorage.getItem("openai") || false,
-            claude: localStorage.getItem("openrouter") || false,
-            gemini: localStorage.getItem("gemini") || false,
-            llama: localStorage.getItem("groq") || false,
-            deepseek: localStorage.getItem("groq") || false,
-            openaiGptOss120b: localStorage.getItem("groq") || false,
-        });
-    }, []);
+        const llamaActive = localStorage.getItem("llama") === "true";
+        const openaiActive = localStorage.getItem("openai") === "true";
+        const claudeActive = localStorage.getItem("claude") === "true";
+        const geminiActive = localStorage.getItem("gemini") === "true";
+        const deepseekActive = localStorage.getItem("deepseek") === "true";
+        const openaiGptOss120bActive =
+            localStorage.getItem("openaiGptOss120b") === "true";
 
-    useEffect(() => {
-        //if (typeof window === "undefined") return;
-        if (modelOpen.llama) {
-            setModelOpen((prev) => ({
-                ...prev,
-                llama: !modelOpen.llama,
-                deepseek: true,
-                openaiGptOss120b: true,
-            }));
-            console.log("j");
-            localStorage.setItem("llama", !modelOpen.llama);
-        }
+        setModelOpen({
+            llama: llamaActive && !!localStorage.getItem("groqkey"),
+            openai: openaiActive && !!localStorage.getItem("openaikey"),
+            claude: claudeActive && !!localStorage.getItem("openrouterkey"),
+            gemini: geminiActive && !!localStorage.getItem("geminikey"),
+            deepseek: deepseekActive && !!localStorage.getItem("groqkey"),
+            openaiGptOss120b:
+                openaiGptOss120bActive && !!localStorage.getItem("groqkey"),
+        });
     }, []);
 
     return (
@@ -147,22 +142,24 @@ export default function Home() {
                                     onChange={() => {
                                         setModelOpen((prev) => ({
                                             ...prev,
-                                            llama: !modelOpen.llama,
+                                            llama: !prev.llama,
                                         }));
                                         localStorage.setItem(
                                             "llama",
                                             !modelOpen.llama
                                         );
                                     }}
+                                    disabled={!localStorage.getItem("groqkey")}
                                     className="sr-only peer"
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                    bg-gray-400 peer-checked:bg-primary
-                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                    after:bg-white after:border after:border-gray-300 
-                    after:rounded-full after:h-4 after:w-4 after:transition-all 
-                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                     bg-gray-400 peer-checked:bg-blue-700
+                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                     after:bg-white after:border after:border-gray-300 
+                     after:rounded-full after:h-4 after:w-4 after:transition-all 
+                     peer-checked:after:translate-x-full peer-checked:after:border-white
+                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
                                 ></div>
                             </label>
                         </button>
@@ -189,18 +186,26 @@ export default function Home() {
                                     onChange={() => {
                                         setModelOpen((prev) => ({
                                             ...prev,
-                                            openai: !modelOpen.openai,
+                                            openai: !prev.openai,
                                         }));
+                                        localStorage.setItem(
+                                            "openai",
+                                            !modelOpen.openai
+                                        );
                                     }}
+                                    disabled={
+                                        !localStorage.getItem("openaikey")
+                                    }
                                     className="sr-only peer"
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                    bg-gray-400 peer-checked:bg-primary
-                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                    after:bg-white after:border after:border-gray-300 
-                    after:rounded-full after:h-4 after:w-4 after:transition-all 
-                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                     bg-gray-400 peer-checked:bg-blue-700
+                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                     after:bg-white after:border after:border-gray-300 
+                     after:rounded-full after:h-4 after:w-4 after:transition-all 
+                     peer-checked:after:translate-x-full peer-checked:after:border-white
+                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
                                 ></div>
                             </label>
                         </button>
@@ -230,16 +235,68 @@ export default function Home() {
                                             ...prev,
                                             claude: !prev.claude,
                                         }));
+                                        localStorage.setItem(
+                                            "claude",
+                                            !modelOpen.claude
+                                        );
                                     }}
+                                    disabled={
+                                        !localStorage.getItem("openrouterkey")
+                                    }
                                     className="sr-only peer"
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                    bg-gray-400 peer-checked:bg-primary
-                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                    after:bg-white after:border after:border-gray-300 
-                    after:rounded-full after:h-4 after:w-4 after:transition-all 
-                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                     bg-gray-400 peer-checked:bg-blue-700
+                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                     after:bg-white after:border after:border-gray-300 
+                     after:rounded-full after:h-4 after:w-4 after:transition-all 
+                     peer-checked:after:translate-x-full peer-checked:after:border-white
+                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
+                                ></div>
+                            </label>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 border p-2">
+                    <div className="flex items-center gap-4">
+                        {modelIcons.deepseek}
+                        <div>
+                            <h3 className="font-semibold">Deepseek</h3>
+                            <p>
+                                Cutting edge high-performance model specializing
+                                in complex reasoning. (Using Groq){" "}
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <button>
+                            <label className="flex items-center cursor-pointer">
+                                <input
+                                    checked={modelOpen.deepseek}
+                                    type="checkbox"
+                                    onChange={() => {
+                                        setModelOpen((prev) => ({
+                                            ...prev,
+                                            deepseek: !prev.deepseek,
+                                        }));
+                                        localStorage.setItem(
+                                            "deepseek",
+                                            !modelOpen.deepseek
+                                        );
+                                    }}
+                                    disabled={!localStorage.getItem("groqkey")}
+                                    className="sr-only peer"
+                                />
+                                <div
+                                    className="relative w-9 h-5 rounded-full 
+                     bg-gray-400 peer-checked:bg-blue-700
+                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                     after:bg-white after:border after:border-gray-300 
+                     after:rounded-full after:h-4 after:w-4 after:transition-all 
+                     peer-checked:after:translate-x-full peer-checked:after:border-white
+                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
                                 ></div>
                             </label>
                         </button>
@@ -269,54 +326,24 @@ export default function Home() {
                                             ...prev,
                                             gemini: !prev.gemini,
                                         }));
+                                        localStorage.setItem(
+                                            "gemini",
+                                            !modelOpen.gemini
+                                        );
                                     }}
+                                    disabled={
+                                        !localStorage.getItem("geminikey")
+                                    }
                                     className="sr-only peer"
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                    bg-gray-400 peer-checked:bg-primary
-                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                    after:bg-white after:border after:border-gray-300 
-                    after:rounded-full after:h-4 after:w-4 after:transition-all 
-                    peer-checked:after:translate-x-full peer-checked:after:border-white"
-                                ></div>
-                            </label>
-                        </button>
-                    </div>
-                </div>
-
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 border p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.deepseek}
-                        <div>
-                            <h3 className="font-semibold">Deepseek</h3>
-                            <p>
-                                Cutting-edge high-performance model specializing
-                                in complex reasoning. (Using Groq){" "}
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <button>
-                            <label className="flex items-center cursor-pointer">
-                                <input
-                                    checked={modelOpen.deepseek}
-                                    type="checkbox"
-                                    onChange={() => {
-                                        setModelOpen((prev) => ({
-                                            ...prev,
-                                            deepseek: !prev.deepseek,
-                                        }));
-                                    }}
-                                    className="sr-only peer"
-                                />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                    bg-gray-400 peer-checked:bg-primary
-                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                    after:bg-white after:border after:border-gray-300 
-                    after:rounded-full after:h-4 after:w-4 after:transition-all 
-                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                     bg-gray-400 peer-checked:bg-blue-700
+                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                     after:bg-white after:border after:border-gray-300 
+                     after:rounded-full after:h-4 after:w-4 after:transition-all 
+                     peer-checked:after:translate-x-full peer-checked:after:border-white
+                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
                                 ></div>
                             </label>
                         </button>
@@ -346,16 +373,22 @@ export default function Home() {
                                             openaiGptOss120b:
                                                 !prev.openaiGptOss120b,
                                         }));
+                                        localStorage.setItem(
+                                            "openaiGptOss120b",
+                                            !modelOpen.openaiGptOss120b
+                                        );
                                     }}
+                                    disabled={!localStorage.getItem("groqkey")}
                                     className="sr-only peer"
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                    bg-gray-400 peer-checked:bg-primary
-                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                    after:bg-white after:border after:border-gray-300 
-                    after:rounded-full after:h-4 after:w-4 after:transition-all 
-                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                     bg-gray-400 peer-checked:bg-blue-700
+                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                     after:bg-white after:border after:border-gray-300 
+                     after:rounded-full after:h-4 after:w-4 after:transition-all 
+                     peer-checked:after:translate-x-full peer-checked:after:border-white
+                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
                                 ></div>
                             </label>
                         </button>

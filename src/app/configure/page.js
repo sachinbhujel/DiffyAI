@@ -12,10 +12,10 @@ function Configure() {
 
     useEffect(() => {
         const savedApi = {
-            groq: localStorage.getItem("groq") || "",
-            openai: localStorage.getItem("openai") || "",
-            openrouter: localStorage.getItem("openrouter") || "",
-            gemini: localStorage.getItem("gemini") || "",
+            groq: localStorage.getItem("groqkey") || "",
+            openai: localStorage.getItem("openaikey") || "",
+            openrouter: localStorage.getItem("openrouterkey") || "",
+            gemini: localStorage.getItem("geminikey") || "",
         };
         setKeys(savedApi);
     }, []);
@@ -30,13 +30,46 @@ function Configure() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (localStorage.getItem("groq")) {
+        localStorage.setItem("groqkey", keys.groq);
+        localStorage.setItem("openaikey", keys.openai);
+        localStorage.setItem("openrouterkey", keys.openrouter);
+        localStorage.setItem("geminikey", keys.gemini);
+
+        if (!!localStorage.getItem("groqkey")) {
             localStorage.setItem("llama", true);
+        } else {
+            localStorage.setItem("llama", false);
         }
-        localStorage.setItem("groq", keys.groq);
-        localStorage.setItem("openai", keys.openai);
-        localStorage.setItem("openrouter", keys.openrouter);
-        localStorage.setItem("gemini", keys.gemini);
+
+        if (!!localStorage.getItem("openaikey")) {
+            localStorage.setItem("openai", true);
+        } else {
+            localStorage.setItem("openai", false);
+        }
+
+        if (!!localStorage.getItem("geminikey")) {
+            localStorage.setItem("gemini", true);
+        } else {
+            localStorage.setItem("gemini", false);
+        }
+
+        if (!!localStorage.getItem("groqkey")) {
+            localStorage.setItem("deepseek", true);
+        } else {
+            localStorage.setItem("deepseek", false);
+        }
+
+        if (!!localStorage.getItem("openrouterkey")) {
+            localStorage.setItem("claude", true);
+        } else {
+            localStorage.setItem("claude", false);
+        }
+
+        if (!!localStorage.getItem("groqkey")) {
+            localStorage.setItem("openaiGptOss120b", true);
+        } else {
+            localStorage.setItem("openaiGptOss120b", false);
+        }
     };
 
     return (
