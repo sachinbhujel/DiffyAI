@@ -107,27 +107,19 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        const llamaActive = localStorage.getItem("llama") === "true";
-        const openaiActive = localStorage.getItem("openai") === "true";
-        const claudeActive = localStorage.getItem("claude") === "true";
-        const geminiActive = localStorage.getItem("gemini") === "true";
-        const deepseekActive = localStorage.getItem("deepseek") === "true";
-        const openaiGptOss120bActive =
-            localStorage.getItem("openaiGptOss120b") === "true";
-
         setModelOpen({
-            llama: llamaActive && !!localStorage.getItem("groqkey"),
-            openai: openaiActive && !!localStorage.getItem("openaikey"),
-            claude: claudeActive && !!localStorage.getItem("openrouterkey"),
-            gemini: geminiActive && !!localStorage.getItem("geminikey"),
-            deepseek: deepseekActive && !!localStorage.getItem("groqkey"),
+            llama: localStorage.getItem("llama") === "true",
+            openai: localStorage.getItem("openai") === "true",
+            claude: localStorage.getItem("claude") === "true",
+            gemini: localStorage.getItem("gemini") === "true",
+            deepseek: localStorage.getItem("deepseek") === "true",
             openaiGptOss120b:
-                openaiGptOss120bActive && !!localStorage.getItem("groqkey"),
+                localStorage.getItem("openaiGptOss120b") === "true",
         });
     }, []);
 
     return (
-        <div className="h-[calc(100vh-16px)] overflow-auto border-2 border-primary rounded-md p-2 w-full">
+        <div className="h-[calc(100dvh-16px)] overflow-auto custom-scrollbar border-2 border-primary rounded-md p-2 w-full">
             <div className="my-8 sm:my-4">
                 <p className="text-center text-lg">
                     Start by adding your API keys on the{" "}
@@ -170,7 +162,7 @@ export default function Home() {
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-blue-700
+                     bg-gray-400 peer-checked:bg-primary
                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
                      after:bg-white after:border after:border-gray-300 
                      after:rounded-full after:h-4 after:w-4 after:transition-all 
@@ -214,7 +206,7 @@ export default function Home() {
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-blue-700
+                     bg-gray-400 peer-checked:bg-primary
                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
                      after:bg-white after:border after:border-gray-300 
                      after:rounded-full after:h-4 after:w-4 after:transition-all 
@@ -259,7 +251,7 @@ export default function Home() {
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-blue-700
+                     bg-gray-400 peer-checked:bg-primary
                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
                      after:bg-white after:border after:border-gray-300 
                      after:rounded-full after:h-4 after:w-4 after:transition-all 
@@ -303,7 +295,7 @@ export default function Home() {
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-blue-700
+                     bg-gray-400 peer-checked:bg-primary
                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
                      after:bg-white after:border after:border-gray-300 
                      after:rounded-full after:h-4 after:w-4 after:transition-all 
@@ -348,7 +340,7 @@ export default function Home() {
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-blue-700
+                     bg-gray-400 peer-checked:bg-primary
                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
                      after:bg-white after:border after:border-gray-300 
                      after:rounded-full after:h-4 after:w-4 after:transition-all 
@@ -393,7 +385,7 @@ export default function Home() {
                                 />
                                 <div
                                     className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-blue-700
+                     bg-gray-400 peer-checked:bg-primary
                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
                      after:bg-white after:border after:border-gray-300 
                      after:rounded-full after:h-4 after:w-4 after:transition-all 

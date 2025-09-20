@@ -234,12 +234,13 @@ function ModelContainer() {
                             gemini: false,
                         }));
                     }}
-                    onToggle={() =>
+                    onToggle={() => {
                         setActiveModel((prev) => ({
                             ...prev,
                             llama: !prev.llama,
-                        }))
-                    }
+                        }));
+                        localStorage.setItem("llama", !activeModel.llama);
+                    }}
                 />
 
                 <ModelPanel
@@ -262,12 +263,16 @@ function ModelContainer() {
                             gemini: false,
                         }));
                     }}
-                    onToggle={() =>
+                    onToggle={() => {
                         setActiveModel((prev) => ({
                             ...prev,
                             openaiGptOss120b: !prev.openaiGptOss120b,
-                        }))
-                    }
+                        }));
+                        localStorage.setItem(
+                            "openaiGptOss120b",
+                            !activeModel.openaiGptOss120b
+                        );
+                    }}
                 />
 
                 <ModelPanel
@@ -290,12 +295,13 @@ function ModelContainer() {
                             gemini: false,
                         }));
                     }}
-                    onToggle={() =>
+                    onToggle={() => {
                         setActiveModel((prev) => ({
                             ...prev,
                             deepseek: !prev.deepseek,
-                        }))
-                    }
+                        }));
+                        localStorage.setItem("deepseek", !activeModel.deepseek);
+                    }}
                 />
 
                 <ModelPanel
@@ -318,12 +324,13 @@ function ModelContainer() {
                             gemini: false,
                         }));
                     }}
-                    onToggle={() =>
+                    onToggle={() => {
                         setActiveModel((prev) => ({
                             ...prev,
                             openai: !prev.openai,
-                        }))
-                    }
+                        }));
+                        localStorage.setItem("openai", !activeModel.openai);
+                    }}
                 />
 
                 <ModelPanel
@@ -346,12 +353,13 @@ function ModelContainer() {
                             gemini: false,
                         }));
                     }}
-                    onToggle={() =>
+                    onToggle={() => {
                         setActiveModel((prev) => ({
                             ...prev,
                             claude: !prev.claude,
-                        }))
-                    }
+                        }));
+                        localStorage.setItem("claude", !activeModel.claude);
+                    }}
                 />
 
                 <ModelPanel
@@ -374,12 +382,13 @@ function ModelContainer() {
                             claude: false,
                         }));
                     }}
-                    onToggle={() =>
+                    onToggle={() => {
                         setActiveModel((prev) => ({
                             ...prev,
                             gemini: !prev.gemini,
-                        }))
-                    }
+                        }));
+                        localStorage.setItem("gemini", !activeModel.gemini);
+                    }}
                 />
             </div>
             <form onSubmit={handleSubmit} className="flex justify-center">

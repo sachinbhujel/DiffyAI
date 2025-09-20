@@ -37,8 +37,12 @@ function Configure() {
 
         if (!!localStorage.getItem("groqkey")) {
             localStorage.setItem("llama", true);
+            localStorage.setItem("deepseek", true);
+            localStorage.setItem("openaiGptOss120b", true);
         } else {
             localStorage.setItem("llama", false);
+            localStorage.setItem("deepseek", false);
+            localStorage.setItem("openaiGptOss120b", false);
         }
 
         if (!!localStorage.getItem("openaikey")) {
@@ -53,22 +57,10 @@ function Configure() {
             localStorage.setItem("gemini", false);
         }
 
-        if (!!localStorage.getItem("groqkey")) {
-            localStorage.setItem("deepseek", true);
-        } else {
-            localStorage.setItem("deepseek", false);
-        }
-
         if (!!localStorage.getItem("openrouterkey")) {
             localStorage.setItem("claude", true);
         } else {
             localStorage.setItem("claude", false);
-        }
-
-        if (!!localStorage.getItem("groqkey")) {
-            localStorage.setItem("openaiGptOss120b", true);
-        } else {
-            localStorage.setItem("openaiGptOss120b", false);
         }
     };
 
