@@ -10,7 +10,7 @@ function Sidebar({ isVisible, setIsVisible }) {
     return (
         <div
             className={`rounded-md border-primary border-2 bg-background z-10 flex flex-col p-2 ${
-                isVisible ? "fixed sm:static h-[calc(100dvh-16px)]" : ""
+                isVisible ? "fixed sm:static h-[calc(100vh-16px)]" : ""
             } border ${
                 sidebarWidth ? "w-max" : "w-[250px]"
             } overflow-y-auto custom-scrollbar`}
