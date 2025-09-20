@@ -119,7 +119,7 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="h-[calc(100vh-16px)] border-2 border-primary rounded-md p-2 w-full overflow-auto">
+        <div className="reltive border-2 border-primary rounded-md min-h-[calc(100vh-16px)] w-full overflow-auto">
             <div className="py-8 sm:py-4">
                 <p className="text-center text-lg">
                     Start by adding your API keys on the{" "}
@@ -129,7 +129,7 @@ export default function Home() {
                     page, and then select your default AI models.
                 </p>
             </div>
-            <div className="h-100 sm:w-[80%] w-[100%] mx-auto flex flex-col">
+            <div className="h-max sm:w-[80%] w-[100%] mx-auto flex flex-col">
                 <div className="border border-primary rounded-md flex justify-between items-center gap-10 sm:gap-0 px-4 p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.llama}
@@ -308,96 +308,6 @@ export default function Home() {
                 </div>
 
                 <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4   sm:gap-0 p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.gemini}
-                        <div>
-                            <h3 className="font-semibold">Gemini</h3>
-                            <p>
-                                Google&apos;s powerful conversational AI with
-                                strong analytical abilities. (Using Google
-                                Gemini API){" "}
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <button>
-                            <label className="flex items-center cursor-pointer">
-                                <input
-                                    checked={modelOpen.gemini}
-                                    type="checkbox"
-                                    onChange={() => {
-                                        setModelOpen((prev) => ({
-                                            ...prev,
-                                            gemini: !prev.gemini,
-                                        }));
-                                        localStorage.setItem(
-                                            "gemini",
-                                            !modelOpen.gemini
-                                        );
-                                    }}
-                                    disabled={!apiKey.geminiApiKey}
-                                    className="sr-only peer"
-                                />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-primary
-                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                     after:bg-white after:border after:border-gray-300 
-                     after:rounded-full after:h-4 after:w-4 after:transition-all 
-                     peer-checked:after:translate-x-full peer-checked:after:border-white
-                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
-                                ></div>
-                            </label>
-                        </button>
-                    </div>
-                </div>
-
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4   sm:gap-0 p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.openai}
-                        <div>
-                            <h3 className="font-semibold">GPT OSS</h3>
-                            <p>
-                                Lightning-fast open-source model optimized for
-                                quick responses. (Using Groq){" "}
-                            </p>
-                        </div>
-                    </div>
-                    <div>
-                        <button>
-                            <label className="flex items-center cursor-pointer">
-                                <input
-                                    checked={modelOpen.openaiGptOss120b}
-                                    type="checkbox"
-                                    onChange={() => {
-                                        setModelOpen((prev) => ({
-                                            ...prev,
-                                            openaiGptOss120b:
-                                                !prev.openaiGptOss120b,
-                                        }));
-                                        localStorage.setItem(
-                                            "openaiGptOss120b",
-                                            !modelOpen.openaiGptOss120b
-                                        );
-                                    }}
-                                    disabled={!apiKey.groqApiKey}
-                                    className="sr-only peer"
-                                />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-primary
-                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                     after:bg-white after:border after:border-gray-300 
-                     after:rounded-full after:h-4 after:w-4 after:transition-all 
-                     peer-checked:after:translate-x-full peer-checked:after:border-white
-                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
-                                ></div>
-                            </label>
-                        </button>
-                    </div>
-                </div>
-
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4  sm:gap-0 p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.gemini}
                         <div>
