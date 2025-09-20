@@ -12,9 +12,9 @@ function ModelContainer() {
         openai: false,
         claude: false,
         gemini: false,
-        llama: true,
+        llama: false,
         deepseek: false,
-        openaiGptOss120b: true,
+        openaiGptOss120b: false,
     });
 
     const claudeChat = useChat({

@@ -30,6 +30,9 @@ function Configure() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (localStorage.getItem("groq")) {
+            localStorage.setItem("llama", true);
+        }
         localStorage.setItem("groq", keys.groq);
         localStorage.setItem("openai", keys.openai);
         localStorage.setItem("openrouter", keys.openrouter);

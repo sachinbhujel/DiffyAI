@@ -1,4 +1,8 @@
+"use client";
+
+import { openrouter } from "@openrouter/ai-sdk-provider";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
     const modelIcons = {
@@ -76,6 +80,41 @@ export default function Home() {
             </svg>
         ),
     };
+
+    const [modelOpen, setModelOpen] = useState({
+        openai: false,
+        claude: false,
+        gemini: false,
+        llama: false,
+        deepseek: false,
+        openaiGptOss120b: false,
+    });
+
+    useEffect(() => {
+        setModelOpen({
+            openai: localStorage.getItem("openai") || false,
+            claude: localStorage.getItem("openrouter") || false,
+            gemini: localStorage.getItem("gemini") || false,
+            llama: localStorage.getItem("groq") || false,
+            deepseek: localStorage.getItem("groq") || false,
+            openaiGptOss120b: localStorage.getItem("groq") || false,
+        });
+    }, []);
+
+    useEffect(() => {
+        //if (typeof window === "undefined") return;
+        if (modelOpen.llama) {
+            setModelOpen((prev) => ({
+                ...prev,
+                llama: !modelOpen.llama,
+                deepseek: true,
+                openaiGptOss120b: true,
+            }));
+            console.log("j");
+            localStorage.setItem("llama", !modelOpen.llama);
+        }
+    }, []);
+
     return (
         <div className="h-[calc(100vh-16px)] overflow-auto border-2 border-primary rounded-md p-2 w-full">
             <div className="my-8 sm:my-4">
@@ -88,14 +127,14 @@ export default function Home() {
                 </p>
             </div>
             <div className="h-100 sm:w-[80%] w-[100%] mx-auto flex flex-col gap-2">
-                <div className="border border-primary rounded-md flex justify-between items-center gap-20 border p-2">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 border p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.llama}
                         <div>
-                            <h3>Meta llama</h3>
+                            <h3 className="font-semibold">Meta llama</h3>
                             <p>
-                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
-                                fsnd fgs{" "}
+                                Meta&apos;s open-source model for everyday
+                                general use. (Using Groq){" "}
                             </p>
                         </div>
                     </div>
@@ -103,23 +142,41 @@ export default function Home() {
                         <button>
                             <label className="flex items-center cursor-pointer">
                                 <input
-                                checked={false}
+                                    checked={modelOpen.llama}
                                     type="checkbox"
+                                    onChange={() => {
+                                        setModelOpen((prev) => ({
+                                            ...prev,
+                                            llama: !modelOpen.llama,
+                                        }));
+                                        localStorage.setItem(
+                                            "llama",
+                                            !modelOpen.llama
+                                        );
+                                    }}
                                     className="sr-only peer"
                                 />
-                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                                <div
+                                    className="relative w-9 h-5 rounded-full 
+                    bg-gray-400 peer-checked:bg-primary
+                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                    after:bg-white after:border after:border-gray-300 
+                    after:rounded-full after:h-4 after:w-4 after:transition-all 
+                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                                ></div>
                             </label>
                         </button>
                     </div>
                 </div>
-                <div className="flex justify-between items-center gap-20 border p-2">
+
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 border p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.openai}
                         <div>
-                            <h3>OpenAI</h3>
+                            <h3 className="font-semibold">OpenAI</h3>
                             <p>
-                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
-                                fsnd fgs{" "}
+                                GPT-5 model with advanced reasoning
+                                capabilities. (Using OpenAI API){" "}
                             </p>
                         </div>
                     </div>
@@ -127,22 +184,38 @@ export default function Home() {
                         <button>
                             <label className="flex items-center cursor-pointer">
                                 <input
+                                    checked={modelOpen.openai}
                                     type="checkbox"
+                                    onChange={() => {
+                                        setModelOpen((prev) => ({
+                                            ...prev,
+                                            openai: !modelOpen.openai,
+                                        }));
+                                    }}
                                     className="sr-only peer"
                                 />
-                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                                <div
+                                    className="relative w-9 h-5 rounded-full 
+                    bg-gray-400 peer-checked:bg-primary
+                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                    after:bg-white after:border after:border-gray-300 
+                    after:rounded-full after:h-4 after:w-4 after:transition-all 
+                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                                ></div>
                             </label>
                         </button>
                     </div>
                 </div>
-                <div className="flex justify-between items-center gap-20 border p-2">
+
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 border p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.claude}
                         <div>
-                            <h3>Claude</h3>
+                            <h3 className="font-semibold">Claude</h3>
                             <p>
-                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
-                                fsnd fgs{" "}
+                                Anthropic&apos;s thoughtful AI assistant with
+                                excellent contextual understanding. (Using
+                                OpenRouter){" "}
                             </p>
                         </div>
                     </div>
@@ -150,22 +223,38 @@ export default function Home() {
                         <button>
                             <label className="flex items-center cursor-pointer">
                                 <input
+                                    checked={modelOpen.claude}
                                     type="checkbox"
+                                    onChange={() => {
+                                        setModelOpen((prev) => ({
+                                            ...prev,
+                                            claude: !prev.claude,
+                                        }));
+                                    }}
                                     className="sr-only peer"
                                 />
-                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                                <div
+                                    className="relative w-9 h-5 rounded-full 
+                    bg-gray-400 peer-checked:bg-primary
+                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                    after:bg-white after:border after:border-gray-300 
+                    after:rounded-full after:h-4 after:w-4 after:transition-all 
+                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                                ></div>
                             </label>
                         </button>
                     </div>
                 </div>
-                <div className="flex justify-between items-center gap-20 border p-2">
+
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 border p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.gemini}
                         <div>
-                            <h3>Gemini</h3>
+                            <h3 className="font-semibold">Gemini</h3>
                             <p>
-                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
-                                fsnd fgs{" "}
+                                Google&apos;s powerful conversational AI with
+                                strong analytical abilities. (Using Google
+                                Gemini API){" "}
                             </p>
                         </div>
                     </div>
@@ -173,22 +262,37 @@ export default function Home() {
                         <button>
                             <label className="flex items-center cursor-pointer">
                                 <input
+                                    checked={modelOpen.gemini}
                                     type="checkbox"
+                                    onChange={() => {
+                                        setModelOpen((prev) => ({
+                                            ...prev,
+                                            gemini: !prev.gemini,
+                                        }));
+                                    }}
                                     className="sr-only peer"
                                 />
-                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                                <div
+                                    className="relative w-9 h-5 rounded-full 
+                    bg-gray-400 peer-checked:bg-primary
+                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                    after:bg-white after:border after:border-gray-300 
+                    after:rounded-full after:h-4 after:w-4 after:transition-all 
+                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                                ></div>
                             </label>
                         </button>
                     </div>
                 </div>
-                <div className="flex justify-between items-center gap-20 border p-2">
+
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 border p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.deepseek}
                         <div>
-                            <h3>Deepseek</h3>
+                            <h3 className="font-semibold">Deepseek</h3>
                             <p>
-                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
-                                fsnd fgs{" "}
+                                Cutting-edge high-performance model specializing
+                                in complex reasoning. (Using Groq){" "}
                             </p>
                         </div>
                     </div>
@@ -196,22 +300,37 @@ export default function Home() {
                         <button>
                             <label className="flex items-center cursor-pointer">
                                 <input
+                                    checked={modelOpen.deepseek}
                                     type="checkbox"
+                                    onChange={() => {
+                                        setModelOpen((prev) => ({
+                                            ...prev,
+                                            deepseek: !prev.deepseek,
+                                        }));
+                                    }}
                                     className="sr-only peer"
                                 />
-                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                                <div
+                                    className="relative w-9 h-5 rounded-full 
+                    bg-gray-400 peer-checked:bg-primary
+                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                    after:bg-white after:border after:border-gray-300 
+                    after:rounded-full after:h-4 after:w-4 after:transition-all 
+                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                                ></div>
                             </label>
                         </button>
                     </div>
                 </div>
-                <div className="flex justify-between items-center gap-20 border p-2">
+
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 border p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.openai}
                         <div>
-                            <h3>GPT OSS</h3>
+                            <h3 className="font-semibold">GPT OSS</h3>
                             <p>
-                                lorem ipsum nfj g gmmmfgfsnmf sdfndmmdf sdfmsd
-                                fsnd fgs{" "}
+                                Lightning-fast open-source model optimized for
+                                quick responses. (Using Groq){" "}
                             </p>
                         </div>
                     </div>
@@ -219,10 +338,25 @@ export default function Home() {
                         <button>
                             <label className="flex items-center cursor-pointer">
                                 <input
+                                    checked={modelOpen.openaiGptOss120b}
                                     type="checkbox"
+                                    onChange={() => {
+                                        setModelOpen((prev) => ({
+                                            ...prev,
+                                            openaiGptOss120b:
+                                                !prev.openaiGptOss120b,
+                                        }));
+                                    }}
                                     className="sr-only peer"
                                 />
-                                <div className="relative w-9 h-5 bg-primary rounded-full peer dark:bg-primary peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-primary peer-checked:bg-primary dark:peer-checked:bg-primary"></div>
+                                <div
+                                    className="relative w-9 h-5 rounded-full 
+                    bg-gray-400 peer-checked:bg-primary
+                    after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
+                    after:bg-white after:border after:border-gray-300 
+                    after:rounded-full after:h-4 after:w-4 after:transition-all 
+                    peer-checked:after:translate-x-full peer-checked:after:border-white"
+                                ></div>
                             </label>
                         </button>
                     </div>
