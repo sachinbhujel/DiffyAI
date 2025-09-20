@@ -365,10 +365,10 @@ export default function Home() {
                     </div>
                     <div>
                         <button>
-                            <label className="flex items-center cursor-pointer">
+                            <label className="relative block h-8 w-14 rounded-full bg-gray-300 transition-colors [-webkit-tap-highlight-color:_transparent] has-checked:bg-green-500">
                                 <input
-                                    checked={modelOpen.openaiGptOss120b}
                                     type="checkbox"
+                                    checked={modelOpen.openaiGptOss120b}
                                     onChange={() => {
                                         setModelOpen((prev) => ({
                                             ...prev,
@@ -383,15 +383,8 @@ export default function Home() {
                                     disabled={!apiKey.groqApiKey}
                                     className="sr-only peer"
                                 />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-primary
-                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                     after:bg-white after:border after:border-gray-300 
-                     after:rounded-full after:h-4 after:w-4 after:transition-all 
-                     peer-checked:after:translate-x-full peer-checked:after:border-white
-                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
-                                ></div>
+
+                                <span className="absolute inset-y-0 start-0 m-1 size-6 rounded-full bg-white transition-[inset-inline-start] peer-checked:start-6"></span>
                             </label>
                         </button>
                     </div>
