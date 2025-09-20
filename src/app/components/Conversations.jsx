@@ -3,7 +3,7 @@ import React from "react";
 const Conversation = ({ messages, isChecked, onToggle }) => {
     return (
         <div
-            className={`h-90 px-2 ${
+            className={`h-85 2xl:h-120 px-2 ${
                 !isChecked ? "flex justify-center items-center" : ""
             } custom-scrollbar overflow-auto flex flex-col-reverse`}
         >

@@ -90,6 +90,22 @@ export default function Home() {
         openaiGptOss120b: false,
     });
 
+    const [apiKey, setApiKey] = useState({
+        groqApiKey: false,
+        openaiApiKey: false,
+        geminiApiKey: false,
+        openrouterApiKey: false,
+    });
+
+    useEffect(() => {
+        setApiKey({
+            groqApiKey: localStorage.getItem("groqkey") || false,
+            openaiApiKey: localStorage.getItem("openaikey") || false,
+            geminiApiKey: localStorage.getItem("geminikey") || false,
+            openrouterApiKey: localStorage.getItem("openrouterkey") || false,
+        });
+    }, []);
+
     useEffect(() => {
         const llamaActive = localStorage.getItem("llama") === "true";
         const openaiActive = localStorage.getItem("openai") === "true";
@@ -149,7 +165,7 @@ export default function Home() {
                                             !modelOpen.llama
                                         );
                                     }}
-                                    disabled={!localStorage.getItem("groqkey")}
+                                    disabled={!apiKey.groqApiKey}
                                     className="sr-only peer"
                                 />
                                 <div
@@ -193,9 +209,7 @@ export default function Home() {
                                             !modelOpen.openai
                                         );
                                     }}
-                                    disabled={
-                                        !localStorage.getItem("openaikey")
-                                    }
+                                    disabled={!apiKey.openaiApiKey}
                                     className="sr-only peer"
                                 />
                                 <div
@@ -240,9 +254,7 @@ export default function Home() {
                                             !modelOpen.claude
                                         );
                                     }}
-                                    disabled={
-                                        !localStorage.getItem("openrouterkey")
-                                    }
+                                    disabled={!apiKey.openaiApiKey}
                                     className="sr-only peer"
                                 />
                                 <div
@@ -286,7 +298,7 @@ export default function Home() {
                                             !modelOpen.deepseek
                                         );
                                     }}
-                                    disabled={!localStorage.getItem("groqkey")}
+                                    disabled={!apiKey.groqApiKey}
                                     className="sr-only peer"
                                 />
                                 <div
@@ -331,9 +343,7 @@ export default function Home() {
                                             !modelOpen.gemini
                                         );
                                     }}
-                                    disabled={
-                                        !localStorage.getItem("geminikey")
-                                    }
+                                    disabled={!apiKey.geminiApiKey}
                                     className="sr-only peer"
                                 />
                                 <div
@@ -378,7 +388,7 @@ export default function Home() {
                                             !modelOpen.openaiGptOss120b
                                         );
                                     }}
-                                    disabled={!localStorage.getItem("groqkey")}
+                                    disabled={!apiKey.groqApiKey}
                                     className="sr-only peer"
                                 />
                                 <div
