@@ -119,7 +119,7 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="reltive border-2 border-primary rounded-md min-h-[calc(100vh-16px)] w-full overflow-auto">
+        <div className="reltive border-2 border-primary rounded-md min-h-[calc(100vh-16px)] w-full overflow-auto custom-scrollbar">
             <div className="py-8 sm:py-4">
                 <p className="text-center text-lg">
                     Start by adding your API keys on the{" "}
@@ -142,10 +142,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <div class="flex items-center gap-x-3">
+                        <div className="flex items-center gap-x-3">
                             <label
-                                for="hs-xs-switch1"
-                                class="relative inline-block w-9 h-5 cursor-pointer"
+                                htmlFor="hs-xs-switch1"
+                                className="relative inline-block w-9 h-5 cursor-pointer"
                             >
                                 <input
                                     type="checkbox"
@@ -162,10 +162,10 @@ export default function Home() {
                                     }}
                                     disabled={!apiKey.groqApiKey}
                                     id="hs-xs-switch1"
-                                    class="peer sr-only"
+                                    className="peer sr-only"
                                 />
-                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
-                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
+                                <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
                         </div>
                     </div>
@@ -183,10 +183,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <div class="flex items-center gap-x-3">
+                        <div className="flex items-center gap-x-3">
                             <label
-                                for="hs-xs-switch2"
-                                class="relative inline-block w-9 h-5 cursor-pointer"
+                                htmlFor="hs-xs-switch2"
+                                className="relative inline-block w-9 h-5 cursor-pointer"
                             >
                                 <input
                                     type="checkbox"
@@ -203,10 +203,10 @@ export default function Home() {
                                     }}
                                     disabled={!apiKey.openaiApiKey}
                                     id="hs-xs-switch2"
-                                    class="peer sr-only"
+                                    className="peer sr-only"
                                 />
-                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
-                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
+                                <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
                         </div>
                     </div>
@@ -225,10 +225,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <div class="flex items-center gap-x-3">
+                        <div className="flex items-center gap-x-3">
                             <label
-                                for="hs-xs-switch3"
-                                class="relative inline-block w-9 h-5 cursor-pointer"
+                            htmlFor="hs-xs-switch3"
+                                className="relative inline-block w-9 h-5 cursor-pointer"
                             >
                                 <input
                                     type="checkbox"
@@ -245,10 +245,10 @@ export default function Home() {
                                     }}
                                     disabled={!apiKey.openrouterApiKey}
                                     id="hs-xs-switch3"
-                                    class="peer sr-only"
+                                    className="peer sr-only"
                                 />
-                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
-                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
+                                <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
                         </div>
                     </div>
@@ -267,10 +267,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <div class="flex items-center gap-x-3">
+                        <div className="flex items-center gap-x-3">
                             <label
-                                for="hs-xs-switch4"
-                                class="relative inline-block w-9 h-5 cursor-pointer"
+                                htmlFor="hs-xs-switch4"
+                                className="relative inline-block w-9 h-5 cursor-pointer"
                             >
                                 <input
                                     checked={modelOpen.deepseek}
@@ -287,10 +287,10 @@ export default function Home() {
                                     }}
                                     disabled={!apiKey.groqApiKey}
                                     id="hs-xs-switch4"
-                                    class="peer sr-only"
+                                    className="peer sr-only"
                                 />
-                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
-                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
+                                <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
                         </div>
                     </div>
@@ -309,10 +309,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <div class="flex items-center gap-x-3">
+                        <div className="flex items-center gap-x-3">
                             <label
-                                for="hs-xs-switch5"
-                                class="relative inline-block w-9 h-5 cursor-pointer"
+                                htmlFor="hs-xs-switch5"
+                                className="relative inline-block w-9 h-5 cursor-pointer"
                             >
                                 <input
                                     checked={modelOpen.gemini}
@@ -329,10 +329,10 @@ export default function Home() {
                                     }}
                                     disabled={!apiKey.geminiApiKey}
                                     id="hs-xs-switch5"
-                                    class="peer sr-only"
+                                    className="peer sr-only"
                                 />
-                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
-                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
+                                <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
                         </div>
                     </div>
@@ -350,10 +350,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <div class="flex items-center gap-x-3">
+                        <div className="flex items-center gap-x-3">
                             <label
-                                for="hs-xs-switch6"
-                                class="relative inline-block w-9 h-5 cursor-pointer"
+                                htmlFor="hs-xs-switch6"
+                                className="relative inline-block w-9 h-5 cursor-pointer"
                             >
                                 <input
                                     type="checkbox"
@@ -371,10 +371,10 @@ export default function Home() {
                                     }}
                                     disabled={!apiKey.groqApiKey}
                                     id="hs-xs-switch6"
-                                    class="peer sr-only"
+                                    className="peer sr-only"
                                 />
-                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
-                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
+                                <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
                         </div>
                     </div>

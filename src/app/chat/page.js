@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import ModelPanel from "../components/ModelPanel";
+import { set, get } from "idb-keyval";
 
 function ModelContainer() {
     const [prompt, setPrompt] = useState("");
@@ -35,7 +36,7 @@ function ModelContainer() {
         transport: new DefaultChatTransport({
             api: "/api/claude",
             headers: () => ({
-                "X-OPENROUTER-API-KEY": localStorage.getItem("openrouter"),
+                "X-OPENROUTER-API-KEY": localStorage.getItem("openrouterkey"),
             }),
         }),
     });
@@ -44,7 +45,7 @@ function ModelContainer() {
         transport: new DefaultChatTransport({
             api: "/api/deepseek",
             headers: () => ({
-                "X-GROQ-API-KEY": localStorage.getItem("groq"),
+                "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
     });
@@ -53,7 +54,7 @@ function ModelContainer() {
         transport: new DefaultChatTransport({
             api: "/api/gemini",
             headers: () => ({
-                "X-GEMINI-API-KEY": localStorage.getItem("gemini"),
+                "X-GEMINI-API-KEY": localStorage.getItem("geminikey"),
             }),
         }),
     });
@@ -62,7 +63,7 @@ function ModelContainer() {
         transport: new DefaultChatTransport({
             api: "/api/llama",
             headers: () => ({
-                "X-GROQ-API-KEY": localStorage.getItem("groq"),
+                "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
     });
@@ -71,7 +72,7 @@ function ModelContainer() {
         transport: new DefaultChatTransport({
             api: "/api/openai",
             headers: () => ({
-                "X-OPENAI-API-KEY": localStorage.getItem("openai"),
+                "X-OPENAI-API-KEY": localStorage.getItem("openaikey"),
             }),
         }),
     });
@@ -80,7 +81,7 @@ function ModelContainer() {
         transport: new DefaultChatTransport({
             api: "/api/openai-gpt-oss-120b",
             headers: () => ({
-                "X-GROQ-API-KEY": localStorage.getItem("groq"),
+                "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
     });
@@ -92,11 +93,16 @@ function ModelContainer() {
             if (activeModel.openai) openaiChat.sendMessage({ text: prompt });
             if (activeModel.claude) claudeChat.sendMessage({ text: prompt });
             if (activeModel.gemini) geminiChat.sendMessage({ text: prompt });
-            if (activeModel.llama) llamaChat.sendMessage({ text: prompt });
+            if (activeModel.llama) {
+                llamaChat.sendMessage({ text: prompt });
+                set("llamaChat", llamaChat.messages);
+            }
             if (activeModel.deepseek)
                 deepseekChat.sendMessage({ text: prompt });
-            if (activeModel.openaiGptOss120b)
+            if (activeModel.openaiGptOss120b) {
                 openaiGptOss120bChat.sendMessage({ text: prompt });
+                set("openaiGptOss120bChat", openaiGptOss120bChat.messages);
+            }
         } else {
             alert("Write something!!");
         }
@@ -212,184 +218,187 @@ function ModelContainer() {
     });
 
     return (
-        <div className="relative pt-10 rounded-md gap-4 p-2 flex flex-col border-2 border-primary w-full h-full">
-            <div className="flex gap-3 overflow-auto">
-                <ModelPanel
-                    messages={llamaChat.messages}
-                    model="llama"
-                    modelIcons={modelIcons.llama}
-                    isActive={activeModel.llama}
-                    isModelActive={modelExpand.llama}
-                    onToggleExpandModel={() => {
-                        setModelExpand((prev) => ({
-                            ...prev,
-                            llama: !prev.llama,
-                        }));
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            deepseek: false,
-                            openaiGptOss120b: false,
-                            openai: false,
-                            claude: false,
-                            gemini: false,
-                        }));
-                    }}
-                    onToggle={() => {
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            llama: !prev.llama,
-                        }));
-                        localStorage.setItem("llama", !activeModel.llama);
-                    }}
-                />
+        <div className="relative pt-10 rounded-md gap-4 p-2 flex flex-col border-2 border-primary h-full w-full">
+            <div className="flex gap-3 overflow-auto w-full">
+                {activeModel.llama && (
+                    <ModelPanel
+                        messages={llamaChat.messages}
+                        model="llama"
+                        modelIcons={modelIcons.llama}
+                        isActive={activeModel.llama}
+                        isModelActive={modelExpand.llama}
+                        onToggleExpandModel={() => {
+                            setModelExpand((prev) => ({
+                                ...prev,
+                                llama: !prev.llama,
+                            }));
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                deepseek: false,
+                                openaiGptOss120b: false,
+                                openai: false,
+                                claude: false,
+                                gemini: false,
+                            }));
+                        }}
+                        onToggle={() => {
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                llama: !prev.llama,
+                            }));
+                        }}
+                    />
+                )}
 
-                <ModelPanel
-                    messages={openaiGptOss120bChat.messages}
-                    model="GPT OSS"
-                    modelIcons={modelIcons.openai}
-                    isActive={activeModel.openaiGptOss120b}
-                    isModelActive={modelExpand.openaiGptOss120b}
-                    onToggleExpandModel={() => {
-                        setModelExpand((prev) => ({
-                            ...prev,
-                            openaiGptOss120b: !prev.openaiGptOss120b,
-                        }));
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            llama: false,
-                            deepseek: false,
-                            openai: false,
-                            claude: false,
-                            gemini: false,
-                        }));
-                    }}
-                    onToggle={() => {
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            openaiGptOss120b: !prev.openaiGptOss120b,
-                        }));
-                        localStorage.setItem(
-                            "openaiGptOss120b",
-                            !activeModel.openaiGptOss120b
-                        );
-                    }}
-                />
+                {activeModel.openaiGptOss120b && (
+                    <ModelPanel
+                        messages={openaiGptOss120bChat.messages}
+                        model="GPT OSS"
+                        modelIcons={modelIcons.openai}
+                        isActive={activeModel.openaiGptOss120b}
+                        isModelActive={modelExpand.openaiGptOss120b}
+                        onToggleExpandModel={() => {
+                            setModelExpand((prev) => ({
+                                ...prev,
+                                openaiGptOss120b: !prev.openaiGptOss120b,
+                            }));
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                llama: false,
+                                deepseek: false,
+                                openai: false,
+                                claude: false,
+                                gemini: false,
+                            }));
+                        }}
+                        onToggle={() => {
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                openaiGptOss120b: !prev.openaiGptOss120b,
+                            }));
+                        }}
+                    />
+                )}
 
-                <ModelPanel
-                    messages={deepseekChat.messages}
-                    model="deepseek"
-                    isActive={activeModel.deepseek}
-                    modelIcons={modelIcons.deepseek}
-                    isModelActive={modelExpand.deepseek}
-                    onToggleExpandModel={() => {
-                        setModelExpand((prev) => ({
-                            ...prev,
-                            deepseek: !prev.deepseek,
-                        }));
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            llama: false,
-                            openaiGptOss120b: false,
-                            openai: false,
-                            claude: false,
-                            gemini: false,
-                        }));
-                    }}
-                    onToggle={() => {
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            deepseek: !prev.deepseek,
-                        }));
-                        localStorage.setItem("deepseek", !activeModel.deepseek);
-                    }}
-                />
+                {activeModel.deepseek && (
+                    <ModelPanel
+                        messages={deepseekChat.messages}
+                        model="deepseek"
+                        isActive={activeModel.deepseek}
+                        modelIcons={modelIcons.deepseek}
+                        isModelActive={modelExpand.deepseek}
+                        onToggleExpandModel={() => {
+                            setModelExpand((prev) => ({
+                                ...prev,
+                                deepseek: !prev.deepseek,
+                            }));
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                llama: false,
+                                openaiGptOss120b: false,
+                                openai: false,
+                                claude: false,
+                                gemini: false,
+                            }));
+                        }}
+                        onToggle={() => {
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                deepseek: !prev.deepseek,
+                            }));
+                        }}
+                    />
+                )}
 
-                <ModelPanel
-                    messages={openaiChat.messages}
-                    model="Openai"
-                    modelIcons={modelIcons.openai}
-                    isActive={activeModel.openai}
-                    isModelActive={modelExpand.openai}
-                    onToggleExpandModel={() => {
-                        setModelExpand((prev) => ({
-                            ...prev,
-                            openai: !prev.openai,
-                        }));
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            llama: false,
-                            deepseek: false,
-                            openaiGptOss120b: false,
-                            claude: false,
-                            gemini: false,
-                        }));
-                    }}
-                    onToggle={() => {
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            openai: !prev.openai,
-                        }));
-                        localStorage.setItem("openai", !activeModel.openai);
-                    }}
-                />
+                {activeModel.openai && (
+                    <ModelPanel
+                        messages={openaiChat.messages}
+                        model="Openai"
+                        modelIcons={modelIcons.openai}
+                        isActive={activeModel.openai}
+                        isModelActive={modelExpand.openai}
+                        onToggleExpandModel={() => {
+                            setModelExpand((prev) => ({
+                                ...prev,
+                                openai: !prev.openai,
+                            }));
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                llama: false,
+                                deepseek: false,
+                                openaiGptOss120b: false,
+                                claude: false,
+                                gemini: false,
+                            }));
+                        }}
+                        onToggle={() => {
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                openai: !prev.openai,
+                            }));
+                        }}
+                    />
+                )}
 
-                <ModelPanel
-                    messages={claudeChat.messages}
-                    model="Claude"
-                    modelIcons={modelIcons.claude}
-                    isActive={activeModel.claude}
-                    isModelActive={modelExpand.claude}
-                    onToggleExpandModel={() => {
-                        setModelExpand((prev) => ({
-                            ...prev,
-                            claude: !prev.claude,
-                        }));
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            llama: false,
-                            deepseek: false,
-                            openaiGptOss120b: false,
-                            openai: false,
-                            gemini: false,
-                        }));
-                    }}
-                    onToggle={() => {
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            claude: !prev.claude,
-                        }));
-                        localStorage.setItem("claude", !activeModel.claude);
-                    }}
-                />
+                {activeModel.claude && (
+                    <ModelPanel
+                        messages={claudeChat.messages}
+                        model="Claude"
+                        modelIcons={modelIcons.claude}
+                        isActive={activeModel.claude}
+                        isModelActive={modelExpand.claude}
+                        onToggleExpandModel={() => {
+                            setModelExpand((prev) => ({
+                                ...prev,
+                                claude: !prev.claude,
+                            }));
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                llama: false,
+                                deepseek: false,
+                                openaiGptOss120b: false,
+                                openai: false,
+                                gemini: false,
+                            }));
+                        }}
+                        onToggle={() => {
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                claude: !prev.claude,
+                            }));
+                        }}
+                    />
+                )}
 
-                <ModelPanel
-                    messages={geminiChat.messages}
-                    model="Gemini"
-                    modelIcons={modelIcons.gemini}
-                    isActive={activeModel.gemini}
-                    isModelActive={modelExpand.gemini}
-                    onToggleExpandModel={() => {
-                        setModelExpand((prev) => ({
-                            ...prev,
-                            gemini: !prev.gemini,
-                        }));
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            llama: false,
-                            deepseek: false,
-                            openaiGptOss120b: false,
-                            openai: false,
-                            claude: false,
-                        }));
-                    }}
-                    onToggle={() => {
-                        setActiveModel((prev) => ({
-                            ...prev,
-                            gemini: !prev.gemini,
-                        }));
-                        localStorage.setItem("gemini", !activeModel.gemini);
-                    }}
-                />
+                {activeModel.gemini && (
+                    <ModelPanel
+                        messages={geminiChat.messages}
+                        model="Gemini"
+                        modelIcons={modelIcons.gemini}
+                        isActive={activeModel.gemini}
+                        isModelActive={modelExpand.gemini}
+                        onToggleExpandModel={() => {
+                            setModelExpand((prev) => ({
+                                ...prev,
+                                gemini: !prev.gemini,
+                            }));
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                llama: false,
+                                deepseek: false,
+                                openaiGptOss120b: false,
+                                openai: false,
+                                claude: false,
+                            }));
+                        }}
+                        onToggle={() => {
+                            setActiveModel((prev) => ({
+                                ...prev,
+                                gemini: !prev.gemini,
+                            }));
+                        }}
+                    />
+                )}
             </div>
             <form onSubmit={handleSubmit} className="flex justify-center">
                 <div className="absolute bg-background bottom-3 border border-primary left-1/2 transform -translate-x-1/2 shadow-lg w-[90%] rounded-xl flex flex-col items-end p-2 gap-2 justify-center">

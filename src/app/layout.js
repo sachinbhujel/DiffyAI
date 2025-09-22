@@ -41,11 +41,13 @@ export default function RootLayout({ children }) {
                 />
             </head>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden border`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <div className="flex p-2 sm:gap-2 gap-0 h-[100vh] border">
+                <div className="flex p-2 sm:gap-2 gap-0 h-[100vh] overflow-hidden border">
                     <SidebarWrapper />
-                    <div className="flex flex-1 h-full">{children}</div>
+                    <div className="flex flex-1 h-full overflow-auto">
+                        {children}
+                    </div>
                 </div>
             </body>
         </html>
