@@ -130,7 +130,7 @@ export default function Home() {
                 </p>
             </div>
             <div className="h-max sm:w-[80%] w-[100%] mx-auto flex flex-col">
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 sm:gap-0 px-4 p-2">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.llama}
                         <div>
@@ -142,11 +142,14 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <button>
-                            <label className="flex items-center cursor-pointer">
+                        <div class="flex items-center gap-x-3">
+                            <label
+                                for="hs-xs-switch1"
+                                class="relative inline-block w-9 h-5 cursor-pointer"
+                            >
                                 <input
-                                    checked={modelOpen.llama}
                                     type="checkbox"
+                                    checked={modelOpen.llama}
                                     onChange={() => {
                                         setModelOpen((prev) => ({
                                             ...prev,
@@ -158,23 +161,17 @@ export default function Home() {
                                         );
                                     }}
                                     disabled={!apiKey.groqApiKey}
-                                    className="sr-only peer"
+                                    id="hs-xs-switch1"
+                                    class="peer sr-only"
                                 />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-primary
-                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                     after:bg-white after:border after:border-gray-300 
-                     after:rounded-full after:h-4 after:w-4 after:transition-all 
-                     peer-checked:after:translate-x-full peer-checked:after:border-white
-                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
-                                ></div>
+                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
-                        </button>
+                        </div>
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 sm:gap-0 px-4  p-2">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.openai}
                         <div>
@@ -186,11 +183,14 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <button>
-                            <label className="flex items-center cursor-pointer">
+                        <div class="flex items-center gap-x-3">
+                            <label
+                                for="hs-xs-switch2"
+                                class="relative inline-block w-9 h-5 cursor-pointer"
+                            >
                                 <input
-                                    checked={modelOpen.openai}
                                     type="checkbox"
+                                    checked={modelOpen.openai}
                                     onChange={() => {
                                         setModelOpen((prev) => ({
                                             ...prev,
@@ -202,23 +202,17 @@ export default function Home() {
                                         );
                                     }}
                                     disabled={!apiKey.openaiApiKey}
-                                    className="sr-only peer"
+                                    id="hs-xs-switch2"
+                                    class="peer sr-only"
                                 />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-primary
-                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                     after:bg-white after:border after:border-gray-300 
-                     after:rounded-full after:h-4 after:w-4 after:transition-all 
-                     peer-checked:after:translate-x-full peer-checked:after:border-white
-                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
-                                ></div>
+                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
-                        </button>
+                        </div>
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10  sm:gap-0 px-4 p-2">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.claude}
                         <div>
@@ -231,11 +225,14 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <button>
-                            <label className="flex items-center cursor-pointer">
+                        <div class="flex items-center gap-x-3">
+                            <label
+                                for="hs-xs-switch3"
+                                class="relative inline-block w-9 h-5 cursor-pointer"
+                            >
                                 <input
-                                    checked={modelOpen.claude}
                                     type="checkbox"
+                                    checked={modelOpen.claude}
                                     onChange={() => {
                                         setModelOpen((prev) => ({
                                             ...prev,
@@ -246,37 +243,35 @@ export default function Home() {
                                             !modelOpen.claude
                                         );
                                     }}
-                                    disabled={!apiKey.openaiApiKey}
-                                    className="sr-only peer"
+                                    disabled={!apiKey.openrouterApiKey}
+                                    id="hs-xs-switch3"
+                                    class="peer sr-only"
                                 />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-primary
-                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                     after:bg-white after:border after:border-gray-300 
-                     after:rounded-full after:h-4 after:w-4 after:transition-all 
-                     peer-checked:after:translate-x-full peer-checked:after:border-white
-                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
-                                ></div>
+                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
-                        </button>
+                        </div>
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4  sm:gap-0  p-2">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.deepseek}
                         <div>
                             <h3 className="font-semibold">Deepseek</h3>
                             <p>
-                                Cutting edge high-performance model specializing
-                                in complex reasoning. (Using Groq){" "}
+                                Google&apos;s powerful conversational AI with
+                                strong analytical abilities. (Using Google
+                                Gemini API){" "}
                             </p>
                         </div>
                     </div>
                     <div>
-                        <button>
-                            <label className="flex items-center cursor-pointer">
+                        <div class="flex items-center gap-x-3">
+                            <label
+                                for="hs-xs-switch4"
+                                class="relative inline-block w-9 h-5 cursor-pointer"
+                            >
                                 <input
                                     checked={modelOpen.deepseek}
                                     type="checkbox"
@@ -291,23 +286,17 @@ export default function Home() {
                                         );
                                     }}
                                     disabled={!apiKey.groqApiKey}
-                                    className="sr-only peer"
+                                    id="hs-xs-switch4"
+                                    class="peer sr-only"
                                 />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-primary
-                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                     after:bg-white after:border after:border-gray-300 
-                     after:rounded-full after:h-4 after:w-4 after:transition-all 
-                     peer-checked:after:translate-x-full peer-checked:after:border-white
-                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
-                                ></div>
+                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
-                        </button>
+                        </div>
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4   sm:gap-0 p-2">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.gemini}
                         <div>
@@ -320,8 +309,11 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <button>
-                            <label className="flex items-center cursor-pointer">
+                        <div class="flex items-center gap-x-3">
+                            <label
+                                for="hs-xs-switch5"
+                                class="relative inline-block w-9 h-5 cursor-pointer"
+                            >
                                 <input
                                     checked={modelOpen.gemini}
                                     type="checkbox"
@@ -336,23 +328,17 @@ export default function Home() {
                                         );
                                     }}
                                     disabled={!apiKey.geminiApiKey}
-                                    className="sr-only peer"
+                                    id="hs-xs-switch5"
+                                    class="peer sr-only"
                                 />
-                                <div
-                                    className="relative w-9 h-5 rounded-full 
-                     bg-gray-400 peer-checked:bg-primary
-                     after:content-[''] after:absolute after:top-[2px] after:start-[2px] 
-                     after:bg-white after:border after:border-gray-300 
-                     after:rounded-full after:h-4 after:w-4 after:transition-all 
-                     peer-checked:after:translate-x-full peer-checked:after:border-white
-                     peer-disabled:bg-gray-300 peer-disabled:after:bg-gray-200 peer-disabled:cursor-not-allowed"
-                                ></div>
+                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
-                        </button>
+                        </div>
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4   sm:gap-0 p-2">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
                     <div className="flex items-center gap-4">
                         {modelIcons.openai}
                         <div>
@@ -364,8 +350,11 @@ export default function Home() {
                         </div>
                     </div>
                     <div>
-                        <button>
-                            <label className="relative block h-8 w-14 rounded-full bg-gray-300 transition-colors [-webkit-tap-highlight-color:_transparent] has-checked:bg-green-500">
+                        <div class="flex items-center gap-x-3">
+                            <label
+                                for="hs-xs-switch6"
+                                class="relative inline-block w-9 h-5 cursor-pointer"
+                            >
                                 <input
                                     type="checkbox"
                                     checked={modelOpen.openaiGptOss120b}
@@ -381,12 +370,13 @@ export default function Home() {
                                         );
                                     }}
                                     disabled={!apiKey.groqApiKey}
-                                    className="sr-only peer"
+                                    id="hs-xs-switch6"
+                                    class="peer sr-only"
                                 />
-
-                                <span className="absolute inset-y-0 start-0 m-1 size-6 rounded-full bg-white transition-[inset-inline-start] peer-checked:start-6"></span>
+                                <span class="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
                             </label>
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
