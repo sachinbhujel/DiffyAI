@@ -119,7 +119,7 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="reltive border-2 border-primary rounded-md min-h-[calc(100vh-16px)] w-full overflow-auto custom-scrollbar">
+        <div className="reltive border-2 border-primary rounded-md min-h-[calc(100vh-16px)] w-full flex flex-col overflow-auto custom-scrollbar">
             <div className="py-8 sm:py-4">
                 <p className="text-center text-lg">
                     Start by adding your API keys on the{" "}
@@ -227,7 +227,7 @@ export default function Home() {
                     <div>
                         <div className="flex items-center gap-x-3">
                             <label
-                            htmlFor="hs-xs-switch3"
+                                htmlFor="hs-xs-switch3"
                                 className="relative inline-block w-9 h-5 cursor-pointer"
                             >
                                 <input

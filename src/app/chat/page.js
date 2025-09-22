@@ -86,6 +86,8 @@ function ModelContainer() {
         }),
     });
 
+    const [llamaChats, setLlamaChats] = useState({});
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (disabledButton) return;
@@ -95,19 +97,34 @@ function ModelContainer() {
             if (activeModel.gemini) geminiChat.sendMessage({ text: prompt });
             if (activeModel.llama) {
                 llamaChat.sendMessage({ text: prompt });
-                set("llamaChat", llamaChat.messages);
             }
             if (activeModel.deepseek)
                 deepseekChat.sendMessage({ text: prompt });
             if (activeModel.openaiGptOss120b) {
                 openaiGptOss120bChat.sendMessage({ text: prompt });
-                set("openaiGptOss120bChat", openaiGptOss120bChat.messages);
             }
         } else {
             alert("Write something!!");
         }
         setPrompt("");
     };
+
+
+
+    useEffect(() => {
+        get("llamachat").then((chats) => {
+            console.log("Chats", chats);
+            setLlamaChats({ chats });
+        })
+    }, [])
+
+    console.log(llamaChats);
+
+
+    if (llamaChat.status.includes("ready") && llamaChat.messages.length !== 0) {
+        set("llamachat", llamaChat.messages);
+    }
+
 
     const [disabledButton, setDisabledButton] = useState(false);
     useEffect(() => {
@@ -245,7 +262,7 @@ function ModelContainer() {
             <div className="flex gap-3 overflow-auto w-full">
                 {models.llama && (
                     <ModelPanel
-                        messages={llamaChat.messages}
+                        messages={llamaChats.chats || llamaChat.messages}
                         model="llama"
                         modelIcons={modelIcons.llama}
                         isActive={activeModel.llama}
@@ -442,11 +459,10 @@ function ModelContainer() {
                     />
                     <button
                         type="submit"
-                        className={`border w-20 p-1.5 flex justify-center items-center rounded-lg text-gray-300 ${
-                            !prompt
-                                ? "bg-[#7585a2] cursor-not-allowed"
-                                : "bg-primary text-white cursor-pointer"
-                        }`}
+                        className={`border w-20 p-1.5 flex justify-center items-center rounded-lg text-gray-300 ${!prompt
+                            ? "bg-[#7585a2] cursor-not-allowed"
+                            : "bg-primary text-white cursor-pointer"
+                            }`}
                         disabled={disabledButton}
                     >
                         {!prompt ? "Disabled" : "Enter"}
