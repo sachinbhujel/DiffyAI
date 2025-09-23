@@ -277,7 +277,7 @@ function ModelContainer() {
 
     return (
         <div className="relative pt-10 rounded-md gap-4 p-2 flex flex-col border-2 border-primary h-full w-full">
-            <div className="flex gap-3 overflow-auto w-full">
+            <div className="flex gap-3 overflow-auto all-model-scrollbar w-full">
                 {models.llama && (
                     <ModelPanel
                         messages={llamaChat.messages}
