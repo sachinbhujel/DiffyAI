@@ -7,6 +7,8 @@ import { DefaultChatTransport } from "ai";
 import ModelPanel from "../components/ModelPanel";
 import { set, get } from "idb-keyval";
 
+
+
 function ModelContainer() {
     const [prompt, setPrompt] = useState("");
     const [activeModel, setActiveModel] = useState({
@@ -17,6 +19,14 @@ function ModelContainer() {
         deepseek: false,
         openaiGptOss120b: false,
     });
+    const [llamaChats, setLlamaChats] = useState(undefined);
+
+    useEffect(() => {
+        get("llamachat").then((chats) => {
+            setLlamaChats(chats);
+            console.log("Chats", chats);
+        })
+    }, [])
 
     useEffect(() => {
         setActiveModel({
@@ -59,6 +69,7 @@ function ModelContainer() {
         }),
     });
 
+
     const llamaChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/llama",
@@ -66,7 +77,82 @@ function ModelContainer() {
                 "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
+        messages: [
+            {
+                "parts": [
+                    {
+                        "type": "text",
+                        "text": "hi"
+                    }
+                ],
+                "id": "ylpV9HbL5PjO3ZGe",
+                "role": "user"
+            },
+            {
+                "id": "HpqVZG8efEv53rTR",
+                "role": "assistant",
+                "parts": [
+                    {
+                        "type": "step-start"
+                    },
+                    {
+                        "type": "text",
+                        "text": "Hello, how can I assist you today?",
+                        "state": "done"
+                    }
+                ]
+            },
+            {
+                "parts": [
+                    {
+                        "type": "text",
+                        "text": "hi"
+                    }
+                ],
+                "id": "ylpV9HbL5PjO3ZGe",
+                "role": "user"
+            },
+            {
+                "id": "HpqVZG8efEv53rTR",
+                "role": "assistant",
+                "parts": [
+                    {
+                        "type": "step-start"
+                    },
+                    {
+                        "type": "text",
+                        "text": "Hello, how can I assist you today?",
+                        "state": "done"
+                    }
+                ]
+            },
+            {
+                "parts": [
+                    {
+                        "type": "text",
+                        "text": "hi"
+                    }
+                ],
+                "id": "ylpV9HbL5PjO3ZGe",
+                "role": "user"
+            },
+            {
+                "id": "HpqVZG8efEv53rTR",
+                "role": "assistant",
+                "parts": [
+                    {
+                        "type": "step-start"
+                    },
+                    {
+                        "type": "text",
+                        "text": "Hello, how can I assist you today?",
+                        "state": "done"
+                    }
+                ]
+            },
+        ],
     });
+
 
     const openaiChat = useChat({
         transport: new DefaultChatTransport({
@@ -85,8 +171,6 @@ function ModelContainer() {
             }),
         }),
     });
-
-    const [llamaChats, setLlamaChats] = useState({});
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -111,19 +195,15 @@ function ModelContainer() {
 
 
 
-    useEffect(() => {
-        get("llamachat").then((chats) => {
-            console.log("Chats", chats);
-            setLlamaChats({ chats });
-        })
-    }, [])
 
-    console.log(llamaChats);
+
 
 
     if (llamaChat.status.includes("ready") && llamaChat.messages.length !== 0) {
         set("llamachat", llamaChat.messages);
     }
+
+
 
 
     const [disabledButton, setDisabledButton] = useState(false);
@@ -262,7 +342,7 @@ function ModelContainer() {
             <div className="flex gap-3 overflow-auto w-full">
                 {models.llama && (
                     <ModelPanel
-                        messages={llamaChats.chats || llamaChat.messages}
+                        messages={llamaChat.messages}
                         model="llama"
                         modelIcons={modelIcons.llama}
                         isActive={activeModel.llama}
