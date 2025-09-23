@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
             >
                 <div className="flex p-2 sm:gap-2 gap-0 h-[100dvh] overflow-hidden border">
                     <SidebarWrapper />
-                    <div className="flex flex-1 h-full">{children}</div>
+                    <div className="flex flex-1 h-full w-full overflow-auto">{children}</div>
                 </div>
             </body>
         </html>

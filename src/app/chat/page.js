@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import TextareaAutosize from "react-textarea-autosize";
@@ -6,10 +7,11 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import ModelPanel from "../components/ModelPanel";
 import { set, get } from "idb-keyval";
-
+import { usePathname } from "next/navigation";
 
 
 function ModelContainer() {
+    const pathname = usePathname();
     const [prompt, setPrompt] = useState("");
     const [activeModel, setActiveModel] = useState({
         openai: false,
@@ -19,14 +21,20 @@ function ModelContainer() {
         deepseek: false,
         openaiGptOss120b: false,
     });
-    const [llamaChats, setLlamaChats] = useState(undefined);
+
+    const [allModelChats, setAllModelChats] = useState({
+        llamaChats: [],
+        openaiGptOss120bChats: [],
+    })
 
     useEffect(() => {
-        get("llamachat").then((chats) => {
-            setLlamaChats(chats);
-            console.log("Chats", chats);
-        })
-    }, [])
+        if (pathname === "/chat") {
+            get("allmodelchats").then((chats) => {
+                llamaChat.setMessages(chats.llamaChats);
+                openaiGptOss120bChat.setMessages(chats.openaiGptOss120bChats);
+            })
+        }
+    }, [pathname])
 
     useEffect(() => {
         setActiveModel({
@@ -77,80 +85,6 @@ function ModelContainer() {
                 "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
-        messages: [
-            {
-                "parts": [
-                    {
-                        "type": "text",
-                        "text": "hi"
-                    }
-                ],
-                "id": "ylpV9HbL5PjO3ZGe",
-                "role": "user"
-            },
-            {
-                "id": "HpqVZG8efEv53rTR",
-                "role": "assistant",
-                "parts": [
-                    {
-                        "type": "step-start"
-                    },
-                    {
-                        "type": "text",
-                        "text": "Hello, how can I assist you today?",
-                        "state": "done"
-                    }
-                ]
-            },
-            {
-                "parts": [
-                    {
-                        "type": "text",
-                        "text": "hi"
-                    }
-                ],
-                "id": "ylpV9HbL5PjO3ZGe",
-                "role": "user"
-            },
-            {
-                "id": "HpqVZG8efEv53rTR",
-                "role": "assistant",
-                "parts": [
-                    {
-                        "type": "step-start"
-                    },
-                    {
-                        "type": "text",
-                        "text": "Hello, how can I assist you today?",
-                        "state": "done"
-                    }
-                ]
-            },
-            {
-                "parts": [
-                    {
-                        "type": "text",
-                        "text": "hi"
-                    }
-                ],
-                "id": "ylpV9HbL5PjO3ZGe",
-                "role": "user"
-            },
-            {
-                "id": "HpqVZG8efEv53rTR",
-                "role": "assistant",
-                "parts": [
-                    {
-                        "type": "step-start"
-                    },
-                    {
-                        "type": "text",
-                        "text": "Hello, how can I assist you today?",
-                        "state": "done"
-                    }
-                ]
-            },
-        ],
     });
 
 
@@ -198,11 +132,15 @@ function ModelContainer() {
 
 
 
-
-    if (llamaChat.status.includes("ready") && llamaChat.messages.length !== 0) {
-        set("llamachat", llamaChat.messages);
-    }
-
+    useEffect(() => {
+        if (llamaChat.messages.length > 0) {
+            set("allmodelchats", {
+                ...allModelChats,
+                llamaChats: llamaChat.messages,
+                openaiGptOss120bChats: openaiGptOss120bChat.messages,
+            });
+        }
+    }, [allModelChats, llamaChat.messages, openaiGptOss120bChat.messages]);
 
 
 
