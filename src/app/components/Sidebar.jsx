@@ -7,8 +7,29 @@ import { set, get } from "idb-keyval";
 
 function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
-    const [noOfChats, setNoOfChats] = useState(["Chat 1", "Chat 2"]);
+    const [noOfChats, setNoOfChats] = useState([]);
+    const [isDark, setIsDark] = useState(false);
     const pathname = usePathname();
+
+    const handleTheme = (checked) => {
+        setIsDark(checked);
+        const newTheme = checked ? "dark" : "light";
+        const oldTheme = checked ? "light" : "dark";
+
+        document.documentElement.classList.remove(oldTheme);
+        document.documentElement.classList.add(newTheme);
+
+        localStorage.setItem("theme", newTheme);
+    };
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+            const darkTheme = savedTheme === "dark";
+            setIsDark(darkTheme);
+            document.documentElement.classList.add(savedTheme);
+        }
+    }, []);
 
     useEffect(() => {
         get("chatsnumber").then((savedchats) => {
@@ -213,33 +234,41 @@ function Sidebar({ isVisible, setIsVisible }) {
                                     </svg>
                                 </div>
                             )}
-                            <div className="h-45 overflow-auto all-model-scrollbar flex flex-col gap-2">
-                                {noOfChats.map((chat, index) => (
-                                    <div key={index}>
-                                        {!sidebarWidth && (
-                                            <li className="list-none">
-                                                <a
-                                                    href={`/chat/${index + 1}`}
-                                                    className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
-                                                        pathname ===
-                                                        `/chat/${index + 1}`
-                                                            ? "bg-primary text-white"
-                                                            : ""
-                                                    } px-2 py-2 flex items-center gap-2`}
-                                                >
-                                                    {chat}
-                                                </a>
-                                            </li>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
+                            {noOfChats.length > 0 ? (
+                                <div className="h-45 overflow-auto all-model-scrollbar flex flex-col gap-2">
+                                    {noOfChats.map((chat, index) => (
+                                        <div key={index}>
+                                            {!sidebarWidth && (
+                                                <li className="list-none">
+                                                    <a
+                                                        href={`/chat/${
+                                                            index + 1
+                                                        }`}
+                                                        className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
+                                                            pathname ===
+                                                            `/chat/${index + 1}`
+                                                                ? "bg-primary text-white"
+                                                                : ""
+                                                        } px-2 py-2 flex items-center gap-2`}
+                                                    >
+                                                        {chat}
+                                                    </a>
+                                                </li>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-text h-45 font-light flex justify-center items-center">
+                                    No chats found
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
 
-                <div className="flex flex-col">
-                    <div>
+                <div className="flex flex-col gap-2">
+                    <div className="w-max flex">
                         <label
                             htmlFor="hs-xs-toggle"
                             className="relative inline-block w-9 h-5 cursor-pointer"
@@ -247,7 +276,9 @@ function Sidebar({ isVisible, setIsVisible }) {
                             <input
                                 type="checkbox"
                                 id="hs-xs-toggle"
+                                checked={isDark}
                                 className="peer sr-only"
+                                onChange={(e) => handleTheme(e.target.checked)}
                             />
                             <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
                             <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>

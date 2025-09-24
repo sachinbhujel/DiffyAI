@@ -13,7 +13,7 @@ It lets you easily compare responses from multiple AI models — like _OpenAI GP
 -   **⚡ Minimal and lightweight** – Minimal design and smooth browser performance.
 -   **🎛️ Customizable models** – Add or remove AI models as needed.
 -   **🌙 Dark mode** – Comfortable on eyes during long usage.
--   **💾 Persistent chat history** – Coming soon.
+-   **💾 Persistent chat history** – Automatically saves your chats, making it easy to revisit past conversations anytime.
 -   **🔑 Custom API key support** – Add and use your own API keys for different AI providers
 
 ---
@@ -29,7 +29,7 @@ It lets you easily compare responses from multiple AI models — like _OpenAI GP
 ## 🛠️ Tech Stack
 
 -   **Frontend:** Next.js, React, TailwindCSS
--   **Backend:** Node.js, Express (optional for API integration)
+-   **Backend:** Node.js
 -   **AI Models:** OpenAI, Claude, Gemini, LLaMA, and more.
 
 ---
