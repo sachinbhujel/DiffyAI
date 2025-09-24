@@ -20,9 +20,9 @@ It lets you easily compare responses from multiple AI models — like _OpenAI GP
 
 ## 📷 Screenshots
 
-![Sidewise AI home page](public/sidewise-ai-img-1.png)
-![Sidewise AI new chat page](public/sidewise-ai-img-2.png)
-![Sidewise AI configure page](public/sidewise-ai-img-3.png)
+![Sidewise AI home page](public/diffy-ai-img-1.png)
+![Sidewise AI new chat page](public/diffy-ai-img-2.png)
+![Sidewise AI configure page](public/diffy-ai-img-3.png)
 
 ---
 

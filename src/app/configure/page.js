@@ -65,7 +65,7 @@ function Configure() {
     };
 
     return (
-        <div className="w-full p-2 flex flex-col gap-4 text-text border-2 border-primary rounded-md overflow-auto custom-scrollbar">
+        <div className="w-full p-2 flex flex-col text-text border-2 border-primary rounded-md overflow-auto custom-scrollbar">
             <div className="my-10 flex flex-col gap-4 justify-center items-center text-center">
                 <h1 className="text-5xl font-bold text-primary">Configure</h1>
                 <p className="text-lg text-text w-[90%] sm:w-[70%]">
