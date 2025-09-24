@@ -54,7 +54,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                 />
                             </Link>
                             {!sidebarWidth && (
-                                <span className="text-lg text-text font-bold">
+                                <span className="tracking-wide text-lg text-text font-bold">
                                     diffyAI
                                 </span>
                             )}
@@ -187,28 +187,6 @@ function Sidebar({ isVisible, setIsVisible }) {
                             }`}
                         >
                             <h3 className="text-base font-semibold">Chats</h3>
-                            <div className="h-45 overflow-auto custom-scrollbar flex flex-col gap-2">
-                                {noOfChats.map((chat, index) => (
-                                    <div key={index}>
-                                        {!sidebarWidth && (
-                                            <li className="list-none">
-                                                <a
-                                                    href={`/chat/${index + 1}`}
-                                                    className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
-                                                        pathname ===
-                                                        `/chat/${index + 1}`
-                                                            ? "bg-primary text-white"
-                                                            : ""
-                                                    } px-2 py-2 flex items-center gap-2`}
-                                                >
-                                                    {chat}
-                                                </a>
-                                            </li>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-
                             {sidebarWidth && (
                                 <div
                                     onClick={
@@ -235,6 +213,27 @@ function Sidebar({ isVisible, setIsVisible }) {
                                     </svg>
                                 </div>
                             )}
+                            <div className="h-45 overflow-auto all-model-scrollbar flex flex-col gap-2">
+                                {noOfChats.map((chat, index) => (
+                                    <div key={index}>
+                                        {!sidebarWidth && (
+                                            <li className="list-none">
+                                                <a
+                                                    href={`/chat/${index + 1}`}
+                                                    className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
+                                                        pathname ===
+                                                        `/chat/${index + 1}`
+                                                            ? "bg-primary text-white"
+                                                            : ""
+                                                    } px-2 py-2 flex items-center gap-2`}
+                                                >
+                                                    {chat}
+                                                </a>
+                                            </li>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

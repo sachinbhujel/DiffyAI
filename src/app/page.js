@@ -119,8 +119,8 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="reltive border-2 border-primary rounded-md min-h-[calc(100vh-16px)] w-full flex flex-col overflow-auto custom-scrollbar">
-            <div className="py-8 sm:py-4">
+        <div className="reltive border-2 border-primary rounded-md h-[calc(100vh-16px)] w-full flex flex-col items-center overflow-auto p-2 custom-scrollbar">
+            <div className="py-8 sm:py-4 flex mx-auto">
                 <p className="text-center text-lg">
                     Start by adding your API keys on the{" "}
                     <Link className="underline text-primary" href="/configure">
@@ -129,15 +129,19 @@ export default function Home() {
                     page, and then select your default AI models.
                 </p>
             </div>
-            <div className="h-max sm:w-[80%] w-[100%] mx-auto flex flex-col">
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.llama}
+            <div className="h-max sm:w-[80%] w-[100%] grid grid-flow-col grid-rows-3 gap-4">
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 py-4">
+                    <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-2">
+                            {modelIcons.llama}
+                            <h3 className="font-bold">Meta llama
+                                <span className="text-xs font-medium"> (Using Groq)</span>
+                            </h3>
+                        </div>
                         <div>
-                            <h3 className="font-semibold">Meta llama</h3>
                             <p>
                                 Meta&apos;s open-source model for everyday
-                                general use. (Using Groq){" "}
+                                general use.{" "}
                             </p>
                         </div>
                     </div>
@@ -171,14 +175,18 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.openai}
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 py-4">
+                    <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-2">
+                            {modelIcons.openai}
+                            <h3 className="font-bold">OpenAI
+                                <span className="text-xs font-medium"> (Using OpenAI API)</span>
+                            </h3>
+                        </div>
                         <div>
-                            <h3 className="font-semibold">OpenAI</h3>
                             <p>
                                 GPT-5 model with advanced reasoning
-                                capabilities. (Using OpenAI API){" "}
+                                capabilities.{" "}
                             </p>
                         </div>
                     </div>
@@ -212,15 +220,20 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.claude}
+                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 py-4">
+                    <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-2">
+                            {modelIcons.claude}
+
+                            <h3 className="font-bold">Claude
+                                <span className="text-xs font-medium"> (Using
+                                    OpenRouter)</span>
+                            </h3>
+                        </div>
                         <div>
-                            <h3 className="font-semibold">Claude</h3>
                             <p>
                                 Anthropic&apos;s thoughtful AI assistant with
-                                excellent contextual understanding. (Using
-                                OpenRouter){" "}
+                                excellent understanding.{" "}
                             </p>
                         </div>
                     </div>
@@ -255,14 +268,18 @@ export default function Home() {
                 </div>
 
                 <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.deepseek}
+                    <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-2">
+                            {modelIcons.deepseek}
+                            <h3 className="font-bold">Deepseek
+                                <span className="text-xs font-medium"> (Using Google
+                                    Gemini API)</span>
+                            </h3>
+                        </div>
                         <div>
-                            <h3 className="font-semibold">Deepseek</h3>
                             <p>
                                 Google&apos;s powerful conversational AI with
-                                strong analytical abilities. (Using Google
-                                Gemini API){" "}
+                                strong analytical abilities.{" "}
                             </p>
                         </div>
                     </div>
@@ -297,14 +314,18 @@ export default function Home() {
                 </div>
 
                 <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.gemini}
+                    <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-2">
+                            {modelIcons.gemini}
+                            <h3 className="font-bold">Gemini
+                                <span className="text-xs font-medium"> (Using Google
+                                    Gemini API)</span>
+                            </h3>
+                        </div>
                         <div>
-                            <h3 className="font-semibold">Gemini</h3>
                             <p>
                                 Google&apos;s powerful conversational AI with
-                                strong analytical abilities. (Using Google
-                                Gemini API){" "}
+                                strong analytical abilities.{" "}
                             </p>
                         </div>
                     </div>
@@ -339,13 +360,17 @@ export default function Home() {
                 </div>
 
                 <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex items-center gap-4">
-                        {modelIcons.openai}
+                    <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-2">
+                            {modelIcons.openai}
+                            <h3 className="font-bold">GPT OSS
+                                <span className="text-xs font-medium"> (Using Groq)</span>
+                            </h3>
+                        </div>
                         <div>
-                            <h3 className="font-semibold">GPT OSS</h3>
                             <p>
                                 Lightning-fast open-source model optimized for
-                                quick responses. (Using Groq){" "}
+                                quick responses.{" "}
                             </p>
                         </div>
                     </div>

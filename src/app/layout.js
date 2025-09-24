@@ -43,9 +43,9 @@ export default function RootLayout({ children }) {
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <div className="flex p-2 sm:gap-2 gap-0 h-[100dvh] overflow-hidden border">
+                <div className="flex p-2 sm:gap-2 gap-0 h-screen overflow-hidden">
                     <SidebarWrapper />
-                    <div className="flex flex-1 h-full w-full overflow-auto">{children}</div>
+                    <div className="flex flex-1 h-full w-full overflow-auto custom-scrollbar">{children}</div>
                 </div>
             </body>
         </html>
