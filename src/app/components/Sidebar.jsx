@@ -1,12 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { set, get } from "idb-keyval";
 
 function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
+    const [noOfChats, setNoOfChats] = useState(["Chat 1", "Chat 2"]);
     const pathname = usePathname();
+
+    useEffect(() => {
+        get("chatsnumber").then((savedchats) => {
+            if (savedchats) {
+                setNoOfChats(savedchats);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        set("chatsnumber", noOfChats);
+    }, [noOfChats]);
+
+    const handleChatNumber = () => {
+        const nextChatNumber = noOfChats.length + 1;
+        setNoOfChats([...noOfChats, `chat ${nextChatNumber}`]);
+    };
+
     return (
         <div
             className={`rounded-md border-primary border-2 bg-background z-10 flex flex-col p-2 ${
@@ -132,7 +152,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                 </Link>
                             </li>
 
-                            <li>
+                            <li onClick={handleChatNumber}>
                                 <Link
                                     href="/chat"
                                     className={`hover:bg-primary hover:text-white border-2 border-primary rounded-sm ${
@@ -167,34 +187,27 @@ function Sidebar({ isVisible, setIsVisible }) {
                             }`}
                         >
                             <h3 className="text-base font-semibold">Chats</h3>
-                            {!sidebarWidth && (
-                                <li className="list-none">
-                                    <a
-                                        href="/chat/1"
-                                        className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
-                                            pathname === "/chat/1"
-                                                ? "bg-primary text-white"
-                                                : ""
-                                        } px-2 py-2 flex items-center gap-2`}
-                                    >
-                                        Chat 1
-                                    </a>
-                                </li>
-                            )}
-                            {!sidebarWidth && (
-                                <li className="list-none">
-                                    <a
-                                        href="/chat/2"
-                                        className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
-                                            pathname === "/chat/2"
-                                                ? "bg-primary text-white"
-                                                : ""
-                                        } px-2 py-2 flex items-center gap-2`}
-                                    >
-                                        Chat 2
-                                    </a>
-                                </li>
-                            )}
+                            <div className="h-45 overflow-auto custom-scrollbar flex flex-col gap-2">
+                                {noOfChats.map((chat, index) => (
+                                    <div key={index}>
+                                        {!sidebarWidth && (
+                                            <li className="list-none">
+                                                <a
+                                                    href={`/chat/${index + 1}`}
+                                                    className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
+                                                        pathname ===
+                                                        `/chat/${index + 1}`
+                                                            ? "bg-primary text-white"
+                                                            : ""
+                                                    } px-2 py-2 flex items-center gap-2`}
+                                                >
+                                                    {chat}
+                                                </a>
+                                            </li>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
 
                             {sidebarWidth && (
                                 <div

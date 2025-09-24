@@ -130,11 +130,6 @@ function ModelContainer() {
         setPrompt("");
     };
 
-
-
-
-
-
     useEffect(() => {
         if (llamaChat.messages.length > 0) {
             set(`allChats${id}`, {
@@ -144,8 +139,6 @@ function ModelContainer() {
             });
         }
     }, [allModelChats, llamaChat.messages, openaiGptOss120bChat.messages]);
-
-
 
     const [disabledButton, setDisabledButton] = useState(false);
     useEffect(() => {
