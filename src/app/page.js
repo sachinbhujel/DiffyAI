@@ -129,9 +129,9 @@ export default function Home() {
                     page, and then select your default AI models.
                 </p>
             </div>
-            <div className="h-max sm:w-[80%] w-[100%] grid grid-flow-col grid-rows-3 gap-4">
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 py-4">
-                    <div className="flex flex-col gap-3">
+            <div className="h-max sm:w-[80%] w-[100%] grid lg:grid-cols-2 gap-4">
+                <div className="border border-primary rounded-md min-h-25 flex justify-between items-center gap-10 px-4 py-4">
+                    <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
                             {modelIcons.llama}
                             <h3 className="font-bold">Meta llama
@@ -175,8 +175,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 py-4">
-                    <div className="flex flex-col gap-3">
+                <div className="border border-primary rounded-md flex min-h-25 justify-between items-center gap-10 px-4 py-4">
+                    <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
                             {modelIcons.openai}
                             <h3 className="font-bold">OpenAI
@@ -220,8 +220,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 py-4">
-                    <div className="flex flex-col gap-3">
+                <div className="border border-primary rounded-md flex min-h-25 justify-between items-center gap-10 px-4 py-4">
+                    <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
                             {modelIcons.claude}
 
@@ -267,8 +267,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex flex-col gap-3">
+                <div className="border border-primary rounded-md flex min-h-25 justify-between items-center gap-10 px-4 p-2">
+                    <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
                             {modelIcons.deepseek}
                             <h3 className="font-bold">Deepseek
@@ -313,8 +313,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex flex-col gap-3">
+                <div className="border border-primary rounded-md min-h-25 flex justify-between items-center gap-10 px-4 p-2">
+                    <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
                             {modelIcons.gemini}
                             <h3 className="font-bold">Gemini
@@ -359,8 +359,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="border border-primary rounded-md flex justify-between items-center gap-10 px-4 p-2">
-                    <div className="flex flex-col gap-3">
+                <div className="border border-primary rounded-md flex justify-between min-h-25 items-center gap-10 px-4 p-2">
+                    <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
                             {modelIcons.openai}
                             <h3 className="font-bold">GPT OSS
