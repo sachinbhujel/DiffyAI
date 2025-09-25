@@ -6,11 +6,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import ModelPanel from "../components/ModelPanel";
-import { set, get } from "idb-keyval";
-import { redirect, usePathname } from "next/navigation";
+import { set } from "idb-keyval";
+import { redirect } from "next/navigation";
 
 function ModelContainer() {
-    const pathname = usePathname();
     const [prompt, setPrompt] = useState("");
     const [disabledButton, setDisabledButton] = useState(false);
     const [isChatSavedNum, setIsChatSavedNum] = useState(0);

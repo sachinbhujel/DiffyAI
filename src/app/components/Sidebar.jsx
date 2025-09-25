@@ -38,8 +38,6 @@ function Sidebar({ isVisible, setIsVisible }) {
         }
     }, []);
 
-    const handleChatNumber = () => {};
-
     return (
         <div
             className={`rounded-md border-primary border-2 bg-background z-10 flex flex-col p-2 ${
