@@ -3,13 +3,20 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { set, get } from "idb-keyval";
+import { keys } from "idb-keyval";
 
 function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
     const [noOfChats, setNoOfChats] = useState([]);
     const [isDark, setIsDark] = useState(false);
     const pathname = usePathname();
+    console.log(pathname);
+
+    useEffect(() => {
+        keys().then((keys) => {
+            setNoOfChats(keys);
+        });
+    }, []);
 
     const handleTheme = (checked) => {
         setIsDark(checked);
@@ -31,22 +38,7 @@ function Sidebar({ isVisible, setIsVisible }) {
         }
     }, []);
 
-    useEffect(() => {
-        get("chatsnumber").then((savedchats) => {
-            if (savedchats) {
-                setNoOfChats(savedchats);
-            }
-        });
-    }, []);
-
-    useEffect(() => {
-        set("chatsnumber", noOfChats);
-    }, [noOfChats]);
-
-    const handleChatNumber = () => {
-        const nextChatNumber = noOfChats.length + 1;
-        setNoOfChats([...noOfChats, `chat ${nextChatNumber}`]);
-    };
+    const handleChatNumber = () => {};
 
     return (
         <div
@@ -173,7 +165,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                 </Link>
                             </li>
 
-                            <li onClick={handleChatNumber}>
+                            <li>
                                 <Link
                                     href="/chat"
                                     className={`hover:bg-primary hover:text-white border-2 border-primary rounded-sm ${
@@ -240,13 +232,12 @@ function Sidebar({ isVisible, setIsVisible }) {
                                         <div key={index}>
                                             {!sidebarWidth && (
                                                 <li className="list-none">
+                                                    {}
                                                     <a
-                                                        href={`/chat/${
-                                                            index + 1
-                                                        }`}
+                                                        href={`/chat/${chat}`}
                                                         className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
                                                             pathname ===
-                                                            `/chat/${index + 1}`
+                                                            `/chat/${chat}`
                                                                 ? "bg-primary text-white"
                                                                 : ""
                                                         } px-2 py-2 flex items-center gap-2`}

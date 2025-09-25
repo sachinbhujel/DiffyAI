@@ -2,17 +2,19 @@
 "use client";
 
 import TextareaAutosize from "react-textarea-autosize";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import ModelPanel from "../components/ModelPanel";
 import { set, get } from "idb-keyval";
-import { usePathname } from "next/navigation";
-
+import { redirect, usePathname } from "next/navigation";
 
 function ModelContainer() {
     const pathname = usePathname();
     const [prompt, setPrompt] = useState("");
+    const [disabledButton, setDisabledButton] = useState(false);
+    const [isChatSavedNum, setIsChatSavedNum] = useState(0);
+    const [activeModelNum, setActiveModelNum] = useState(0);
     const [activeModel, setActiveModel] = useState({
         openai: false,
         claude: false,
@@ -25,16 +27,10 @@ function ModelContainer() {
     const [allModelChats, setAllModelChats] = useState({
         llamaChats: [],
         openaiGptOss120bChats: [],
-    })
+    });
 
-    useEffect(() => {
-        if (pathname === "/chat") {
-            get("allmodelchats").then((chats) => {
-                llamaChat.setMessages(chats.llamaChats);
-                openaiGptOss120bChat.setMessages(chats.openaiGptOss120bChats);
-            })
-        }
-    }, [pathname])
+    const uniqueId = useRef(crypto.randomUUID());
+    console.log(uniqueId);
 
     useEffect(() => {
         setActiveModel({
@@ -77,7 +73,6 @@ function ModelContainer() {
         }),
     });
 
-
     const llamaChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/llama",
@@ -85,8 +80,10 @@ function ModelContainer() {
                 "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum(prev => prev + 1);
+        }
     });
-
 
     const openaiChat = useChat({
         transport: new DefaultChatTransport({
@@ -104,6 +101,10 @@ function ModelContainer() {
                 "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum(prev => prev + 1);
+            console.log("hi");
+        }
     });
 
     const handleSubmit = (e) => {
@@ -115,11 +116,13 @@ function ModelContainer() {
             if (activeModel.gemini) geminiChat.sendMessage({ text: prompt });
             if (activeModel.llama) {
                 llamaChat.sendMessage({ text: prompt });
+                setActiveModelNum(prev => prev + 1)
             }
             if (activeModel.deepseek)
                 deepseekChat.sendMessage({ text: prompt });
             if (activeModel.openaiGptOss120b) {
                 openaiGptOss120bChat.sendMessage({ text: prompt });
+                setActiveModelNum(prev => prev + 1)
             }
         } else {
             alert("Write something!!");
@@ -127,24 +130,16 @@ function ModelContainer() {
         setPrompt("");
     };
 
+    console.log(activeModelNum);
+    if (isChatSavedNum === activeModelNum && activeModelNum > 0) {
+        set(uniqueId.current, {
+            ...allModelChats,
+            llamaChats: llamaChat.messages,
+            openaiGptOss120bChats: openaiGptOss120bChat.messages,
+        });
+        redirect(`/chat/${uniqueId.current}`);
+    }
 
-
-
-
-
-    useEffect(() => {
-        if (llamaChat.messages.length > 0) {
-            set("allmodelchats", {
-                ...allModelChats,
-                llamaChats: llamaChat.messages,
-                openaiGptOss120bChats: openaiGptOss120bChat.messages,
-            });
-        }
-    }, [allModelChats, llamaChat.messages, openaiGptOss120bChat.messages]);
-
-
-
-    const [disabledButton, setDisabledButton] = useState(false);
     useEffect(() => {
         if (
             llamaChat.status.includes("streaming") ||

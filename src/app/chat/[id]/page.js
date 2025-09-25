@@ -12,8 +12,14 @@ import { useParams } from "next/navigation";
 
 
 function ModelContainer() {
-    const { id } = useParams();
     const pathname = usePathname();
+    const params = useParams();
+    console.log(params);
+
+    const [allModelChats, setAllModelChats] = useState({
+        llamaChats: [],
+        openaiGptOss120bChats: [],
+    })
 
     const [prompt, setPrompt] = useState("");
     const [activeModel, setActiveModel] = useState({
@@ -25,17 +31,13 @@ function ModelContainer() {
         openaiGptOss120b: false,
     });
 
-    const [allModelChats, setAllModelChats] = useState({
-        llamaChats: [],
-        openaiGptOss120bChats: [],
-    })
-
     useEffect(() => {
-        if (pathname === `/chat/${id}`) {
-            get(`allChats${id}`).then((chats) => {
+        if (pathname === `/chat/${params.id}`) {
+            get(params.id).then((chats) => {
                 llamaChat.setMessages(chats.llamaChats);
                 openaiGptOss120bChat.setMessages(chats.openaiGptOss120bChats);
             })
+            console.log("it works")
         }
     }, [pathname])
 
@@ -130,15 +132,20 @@ function ModelContainer() {
         setPrompt("");
     };
 
+
+
     useEffect(() => {
         if (llamaChat.messages.length > 0) {
-            set(`allChats${id}`, {
+            set(`${params.id}`, {
                 ...allModelChats,
                 llamaChats: llamaChat.messages,
                 openaiGptOss120bChats: openaiGptOss120bChat.messages,
             });
         }
     }, [allModelChats, llamaChat.messages, openaiGptOss120bChat.messages]);
+
+
+
 
     const [disabledButton, setDisabledButton] = useState(false);
     useEffect(() => {
