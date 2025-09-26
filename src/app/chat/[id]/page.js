@@ -27,6 +27,7 @@ function ModelContainer() {
 
     // A state to check how many LLM models are active
     const [activeModelNum, setActiveModelNum] = useState(0);
+    const [disabledButton, setDisabledButton] = useState(false);
     const pathname = usePathname();
     const params = useParams();
 
@@ -56,7 +57,7 @@ function ModelContainer() {
         openaiGptOss120b: false,
     });
 
-    // Get the chat history data from indexedDB and set it to the allModelChats
+    // Created a useEffect to get the chat history data from indexedDB and set it to the allModelChats
     useEffect(() => {
         if (pathname === `/chat/${params.id}`) {
             get(params.id).then((modelchats) => {
@@ -73,6 +74,7 @@ function ModelContainer() {
         }
     }, [pathname])
 
+    // Check if localstorage has a key or not and, then update the activeModel state 
     useEffect(() => {
         setActiveModel({
             llama: localStorage.getItem("llama") === "true" || false,
@@ -87,6 +89,7 @@ function ModelContainer() {
         });
     }, []);
 
+    // src/app/api/claude/route.js
     const claudeChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/claude",
@@ -94,11 +97,14 @@ function ModelContainer() {
                 "X-OPENROUTER-API-KEY": localStorage.getItem("openrouterkey"),
             }),
         }),
+
+        // This function runs when the response is generated via the LLM model
         onFinish: () => {
-            setIsChatSavedNum((prev) => prev + 1);
+            setIsChatSavedNum((prev) => prev + 1); // After receiving the message, increase the number by 1 value
         },
     });
 
+    // src/app/api/deepseek/route.js
     const deepseekChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/deepseek",
@@ -111,6 +117,7 @@ function ModelContainer() {
         },
     });
 
+    // src/app/api/gemini/route.js
     const geminiChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/gemini",
@@ -123,7 +130,7 @@ function ModelContainer() {
         },
     });
 
-
+    // src/app/api/llama/route.js
     const llamaChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/llama",
@@ -136,6 +143,7 @@ function ModelContainer() {
         },
     });
 
+    // src/app/api/openai/route.js
     const openaiChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/openai",
@@ -148,6 +156,7 @@ function ModelContainer() {
         },
     });
 
+    // src/app/api/openai-gpt-oss-120b/route.js
     const openaiGptOss120bChat = useChat({
         transport: new DefaultChatTransport({
             api: "/api/openai-gpt-oss-120b",
@@ -160,35 +169,47 @@ function ModelContainer() {
         },
     });
 
+    // This runs only when clicking the enter button or clicking the button
     const handleSubmit = (e) => {
+        // prevents the page from reloading
         e.preventDefault();
+
+        // Check button is disabled or not
         if (disabledButton) return;
+
+        // Check if the user typed something
         if (prompt.trim()) {
+            // Only runs when openai model is open
             if (activeModel.openai) {
-                openaiChat.sendMessage({ text: prompt });
-                setActiveModelNum((prev) => prev + 1);
+                openaiChat.sendMessage({ text: prompt }); // Send message to the Api router
+                setActiveModelNum((prev) => prev + 1); // After sending the message, increase the number by 1 value
             };
 
+            // Only runs when claude model is open
             if (activeModel.claude) {
                 claudeChat.sendMessage({ text: prompt });
                 setActiveModelNum((prev) => prev + 1);
             };
 
+            // Only runs when gemini model is open
             if (activeModel.gemini) {
                 geminiChat.sendMessage({ text: prompt });
                 setActiveModelNum((prev) => prev + 1);
             };
 
+            // Only runs when llama model is open
             if (activeModel.llama) {
                 llamaChat.sendMessage({ text: prompt });
                 setActiveModelNum((prev) => prev + 1);
             };
 
+            // Only runs when deepseek model is open
             if (activeModel.deepseek) {
                 deepseekChat.sendMessage({ text: prompt });
                 setActiveModelNum((prev) => prev + 1);
             };
 
+            // Only runs when openaiGptOss120b model is open
             if (activeModel.openaiGptOss120b) {
                 openaiGptOss120bChat.sendMessage({ text: prompt });
                 setActiveModelNum((prev) => prev + 1);
@@ -196,13 +217,18 @@ function ModelContainer() {
         } else {
             alert("Write something!!");
         }
+
+        // Reset the prompt state
         setPrompt("");
     };
 
 
+    // Only runs when the chat saved number is equal to the active model number and the active model number is greater than zero
     if (isChatSavedNum === activeModelNum && activeModelNum > 0) {
+
+        // Set new data in the indexedDB with previous data
         set(`${params.id}`, {
-            ...allModelChats,
+            ...allModelChats, // All previous data
             chats: {
                 ...allModelChats.chats,
                 llamaChats: llamaChat.messages,
@@ -215,7 +241,7 @@ function ModelContainer() {
         });
     }
 
-    const [disabledButton, setDisabledButton] = useState(false);
+    // Created a useEffect for checking the status of LLM models
     useEffect(() => {
         if (
             llamaChat.status.includes("streaming") ||
@@ -238,6 +264,7 @@ function ModelContainer() {
         openaiChat.status,
     ]);
 
+    // Icons for each LLM model are stored here
     const modelIcons = {
         openai: (
             <svg
@@ -314,6 +341,7 @@ function ModelContainer() {
         ),
     };
 
+    // State that tells which LLM model should be expanded 
     const [modelExpand, setModelExpand] = useState({
         openai: false,
         claude: false,
@@ -323,33 +351,10 @@ function ModelContainer() {
         openaiGptOss120b: false,
     });
 
-    const [models, setModels] = useState({
-        openai: false,
-        claude: false,
-        gemini: false,
-        llama: false,
-        deepseek: false,
-        openaiGptOss120b: false,
-    });
-
-    useEffect(() => {
-        setModels({
-            llama: localStorage.getItem("llama") === "true" || false,
-            openai: localStorage.getItem("openai") === "true" || false,
-
-            deepseek: localStorage.getItem("deepseek") === "true" || false,
-            openaiGptOss120b:
-                localStorage.getItem("openaiGptOss120b") === "true" || false,
-
-            claude: localStorage.getItem("claude") === "true" || false,
-            gemini: localStorage.getItem("gemini") === "true" || false,
-        });
-    }, []);
-
     return (
         <div className="relative pt-10 rounded-md gap-4 p-2 flex flex-col border-2 border-primary h-full w-full">
             <div className="flex gap-3 overflow-auto all-model-scrollbar w-full">
-                {models.llama && (
+                {activeModel.llama && (
                     <ModelPanel
                         messages={llamaChat.messages}
                         model="llama"
@@ -379,7 +384,7 @@ function ModelContainer() {
                     />
                 )}
 
-                {models.openaiGptOss120b && (
+                {activeModel.openaiGptOss120b && (
                     <ModelPanel
                         messages={openaiGptOss120bChat.messages}
                         model="GPT OSS"
@@ -409,7 +414,7 @@ function ModelContainer() {
                     />
                 )}
 
-                {models.deepseek && (
+                {activeModel.deepseek && (
                     <ModelPanel
                         messages={deepseekChat.messages}
                         model="deepseek"
@@ -439,7 +444,7 @@ function ModelContainer() {
                     />
                 )}
 
-                {models.openai && (
+                {activeModel.openai && (
                     <ModelPanel
                         messages={openaiChat.messages}
                         model="Openai"
@@ -469,7 +474,7 @@ function ModelContainer() {
                     />
                 )}
 
-                {models.claude && (
+                {activeModel.claude && (
                     <ModelPanel
                         messages={claudeChat.messages}
                         model="Claude"
@@ -499,7 +504,7 @@ function ModelContainer() {
                     />
                 )}
 
-                {models.gemini && (
+                {activeModel.gemini && (
                     <ModelPanel
                         messages={geminiChat.messages}
                         model="Gemini"
