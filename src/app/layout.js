@@ -14,20 +14,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-    title: "DiffyAI | ",
+    title: "DiffyAI | Minimal & Lightweight AI Chat App",
     icons: {
         icon: [{ url: "/favicon.ico" }],
     },
-    description: "",
+    description: "Minimal AI chat app built with Next.js and TailwindCSS",
 };
 
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <head>
-                <meta property="og:title" content="" />
-                <meta property="og:description" content="" />
-                <meta property="og:image" content="" />
+                <meta property="og:title" content="DiffyAI | Minimal & Lightweight AI Chat App" />
+                <meta property="og:description" content="Minimal AI chat app built with Next.js and TailwindCSS" />
+                <meta property="og:image" content="/diffy-ai-img-1.png" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link
                     rel="preconnect"

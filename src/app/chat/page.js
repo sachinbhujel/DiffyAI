@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 "use client";
 
 import TextareaAutosize from "react-textarea-autosize";
@@ -8,12 +8,18 @@ import { DefaultChatTransport } from "ai";
 import ModelPanel from "../components/ModelPanel";
 import { set } from "idb-keyval";
 import { redirect } from "next/navigation";
+import { generateText } from "ai";
+import { createGroq } from "@ai-sdk/groq";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { createOpenAI } from "@ai-sdk/openai";
 
 function ModelContainer() {
     const [prompt, setPrompt] = useState("");
     const [disabledButton, setDisabledButton] = useState(false);
     const [isChatSavedNum, setIsChatSavedNum] = useState(0);
     const [activeModelNum, setActiveModelNum] = useState(0);
+    const [chatTitle, setChatTitle] = useState("");
     const [activeModel, setActiveModel] = useState({
         openai: false,
         claude: false,
@@ -23,13 +29,7 @@ function ModelContainer() {
         openaiGptOss120b: false,
     });
 
-    const [allModelChats, setAllModelChats] = useState({
-        llamaChats: [],
-        openaiGptOss120bChats: [],
-    });
-
     const uniqueId = useRef(crypto.randomUUID());
-    console.log(uniqueId);
 
     useEffect(() => {
         setActiveModel({
@@ -52,6 +52,9 @@ function ModelContainer() {
                 "X-OPENROUTER-API-KEY": localStorage.getItem("openrouterkey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const deepseekChat = useChat({
@@ -61,6 +64,9 @@ function ModelContainer() {
                 "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const geminiChat = useChat({
@@ -70,6 +76,9 @@ function ModelContainer() {
                 "X-GEMINI-API-KEY": localStorage.getItem("geminikey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const llamaChat = useChat({
@@ -80,8 +89,8 @@ function ModelContainer() {
             }),
         }),
         onFinish: () => {
-            setIsChatSavedNum(prev => prev + 1);
-        }
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const openaiChat = useChat({
@@ -91,6 +100,9 @@ function ModelContainer() {
                 "X-OPENAI-API-KEY": localStorage.getItem("openaikey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const openaiGptOss120bChat = useChat({
@@ -101,43 +113,111 @@ function ModelContainer() {
             }),
         }),
         onFinish: () => {
-            setIsChatSavedNum(prev => prev + 1);
-            console.log("hi");
-        }
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
+
+    const groqApiKey = localStorage.getItem("groqkey") || false;
+    const groq = createGroq({
+        apiKey: groqApiKey,
+    });
+
+    const googleApiKey = localStorage.getItem("geminikey") || false;
+    const google = createGoogleGenerativeAI({
+        apiKey: googleApiKey,
+    });
+
+    const openrouterApiKey = localStorage.getItem("openrouterkey") || false;
+    const openrouter = createOpenRouter({
+        apiKey: openrouterApiKey,
+    });
+
+    const openaiApiKey = localStorage.getItem("openaikey") || false;
+    const openai = createOpenAI({
+        apiKey: openaiApiKey,
+    });
+
+
+    const handleTextGenerate = async () => {
+        if (
+            activeModel.llama ||
+            activeModel.openaiGptOss120b ||
+            activeModel.gemini
+        ) {
+            let keyModel = groq ? groq("llama-3.1-8b-instant") : google ? google("gemini-2.0-flash") : openai ? openai("gpt-5-nano") : openrouter ? openrouter.chat("anthropic/claude-3.7-sonnet") : "";
+            try {
+                const { text } = await generateText({
+                    model: keyModel,
+                    prompt: `You are an assistant that creates short, descriptive titles for chat conversations. Summarize the following conversation into a title of no more than 3 words.
+      Conversation: ${prompt}`,
+                });
+
+                let cleanText = text.replace(/^"|"$/g, "").trim();
+
+                setChatTitle(cleanText);
+            } catch (error) {
+                console.log("Error while generating title", error);
+            }
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        handleTextGenerate();
         if (disabledButton) return;
         if (prompt.trim()) {
-            if (activeModel.openai) openaiChat.sendMessage({ text: prompt });
-            if (activeModel.claude) claudeChat.sendMessage({ text: prompt });
-            if (activeModel.gemini) geminiChat.sendMessage({ text: prompt });
+            if (activeModel.openai) {
+                openaiChat.sendMessage({ text: prompt });
+                setActiveModelNum((prev) => prev + 1);
+            };
+
+            if (activeModel.claude) {
+                claudeChat.sendMessage({ text: prompt });
+                setActiveModelNum((prev) => prev + 1);
+            };
+
+            if (activeModel.gemini) {
+                geminiChat.sendMessage({ text: prompt });
+                setActiveModelNum((prev) => prev + 1);
+            };
+
             if (activeModel.llama) {
                 llamaChat.sendMessage({ text: prompt });
-                setActiveModelNum(prev => prev + 1)
-            }
-            if (activeModel.deepseek)
+                setActiveModelNum((prev) => prev + 1);
+            };
+
+            if (activeModel.deepseek) {
                 deepseekChat.sendMessage({ text: prompt });
+                setActiveModelNum((prev) => prev + 1);
+            };
+
             if (activeModel.openaiGptOss120b) {
                 openaiGptOss120bChat.sendMessage({ text: prompt });
-                setActiveModelNum(prev => prev + 1)
-            }
+                setActiveModelNum((prev) => prev + 1);
+            };
         } else {
             alert("Write something!!");
         }
         setPrompt("");
     };
 
-    console.log(activeModelNum);
-    if (isChatSavedNum === activeModelNum && activeModelNum > 0) {
-        set(uniqueId.current, {
-            ...allModelChats,
-            llamaChats: llamaChat.messages,
-            openaiGptOss120bChats: openaiGptOss120bChat.messages,
-        });
-        redirect(`/chat/${uniqueId.current}`);
-    }
+    useEffect(() => {
+        if (isChatSavedNum === activeModelNum && activeModelNum > 0) {
+            set(uniqueId.current, {
+                title: chatTitle,
+                chats: {
+                    llamaChats: llamaChat.messages,
+                    openaiGptOss120bChats: openaiGptOss120bChat.messages,
+                    geminiChats: geminiChat.messages,
+                    claudeChats: claudeChat.messages,
+                    deepseekChats: deepseekChat.messages,
+                    openaiChats: openaiChat.messages,
+                },
+            });
+
+            redirect(`/chat/${uniqueId.current}`);
+        }
+    });
 
     useEffect(() => {
         if (

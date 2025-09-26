@@ -12,13 +12,20 @@ import { useParams } from "next/navigation";
 
 
 function ModelContainer() {
+    const [isChatSavedNum, setIsChatSavedNum] = useState(0);
+    const [activeModelNum, setActiveModelNum] = useState(0);
     const pathname = usePathname();
     const params = useParams();
-    console.log(params);
-
     const [allModelChats, setAllModelChats] = useState({
-        llamaChats: [],
-        openaiGptOss120bChats: [],
+        title: "New chat",
+        chats: {
+            llamaChats: [],
+            openaiGptOss120bChats: [],
+            geminiChats: [],
+            claudeChats: [],
+            deepseekChats: [],
+            openaiChats: [],
+        }
     })
 
     const [prompt, setPrompt] = useState("");
@@ -33,13 +40,22 @@ function ModelContainer() {
 
     useEffect(() => {
         if (pathname === `/chat/${params.id}`) {
-            get(params.id).then((chats) => {
-                llamaChat.setMessages(chats.llamaChats);
-                openaiGptOss120bChat.setMessages(chats.openaiGptOss120bChats);
+            get(params.id).then((modelchats) => {
+                if (modelchats) {
+                    console.log("models chats", modelchats);
+                    setAllModelChats(modelchats);
+                    llamaChat.setMessages(modelchats.chats.llamaChats);
+                    openaiGptOss120bChat.setMessages(modelchats.chats.openaiGptOss120bChats);
+                    geminiChat.setMessages(modelchats.chats.geminiChats);
+                    claudeChat.setMessages(modelchats.chats.claudeChats);
+                    deepseekChat.setMessages(modelchats.chats.deepseekChats);
+                    openaiChat.setMessages(modelchats.chats.openaiChats);
+                }
             })
-            console.log("it works")
         }
     }, [pathname])
+
+    console.log("all model chats", allModelChats);
 
     useEffect(() => {
         setActiveModel({
@@ -62,6 +78,9 @@ function ModelContainer() {
                 "X-OPENROUTER-API-KEY": localStorage.getItem("openrouterkey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const deepseekChat = useChat({
@@ -71,6 +90,9 @@ function ModelContainer() {
                 "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const geminiChat = useChat({
@@ -80,6 +102,9 @@ function ModelContainer() {
                 "X-GEMINI-API-KEY": localStorage.getItem("geminikey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
 
@@ -90,8 +115,10 @@ function ModelContainer() {
                 "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
-
 
     const openaiChat = useChat({
         transport: new DefaultChatTransport({
@@ -100,6 +127,9 @@ function ModelContainer() {
                 "X-OPENAI-API-KEY": localStorage.getItem("openaikey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const openaiGptOss120bChat = useChat({
@@ -109,23 +139,44 @@ function ModelContainer() {
                 "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
             }),
         }),
+        onFinish: () => {
+            setIsChatSavedNum((prev) => prev + 1);
+        },
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (disabledButton) return;
         if (prompt.trim()) {
-            if (activeModel.openai) openaiChat.sendMessage({ text: prompt });
-            if (activeModel.claude) claudeChat.sendMessage({ text: prompt });
-            if (activeModel.gemini) geminiChat.sendMessage({ text: prompt });
+            if (activeModel.openai) {
+                openaiChat.sendMessage({ text: prompt });
+                setActiveModelNum((prev) => prev + 1);
+            };
+
+            if (activeModel.claude) {
+                claudeChat.sendMessage({ text: prompt });
+                setActiveModelNum((prev) => prev + 1);
+            };
+
+            if (activeModel.gemini) {
+                geminiChat.sendMessage({ text: prompt });
+                setActiveModelNum((prev) => prev + 1);
+            };
+
             if (activeModel.llama) {
                 llamaChat.sendMessage({ text: prompt });
-            }
-            if (activeModel.deepseek)
+                setActiveModelNum((prev) => prev + 1);
+            };
+
+            if (activeModel.deepseek) {
                 deepseekChat.sendMessage({ text: prompt });
+                setActiveModelNum((prev) => prev + 1);
+            };
+
             if (activeModel.openaiGptOss120b) {
                 openaiGptOss120bChat.sendMessage({ text: prompt });
-            }
+                setActiveModelNum((prev) => prev + 1);
+            };
         } else {
             alert("Write something!!");
         }
@@ -133,19 +184,20 @@ function ModelContainer() {
     };
 
 
-
-    useEffect(() => {
-        if (llamaChat.messages.length > 0) {
-            set(`${params.id}`, {
-                ...allModelChats,
+    if (isChatSavedNum === activeModelNum && activeModelNum > 0) {
+        set(`${params.id}`, {
+            ...allModelChats,
+            chats: {
+                ...allModelChats.chats,
                 llamaChats: llamaChat.messages,
                 openaiGptOss120bChats: openaiGptOss120bChat.messages,
-            });
-        }
-    }, [allModelChats, llamaChat.messages, openaiGptOss120bChat.messages]);
-
-
-
+                geminiChats: geminiChat.messages,
+                claudeChats: claudeChat.messages,
+                deepseekChats: deepseekChat.messages,
+                openaiChats: openaiChat.messages,
+            }
+        });
+    }
 
     const [disabledButton, setDisabledButton] = useState(false);
     useEffect(() => {

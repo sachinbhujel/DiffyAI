@@ -3,20 +3,28 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { keys } from "idb-keyval";
+import { keys, values } from "idb-keyval";
 
 function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
     const [noOfChats, setNoOfChats] = useState([]);
+    const [id, setId] = useState([]);
     const [isDark, setIsDark] = useState(false);
     const pathname = usePathname();
-    console.log(pathname);
 
     useEffect(() => {
+        values().then((values) => {
+            for (let i = 0; i < values.length; i++) {
+                setNoOfChats((prev) => [...prev, values[i].title]);
+            }
+        });
+
         keys().then((keys) => {
-            setNoOfChats(keys);
+            setId(keys);
         });
     }, []);
+
+    console.log("noOfChats", noOfChats);
 
     const handleTheme = (checked) => {
         setIsDark(checked);
@@ -224,6 +232,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                     </svg>
                                 </div>
                             )}
+
                             {noOfChats.length > 0 ? (
                                 <div className="h-45 overflow-auto all-model-scrollbar flex flex-col gap-2">
                                     {noOfChats.map((chat, index) => (
@@ -232,10 +241,10 @@ function Sidebar({ isVisible, setIsVisible }) {
                                                 <li className="list-none">
                                                     {}
                                                     <a
-                                                        href={`/chat/${chat}`}
+                                                        href={`/chat/${id[index]}`}
                                                         className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
                                                             pathname ===
-                                                            `/chat/${chat}`
+                                                            `/chat/${id[index]}`
                                                                 ? "bg-primary text-white"
                                                                 : ""
                                                         } px-2 py-2 flex items-center gap-2`}
@@ -257,7 +266,11 @@ function Sidebar({ isVisible, setIsVisible }) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <div className="w-max flex">
+                    <div
+                        className={`w-max flex ${
+                            sidebarWidth ? "m-auto" : "m-left"
+                        }`}
+                    >
                         <label
                             htmlFor="hs-xs-toggle"
                             className="relative inline-block w-9 h-5 cursor-pointer"
