@@ -3,38 +3,50 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+// Get all keys in the store | Get all values in the store
 import { keys, values } from "idb-keyval";
 
 function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
     const [noOfChats, setNoOfChats] = useState([]);
+
+    // Add state for storing IndexedDB keys
     const [id, setId] = useState([]);
+
+    // Add state for theme toggle
     const [isDark, setIsDark] = useState(false);
     const pathname = usePathname();
 
     useEffect(() => {
+        // Fetch all values from IndexedDB and update noOfChats state
         values().then((values) => {
             for (let i = 0; i < values.length; i++) {
                 setNoOfChats((prev) => [...prev, values[i].title]);
             }
         });
 
+        // Fetch all keys from IndexedDB and store in state
         keys().then((keys) => {
             setId(keys);
         });
     }, []);
 
+    // Implement theme toggle handler
     const handleTheme = (checked) => {
         setIsDark(checked);
         const newTheme = checked ? "dark" : "light";
-        const oldTheme = checked ? "light" : "dark";
+        if (newTheme === "dark") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
 
-        document.documentElement.classList.remove(oldTheme);
-        document.documentElement.classList.add(newTheme);
-
+        // Save theme preference in localstorage
         localStorage.setItem("theme", newTheme);
     };
 
+    // Get theme preference in localstorage
     useEffect(() => {
         const savedTheme = localStorage.getItem("theme");
         if (savedTheme) {
@@ -46,23 +58,19 @@ function Sidebar({ isVisible, setIsVisible }) {
 
     return (
         <div
-            className={`rounded-md border-primary border-2 bg-background z-10 flex flex-col p-2 ${
-                isVisible ? "fixed sm:static h-[calc(100vh-16px)]" : ""
-            } border ${
-                sidebarWidth ? "w-max" : "w-[250px]"
-            } overflow-y-auto custom-scrollbar`}
+            className={`rounded-md border-primary border-2 bg-background z-10 flex flex-col p-2 ${isVisible ? "fixed sm:static h-[calc(100vh-16px)]" : ""
+                } border ${sidebarWidth ? "w-max" : "w-[250px]"
+                } overflow-y-auto custom-scrollbar`}
         >
             <div className="flex flex-col gap-10 justify-between h-full">
                 <div>
                     <div
-                        className={`items-center gap-20 justify-between ${
-                            sidebarWidth ? "flex-col" : "flex"
-                        }`}
+                        className={`items-center gap-20 justify-between ${sidebarWidth ? "flex-col" : "flex"
+                            }`}
                     >
                         <div
-                            className={`flex items-center gap-1.5 ${
-                                sidebarWidth ? "justify-center" : ""
-                            }`}
+                            className={`flex items-center gap-1.5 ${sidebarWidth ? "justify-center" : ""
+                                }`}
                         >
                             <Link href="/">
                                 <img
@@ -77,9 +85,8 @@ function Sidebar({ isVisible, setIsVisible }) {
                             )}
                         </div>
                         <div
-                            className={`text-text rounded-sm cursor-pointer flex justify-center text-center hidden sm:flex ${
-                                sidebarWidth ? "mt-4" : ""
-                            }`}
+                            className={`text-text rounded-sm cursor-pointer flex justify-center text-center hidden sm:flex ${sidebarWidth ? "mt-4" : ""
+                                }`}
                             onClick={() => setSidebarWidth(!sidebarWidth)}
                         >
                             <svg
@@ -106,9 +113,8 @@ function Sidebar({ isVisible, setIsVisible }) {
                             </svg>
                         </div>
                         <div
-                            className={`text-primary cursor-pointer p-2 flex justify-center block sm:hidden ${
-                                sidebarWidth ? "mt-5" : ""
-                            }`}
+                            className={`text-primary cursor-pointer p-2 flex justify-center block sm:hidden ${sidebarWidth ? "mt-5" : ""
+                                }`}
                             onClick={() => setIsVisible(false)}
                         >
                             <svg
@@ -137,18 +143,16 @@ function Sidebar({ isVisible, setIsVisible }) {
                     </div>
                     <div className="flex flex-col gap-10">
                         <ul
-                            className={`mt-6 space-y-1 ${
-                                sidebarWidth ? "flex flex-col items-center" : ""
-                            }`}
+                            className={`mt-6 space-y-1 ${sidebarWidth ? "flex flex-col items-center" : ""
+                                }`}
                         >
                             <li>
                                 <Link
                                     href="/"
-                                    className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
-                                        pathname === "/"
-                                            ? "bg-primary text-white"
-                                            : ""
-                                    } px-2 py-2 flex items-center gap-2`}
+                                    className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${pathname === "/"
+                                        ? "bg-primary text-white"
+                                        : ""
+                                        } px-2 py-2 flex items-center gap-2`}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -172,11 +176,10 @@ function Sidebar({ isVisible, setIsVisible }) {
                             <li>
                                 <Link
                                     href="/chat"
-                                    className={`hover:bg-primary hover:text-white border-2 border-primary rounded-sm ${
-                                        pathname === "/chat"
-                                            ? "bg-primary text-white"
-                                            : ""
-                                    } block px-2 py-2 flex items-center gap-2`}
+                                    className={`hover:bg-primary hover:text-white border-2 border-primary rounded-sm ${pathname === "/chat"
+                                        ? "bg-primary text-white"
+                                        : ""
+                                        } block px-2 py-2 flex items-center gap-2`}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -199,9 +202,8 @@ function Sidebar({ isVisible, setIsVisible }) {
                             </li>
                         </ul>
                         <div
-                            className={`flex flex-col gap-2 ${
-                                sidebarWidth ? "flex flex-col items-center" : ""
-                            }`}
+                            className={`flex flex-col gap-2 ${sidebarWidth ? "flex flex-col items-center" : ""
+                                }`}
                         >
                             <h3 className="text-base font-semibold">Chats</h3>
                             {sidebarWidth && (
@@ -209,7 +211,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                     onClick={
                                         sidebarWidth
                                             ? () =>
-                                                  setSidebarWidth(!sidebarWidth)
+                                                setSidebarWidth(!sidebarWidth)
                                             : undefined
                                     }
                                     className="border-2 border-primary block rounded-sm hover:bg-primary hover:text-white px-2 py-2"
@@ -237,15 +239,14 @@ function Sidebar({ isVisible, setIsVisible }) {
                                         <div key={index}>
                                             {!sidebarWidth && (
                                                 <li className="list-none">
-                                                    {}
+                                                    { }
                                                     <a
                                                         href={`/chat/${id[index]}`}
-                                                        className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${
-                                                            pathname ===
+                                                        className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${pathname ===
                                                             `/chat/${id[index]}`
-                                                                ? "bg-primary text-white"
-                                                                : ""
-                                                        } px-2 py-2 flex items-center gap-2`}
+                                                            ? "bg-primary text-white"
+                                                            : ""
+                                                            } px-2 py-2 flex items-center gap-2`}
                                                     >
                                                         {chat}
                                                     </a>
@@ -265,9 +266,8 @@ function Sidebar({ isVisible, setIsVisible }) {
 
                 <div className="flex flex-col gap-2">
                     <div
-                        className={`w-max flex ${
-                            sidebarWidth ? "m-auto" : "m-left"
-                        }`}
+                        className={`w-max flex ${sidebarWidth ? "m-auto" : "m-left"
+                            }`}
                     >
                         <label
                             htmlFor="hs-xs-toggle"
@@ -286,17 +286,15 @@ function Sidebar({ isVisible, setIsVisible }) {
                     </div>
                     <ul>
                         <li
-                            className={` ${
-                                sidebarWidth ? "flex flex-col items-center" : ""
-                            }`}
+                            className={` ${sidebarWidth ? "flex flex-col items-center" : ""
+                                }`}
                         >
                             <Link
                                 href="/configure"
-                                className={`hover:bg-primary hover:text-background border-2 border-primary ${
-                                    pathname === "/configure"
-                                        ? "bg-primary text-white"
-                                        : ""
-                                } rounded-sm block px-2 py-2 flex items-center gap-2`}
+                                className={`hover:bg-primary hover:text-background border-2 border-primary ${pathname === "/configure"
+                                    ? "bg-primary text-white"
+                                    : ""
+                                    } rounded-sm block px-2 py-2 flex items-center gap-2`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

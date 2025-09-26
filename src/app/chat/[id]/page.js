@@ -1,21 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
+// TextareaAutosize for auto-resizing textarea
 import TextareaAutosize from "react-textarea-autosize";
 import React, { useEffect, useState } from "react";
+
+// Allows you to easily create a conversational user interface
 import { useChat } from "@ai-sdk/react";
+
+// DefaultChatTransport for sending chat messages to API's
 import { DefaultChatTransport } from "ai";
 import ModelPanel from "@/app/components/ModelPanel";
+
+// Set for saving the data in indexedDB | Get for taking the data from indexedDB
 import { set, get } from "idb-keyval";
 import { usePathname } from "next/navigation";
+
+// useParams for handling URL IDs
 import { useParams } from "next/navigation";
 
 
+
 function ModelContainer() {
+    // A state to track how many chat messages have been received
     const [isChatSavedNum, setIsChatSavedNum] = useState(0);
+
+    // A state to check how many LLM models are active
     const [activeModelNum, setActiveModelNum] = useState(0);
     const pathname = usePathname();
     const params = useParams();
+
+    // Created a state for handle all model chats data
     const [allModelChats, setAllModelChats] = useState({
         title: "New chat",
         chats: {
@@ -28,7 +43,10 @@ function ModelContainer() {
         }
     })
 
+    // State for handle user inputs
     const [prompt, setPrompt] = useState("");
+
+    // Create a state that shows how many LLM models are active
     const [activeModel, setActiveModel] = useState({
         openai: false,
         claude: false,
@@ -38,6 +56,7 @@ function ModelContainer() {
         openaiGptOss120b: false,
     });
 
+    // Get the chat history data from indexedDB and set it to the allModelChats
     useEffect(() => {
         if (pathname === `/chat/${params.id}`) {
             get(params.id).then((modelchats) => {

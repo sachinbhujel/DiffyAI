@@ -1,4 +1,3 @@
-
 "use client";
 
 import TextareaAutosize from "react-textarea-autosize";
@@ -142,9 +141,10 @@ function ModelContainer() {
         if (
             activeModel.llama ||
             activeModel.openaiGptOss120b ||
-            activeModel.gemini
+            activeModel.gemini || activeModel.openai || activeModel.claude || activeModel.openaiGptOss120b
         ) {
-            let keyModel = groq ? groq("llama-3.1-8b-instant") : google ? google("gemini-2.0-flash") : openai ? openai("gpt-5-nano") : openrouter ? openrouter.chat("anthropic/claude-3.7-sonnet") : "";
+            let keyModel = groqApiKey ? groq("llama-3.1-8b-instant") : googleApiKey ? google("gemini-2.0-flash") : openaiKey ? openai("gpt-5-nano") : openrouterApiKey ? openrouter.chat("anthropic/claude-3.7-sonnet") : "";
+            console.log(keyModel);
             try {
                 const { text } = await generateText({
                     model: keyModel,
@@ -153,6 +153,7 @@ function ModelContainer() {
                 });
 
                 let cleanText = text.replace(/^"|"$/g, "").trim();
+                console.log(text);
 
                 setChatTitle(cleanText);
             } catch (error) {
