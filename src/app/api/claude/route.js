@@ -4,7 +4,6 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 export async function POST(request) {
     try {
         const data = await request.json();
-        console.log(request.headers);
         const apiKey = await request.headers.get("x-openrouter-api-key");
 
         if (!apiKey) {

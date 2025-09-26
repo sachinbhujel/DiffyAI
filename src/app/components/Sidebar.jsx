@@ -24,8 +24,6 @@ function Sidebar({ isVisible, setIsVisible }) {
         });
     }, []);
 
-    console.log("noOfChats", noOfChats);
-
     const handleTheme = (checked) => {
         setIsDark(checked);
         const newTheme = checked ? "dark" : "light";

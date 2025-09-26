@@ -42,7 +42,6 @@ function ModelContainer() {
         if (pathname === `/chat/${params.id}`) {
             get(params.id).then((modelchats) => {
                 if (modelchats) {
-                    console.log("models chats", modelchats);
                     setAllModelChats(modelchats);
                     llamaChat.setMessages(modelchats.chats.llamaChats);
                     openaiGptOss120bChat.setMessages(modelchats.chats.openaiGptOss120bChats);
@@ -54,8 +53,6 @@ function ModelContainer() {
             })
         }
     }, [pathname])
-
-    console.log("all model chats", allModelChats);
 
     useEffect(() => {
         setActiveModel({
