@@ -116,22 +116,35 @@ function ModelContainer() {
         },
     });
 
-    const groqApiKey = localStorage.getItem("groqkey") || false;
+    let groqApiKey = false;
+    if (typeof window !== "undefined") {
+        groqApiKey = localStorage.getItem("groqkey") || false;
+    }
     const groq = createGroq({
         apiKey: groqApiKey,
     });
 
-    const googleApiKey = localStorage.getItem("geminikey") || false;
+
+    let googleApiKey = false;
+    if (typeof window !== "undefined") {
+        localStorage.getItem("geminikey") || false;
+    }
     const google = createGoogleGenerativeAI({
         apiKey: googleApiKey,
     });
 
-    const openrouterApiKey = localStorage.getItem("openrouterkey") || false;
+    let openrouterApiKey = false;
+    if (typeof window !== "undefined") {
+        localStorage.getItem("openrouterkey") || false;
+    }
     const openrouter = createOpenRouter({
         apiKey: openrouterApiKey,
     });
 
-    const openaiApiKey = localStorage.getItem("openaikey") || false;
+    let openaiApiKey = false;
+    if (typeof window !== "undefined") {
+        localStorage.getItem("openaikey") || false;
+    }
     const openai = createOpenAI({
         apiKey: openaiApiKey,
     });
