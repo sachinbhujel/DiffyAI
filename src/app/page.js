@@ -1,10 +1,10 @@
 "use client";
 
+import { openrouter } from "@openrouter/ai-sdk-provider";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-    // Icons for each LLM model are stored here
     const modelIcons = {
         openai: (
             <svg
@@ -81,7 +81,6 @@ export default function Home() {
         ),
     };
 
-    // Create a useState for checking which LLM model is open
     const [modelOpen, setModelOpen] = useState({
         openai: false,
         claude: false,
@@ -91,7 +90,6 @@ export default function Home() {
         openaiGptOss120b: false,
     });
 
-    // Create a useState for checking which LLM model has the key
     const [apiKey, setApiKey] = useState({
         groqApiKey: false,
         openaiApiKey: false,
@@ -99,7 +97,6 @@ export default function Home() {
         openrouterApiKey: false,
     });
 
-    // Check if localstorage has the key or not, and then Update the useState 
     useEffect(() => {
         setApiKey({
             groqApiKey: localStorage.getItem("groqkey") || false,
@@ -109,7 +106,6 @@ export default function Home() {
         });
     }, []);
 
-    // Check which LLM model is open through the local storage
     useEffect(() => {
         setModelOpen({
             llama: localStorage.getItem("llama") === "true",
