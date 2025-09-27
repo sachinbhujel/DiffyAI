@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
                     rel="stylesheet"
                     href="https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap"
                 />
-                {/* <script defer src="https://cloud.umami.is/script.js" data-website-id="1ad05d53-142a-4cda-9dac-11f8aa3900aa"></script> */}
+                <script defer src="https://cloud.umami.is/script.js" data-website-id="1ad05d53-142a-4cda-9dac-11f8aa3900aa"></script>
             </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
