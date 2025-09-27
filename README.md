@@ -2,7 +2,7 @@
 
 **DiffyAI** is a minimal and lightweight AI chat app built with **Next.js** and **TailwindCSS**.
 
-It lets you easily compare responses from multiple AI models — like _OpenAI GPT_, _Claude_, _Gemini_, _LLaMA_, and more - all side by side in one place.
+It lets you easily compare responses from multiple AI models, like _OpenAI GPT_, _Claude_, _Gemini_, _LLaMA_, and more - all side by side in one place.
 
 ---
 
@@ -37,3 +37,4 @@ It lets you easily compare responses from multiple AI models — like _OpenAI GP
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to open an issue or submit a PR.
+
