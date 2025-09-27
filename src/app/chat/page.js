@@ -8,8 +8,6 @@ export const metadata = {
 };
 
 function ModelContainer() {
-
-
     return (
         <ChatContainer />
     );

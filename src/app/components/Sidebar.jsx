@@ -244,7 +244,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                             {!sidebarWidth && (
                                                 <li className="list-none">
                                                     { }
-                                                    <a
+                                                    <Link
                                                         href={`/chat/${id[index]}`}
                                                         onClick={() => handleChatLink(chat)}
                                                         className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${pathname ===
@@ -254,16 +254,18 @@ function Sidebar({ isVisible, setIsVisible }) {
                                                             } px-2 py-2 flex items-center gap-2`}
                                                     >
                                                         {chat}
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                             )}
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <div className="text-text h-45 font-light flex justify-center items-center">
-                                    No chats found
-                                </div>
+                                !sidebarWidth && (
+                                    <div className="text-text h-45 font-light flex justify-center items-center">
+                                        No chats found
+                                    </div>
+                                )
                             )}
                         </div>
                     </div>
