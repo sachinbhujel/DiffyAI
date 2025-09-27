@@ -37,4 +37,3 @@ It lets you easily compare responses from multiple AI models, like _OpenAI GPT_,
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to open an issue or submit a PR.
-
