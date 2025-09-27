@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 // Get all keys in the store | Get all values in the store
-import { keys, values } from "idb-keyval";
+import { keys, set, values } from "idb-keyval";
 
 function Sidebar({ isVisible, setIsVisible }) {
     const [sidebarWidth, setSidebarWidth] = useState(false);
@@ -55,6 +55,10 @@ function Sidebar({ isVisible, setIsVisible }) {
             document.documentElement.classList.add(savedTheme);
         }
     }, []);
+
+    const handleChatLink = (chatName) => {
+        localStorage.setItem("chatname", chatName);
+    }
 
     return (
         <div
@@ -242,6 +246,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                                                     { }
                                                     <a
                                                         href={`/chat/${id[index]}`}
+                                                        onClick={() => handleChatLink(chat)}
                                                         className={`hover:bg-primary hover:text-white border-2 border-primary block rounded-sm ${pathname ===
                                                             `/chat/${id[index]}`
                                                             ? "bg-primary text-white"
