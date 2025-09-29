@@ -168,7 +168,6 @@ function ChatContainer() {
             activeModel.gemini || activeModel.openai || activeModel.claude || activeModel.openaiGptOss120b
         ) {
             let keyModel = groqApiKey ? groq("llama-3.1-8b-instant") : googleApiKey ? google("gemini-2.0-flash") : openaiKey ? openai("gpt-5-nano") : openrouterApiKey ? openrouter.chat("anthropic/claude-3.7-sonnet") : "";
-            console.log(keyModel);
             try {
                 const { text } = await generateText({
                     model: keyModel,

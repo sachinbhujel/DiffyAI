@@ -297,8 +297,6 @@ function ChatIdContainer() {
         openaiChat.status,
     ]);
 
-    console.log("model", modelResponse);
-
     const modelIcons = {
         openai: (
             <svg
