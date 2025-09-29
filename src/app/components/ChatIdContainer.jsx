@@ -2,6 +2,7 @@
 
 // TextareaAutosize for auto-resizing textarea
 import TextareaAutosize from "react-textarea-autosize";
+
 import React, { useEffect, useState } from "react";
 
 // Allows you to easily create a conversational user interface
@@ -9,10 +10,12 @@ import { useChat } from "@ai-sdk/react";
 
 // DefaultChatTransport for sending chat messages to API's
 import { DefaultChatTransport } from "ai";
-import ModelPanel from "@/app/components/ModelPanel";
 
 // Set for saving the data in indexedDB | Get for taking the data from indexedDB
 import { set, get } from "idb-keyval";
+
+
+import ModelPanel from "@/app/components/ModelPanel";
 import { usePathname } from "next/navigation";
 
 // useParams for handling URL IDs
@@ -24,7 +27,14 @@ function ChatIdContainer() {
 
     // A state to check how many LLM models are active
     const [activeModelNum, setActiveModelNum] = useState(0);
+
     const [disabledButton, setDisabledButton] = useState(false);
+    const [modelResponse, setModelResponse] = useState({
+        llama: true,
+        openai: true,
+        deepseek: true,
+        openaiGptOss120b: true,
+    });
     const pathname = usePathname();
     const params = useParams();
 
@@ -113,6 +123,10 @@ function ChatIdContainer() {
         }),
         onFinish: () => {
             setIsChatSavedNum((prev) => prev + 1);
+            setModelResponse((prev) => ({
+                ...prev,
+                deepseek: true,
+            }));
         },
     });
 
@@ -139,6 +153,10 @@ function ChatIdContainer() {
         }),
         onFinish: () => {
             setIsChatSavedNum((prev) => prev + 1);
+            setModelResponse((prev) => ({
+                ...prev,
+                llama: true,
+            }));
         },
     });
 
@@ -165,6 +183,10 @@ function ChatIdContainer() {
         }),
         onFinish: () => {
             setIsChatSavedNum((prev) => prev + 1);
+            setModelResponse((prev) => ({
+                ...prev,
+                openaiGptOss120b: true,
+            }));
         },
     });
 
@@ -249,8 +271,26 @@ function ChatIdContainer() {
             openaiChat.status.includes("streaming")
         ) {
             setDisabledButton(true);
+            setModelResponse((prev) => ({
+                ...prev,
+                llama: false,
+                openai: false,
+                gemini: false,
+                openaiGptOss120b: false,
+                deepseek: false,
+                claude: false,
+            }));
         } else {
             setDisabledButton(false);
+            setModelResponse((prev) => ({
+                ...prev,
+                llama: true,
+                openai: true,
+                gemini: true,
+                openaiGptOss120b: true,
+                deepseek: true,
+                claude: true,
+            }));
         }
     }, [
         llamaChat.status,
@@ -261,7 +301,38 @@ function ChatIdContainer() {
         openaiChat.status,
     ]);
 
+    // useEffect(() => {
+    //     if (llamaChat.status.includes("streaming")) {
+    //         setModelResponse((prev) => ({
+    //             ...prev,
+    //             llama: false,
+    //         }));
+    //     }
+
+    //     if (deepseekChat.status.includes("streaming")) {
+    //         setModelResponse((prev) => ({
+    //             ...prev,
+    //             deepseek: false,
+    //         }));
+    //     }
+
+    //      if (openaiGptOss120bChat.status.includes("streaming")) {
+    //         setModelResponse((prev) => ({
+    //             ...prev,
+    //             openaiGptOss120b: false,
+    //         }));
+    //     }
+    // }, [llamaChat.status, deepseekChat.status])
+
     // Icons for each LLM model are stored here
+
+    // if (llamaChat.status.includes("streaming") && activeModelNum !== isChatSavedNum) {
+    //     setModelResponse((prev) => ({
+    //         ...prev,
+    //         llama: false,
+    //     }));
+    // }
+
     const modelIcons = {
         openai: (
             <svg
@@ -359,6 +430,7 @@ function ChatIdContainer() {
             <div className="flex gap-3 overflow-auto all-model-scrollbar w-full">
                 {activeModel.llama && (
                     <ModelPanel
+                        response={modelResponse.llama}
                         messages={llamaChat.messages}
                         model="llama"
                         modelIcons={modelIcons.llama}
@@ -389,6 +461,7 @@ function ChatIdContainer() {
 
                 {activeModel.openaiGptOss120b && (
                     <ModelPanel
+                        response={modelResponse.openaiGptOss120b}
                         messages={openaiGptOss120bChat.messages}
                         model="GPT OSS"
                         modelIcons={modelIcons.openai}
@@ -419,6 +492,7 @@ function ChatIdContainer() {
 
                 {activeModel.deepseek && (
                     <ModelPanel
+                        response={modelResponse.deepseek}
                         messages={deepseekChat.messages}
                         model="deepseek"
                         isActive={activeModel.deepseek}

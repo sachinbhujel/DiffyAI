@@ -7,6 +7,7 @@
         --primary: #ca3f51;
         --secondary: #96e3df;
         --accent: #6b6dd6;
+        --pre-bg: black;
     }
     .dark {
         --text: #fdf7f8;
@@ -14,6 +15,23 @@
         --primary: #c03547;
         --secondary: #1c6965;
         --accent: #292a94;
+        --pre-bg: #1d1c1c;
+    }
+    pre {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        overflow: auto;
+        background-color: var(--pre-bg);
+        color: white;
+        padding: 10px;
+        border-radius: 6px;
+    }
+    code {
+        overflow: auto;
+        padding: 0px 2px;
+        background-color: var(--pre-bg);
+        color: white;
+        display: inline-flex;
     }
 }
 

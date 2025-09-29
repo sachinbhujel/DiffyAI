@@ -2,6 +2,7 @@ import React from "react";
 import Conversation from "./Conversations";
 
 function ModelPanel({
+    response,
     messages,
     model,
     modelIcons,
@@ -12,11 +13,9 @@ function ModelPanel({
 }) {
     return (
         <div
-            className={`border-2 rounded-lg border-primary transition-all duration-300 ${
-                isActive ? "w-90 min-w-90" : "w-max min-w-max"
-            } ${
-                isModelActive ? "min-w-[80%] w-[80%]" : ""
-            } overflow-auto all-model-scrollbar`}
+            className={`border-2 rounded-lg border-primary transition-all duration-300 ${isActive ? "w-90 min-w-90" : "w-max min-w-max"
+                } ${isModelActive ? "min-w-[80%] w-[80%]" : ""
+                }`}
         >
             <div
                 className={`h-10 p-2 w-full flex backdrop-blur-xs items-center justify-between sticky top-0 bg-primary/30`}
@@ -67,6 +66,7 @@ function ModelPanel({
                 </div>
             </div>
             <Conversation
+                response={response}
                 messages={messages}
                 isChecked={isActive}
                 onToggle={onToggle}

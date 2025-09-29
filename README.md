@@ -4,6 +4,8 @@
 
 It lets you easily compare responses from multiple AI models, like _OpenAI GPT_, _Claude_, _Gemini_, _LLaMA_, and more - all side by side in one place.
 
+Live preview - https://diffyai.vercel.app
+
 ---
 
 ## 🚀 Features

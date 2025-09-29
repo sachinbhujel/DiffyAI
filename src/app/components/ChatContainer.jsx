@@ -19,6 +19,11 @@ function ChatContainer() {
     const [disabledButton, setDisabledButton] = useState(false);
     const [isChatSavedNum, setIsChatSavedNum] = useState(0);
     const [activeModelNum, setActiveModelNum] = useState(0);
+    const [modelResponse, setModelResponse] = useState({
+        llama: false,
+        openai: false,
+        deepseek: false,
+    });
     const [chatTitle, setChatTitle] = useState("");
     const [activeModel, setActiveModel] = useState({
         openai: false,
@@ -90,6 +95,11 @@ function ChatContainer() {
         }),
         onFinish: () => {
             setIsChatSavedNum((prev) => prev + 1);
+            setModelResponse((prev) => ({
+                ...prev,
+                llama: true,
+                openai: false,
+            }));
         },
     });
 
@@ -219,7 +229,7 @@ function ChatContainer() {
     useEffect(() => {
         if (isChatSavedNum === activeModelNum && activeModelNum > 0) {
             set(uniqueId.current, {
-                title: chatTitle,
+                title: chatTitle || "New Chat",
                 chats: {
                     llamaChats: llamaChat.messages,
                     openaiGptOss120bChats: openaiGptOss120bChat.messages,
@@ -370,6 +380,7 @@ function ChatContainer() {
                 {models.llama && (
                     <ModelPanel
                         messages={llamaChat.messages}
+                        llamaResponse={modelResponse.llama}
                         model="llama"
                         modelIcons={modelIcons.llama}
                         isActive={activeModel.llama}

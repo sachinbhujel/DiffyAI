@@ -56,6 +56,7 @@ function Sidebar({ isVisible, setIsVisible }) {
         }
     }, []);
 
+    // Whichever chat you clicked, its chat name is saved to the localstorage 
     const handleChatLink = (chatName) => {
         localStorage.setItem("chatname", chatName);
     }
@@ -64,12 +65,12 @@ function Sidebar({ isVisible, setIsVisible }) {
         <div
             className={`rounded-md border-primary border-2 bg-background z-10 flex flex-col p-2 ${isVisible ? "fixed sm:static h-[calc(100vh-16px)]" : ""
                 } border ${sidebarWidth ? "w-max" : "w-[250px]"
-                } overflow-y-auto custom-scrollbar`}
+                }`}
         >
             <div className="flex flex-col justify-between h-full">
                 <div>
                     <div
-                        className={`items-center gap-20 justify-between ${sidebarWidth ? "flex-col" : "flex"
+                        className={`items-center justify-between ${sidebarWidth ? "flex-col" : "flex"
                             }`}
                     >
                         <div
@@ -84,7 +85,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                             </Link>
                             {!sidebarWidth && (
                                 <span className="tracking-wide text-lg text-text font-bold">
-                                    diffyAI
+                                    DiffyAI
                                 </span>
                             )}
                         </div>
@@ -145,7 +146,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                             </svg>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-10">
+                    <div className={`flex flex-col ${sidebarWidth ? "gap-5" : "gap-10"}`}>
                         <ul
                             className={`mt-6 space-y-1 ${sidebarWidth ? "flex flex-col items-center" : ""
                                 }`}
@@ -206,7 +207,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                             </li>
                         </ul>
                         <div
-                            className={`flex flex-col gap-2 ${sidebarWidth ? "flex flex-col items-center" : ""
+                            className={`flex flex-col ${sidebarWidth ? "flex flex-col items-center" : ""
                                 }`}
                         >
                             <h3 className="text-base font-semibold">Chats</h3>
@@ -251,9 +252,24 @@ function Sidebar({ isVisible, setIsVisible }) {
                                                             `/chat/${id[index]}`
                                                             ? "bg-primary text-white"
                                                             : ""
-                                                            } px-2 py-2 flex items-center gap-2`}
+                                                            } px-2 py-2 flex items-center justify-between text-sm font-medium group`}
                                                     >
                                                         {chat}
+                                                        <button className="cursor-pointer opacity-0 group-hover:opacity-100">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                width="22"
+                                                                height="22"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                strokeWidth="2"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                className="lucide lucide-ellipsis-icon lucide-ellipsis">
+                                                                <circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><
+                                                                    circle cx="5" cy="12" r="1" />
+                                                            </svg>
+                                                        </button>
                                                     </Link>
                                                 </li>
                                             )}
@@ -272,39 +288,41 @@ function Sidebar({ isVisible, setIsVisible }) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <a href="https://github.com/sachinbhujel/DiffyAI">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className={`cursor-pointer lucide lucide-github-icon lucide-github w-max flex ${sidebarWidth ? "m-auto" : "m-left"} `}>
-                            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                            <path d="M9 18c-4.51 2-5-2-7-2" />
-                        </svg>
-                    </a>
-                    <div
-                        className={`w-max flex ${sidebarWidth ? "m-auto" : "m-left"
-                            }`}
-                    >
-                        <label
-                            htmlFor="hs-xs-toggle"
-                            className="relative inline-block w-9 h-5 cursor-pointer"
+                    <div className={`flex items-center justify-between ${sidebarWidth ? "flex-col-reverse gap-2" : ""}`}>
+                        <div
+                            className={`w-max flex ${sidebarWidth ? "m-auto" : "m-left"
+                                }`}
                         >
-                            <input
-                                type="checkbox"
-                                id="hs-xs-toggle"
-                                checked={isDark}
-                                className="peer sr-only"
-                                onChange={(e) => handleTheme(e.target.checked)}
-                            />
-                            <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
-                            <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
-                        </label>
+                            <label
+                                htmlFor="hs-xs-toggle"
+                                className="relative inline-block w-9 h-5 cursor-pointer"
+                            >
+                                <input
+                                    type="checkbox"
+                                    id="hs-xs-toggle"
+                                    checked={isDark}
+                                    className="peer sr-only"
+                                    onChange={(e) => handleTheme(e.target.checked)}
+                                />
+                                <span className="absolute inset-0 bg-gray-400 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary dark:bg-gray-500 dark:peer-checked:bg-primary peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-4 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:peer-checked:bg-white"></span>
+                            </label>
+                        </div>
+                        <a href="https://github.com/sachinbhujel/DiffyAI" className={`border-2 p-1.5 rounded-full border-primary hover:bg-primary hover:text-white flex ${sidebarWidth ? "m-auto" : "m-left"}`}>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="cursor-pointer lucide lucide-github-icon lucide-github">
+                                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                                <path d="M9 18c-4.51 2-5-2-7-2" />
+                            </svg>
+                        </a>
                     </div>
                     <ul>
                         <li

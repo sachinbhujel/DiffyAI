@@ -1,46 +1,50 @@
 import React from "react";
+import Markdown from "react-markdown";
 
-const Conversation = ({ messages, isChecked, onToggle }) => {
+const Conversation = ({ messages, isChecked, onToggle, response }) => {
     return (
         <div
-            className={`h-85 2xl:h-120 px-2 ${
-                !isChecked ? "flex justify-center items-center" : ""
-            } custom-scrollbar overflow-auto flex flex-col-reverse`}
+            className={`h-85 2xl:h-120 px-2 ${!isChecked ? "flex justify-center items-center" : ""
+                } custom-scrollbar overflow-auto flex flex-col-reverse`}
         >
             <div className="flex flex-col space-y-2">
                 {isChecked
                     ? messages &&
-                      messages.map((message, index) => (
-                          <div
-                              key={message.id}
-                              className={`flex py-2 px-1 ${
-                                  message.role == "user"
-                                      ? "justify-end"
-                                      : "justify-start"
-                              }`}
-                          >
-                              {message.parts &&
-                                  message.parts.map((part, index) => {
-                                      switch (part.type) {
-                                          case "text":
-                                              return (
-                                                  <div
-                                                      className={`bg-base-100 rounded-2xl p-2 max-w-[90%] border-2 shadow-sm ${
-                                                          message.role == "user"
-                                                              ? "rounded-tr-sm border-primary"
-                                                              : "rounded-tl-sm border-text"
-                                                      } `}
-                                                      key={`${message.id}-${index}`}
-                                                  >
-                                                      <p>{part.text}</p>
-                                                  </div>
-                                              );
-                                          default:
-                                              return null;
-                                      }
-                                  })}
-                          </div>
-                      ))
+                    messages.map((message, index) => (
+                        <div
+                            key={message.id}
+                            className={`flex py-2 px-1 ${message.role == "user"
+                                ? "justify-end"
+                                : "justify-start"
+                                }`}
+                        >
+                            {message.parts &&
+                                message.parts.map((part, index) => {
+                                    switch (part.type) {
+                                        case "text":
+                                            return (
+                                                <div
+                                                    className={`bg-base-100 rounded-2xl p-2 max-w-[90%] border-2 shadow-sm ${message.role == "user"
+                                                        ? "rounded-tr-sm border-primary"
+                                                        : "rounded-tl-sm border-text"
+                                                        } `}
+                                                    key={`${message.id}-${index}`}
+                                                >
+                                                    {response ? (
+                                                        <Markdown>
+                                                            {part.text}
+                                                        </Markdown>
+                                                    ) : (
+                                                        <p>{part.text}</p>
+                                                    )}
+                                                </div>
+                                            );
+                                        default:
+                                            return null;
+                                    }
+                                })}
+                        </div>
+                    ))
                     : ""}
                 {!isChecked && (
                     <button className="h-max flex flex-col-reverse gap-8">
