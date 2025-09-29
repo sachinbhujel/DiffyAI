@@ -13,7 +13,7 @@ function ModelPanel({
 }) {
     return (
         <div
-            className={`border-2 rounded-lg border-primary transition-all duration-300 ${isActive ? "w-90 min-w-90" : "w-max min-w-max"
+            className={`border-2 rounded-lg border-primary transition-all overflow-auto all-model-scrollbar duration-300 ${isActive ? "w-90 min-w-90" : "w-max min-w-max"
                 } ${isModelActive ? "min-w-[80%] w-[80%]" : ""
                 }`}
         >

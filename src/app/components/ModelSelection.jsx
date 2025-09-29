@@ -261,8 +261,7 @@ function ModelSelection() {
                     <div className="flex items-center gap-2">
                         {modelIcons.deepseek}
                         <h3 className="font-bold">Deepseek
-                            <span className="text-xs font-medium"> (Using Google
-                                Gemini API)</span>
+                            <span className="text-xs font-medium"> (Using Groq)</span>
                         </h3>
                     </div>
                     <div>

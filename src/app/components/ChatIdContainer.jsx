@@ -1,8 +1,7 @@
 "use client";
 
-// TextareaAutosize for auto-resizing textarea
-import TextareaAutosize from "react-textarea-autosize";
 
+import PromptBar from "./PromptBar";
 import React, { useEffect, useState } from "react";
 
 // Allows you to easily create a conversational user interface
@@ -50,9 +49,6 @@ function ChatIdContainer() {
             openaiChats: [],
         },
     });
-
-    // State for handle user inputs
-    const [prompt, setPrompt] = useState("");
 
     // Create a state that shows how many LLM models are active
     const [activeModel, setActiveModel] = useState({
@@ -191,7 +187,7 @@ function ChatIdContainer() {
     });
 
     // This runs only when clicking the enter button or clicking the button
-    const handleSubmit = (e) => {
+    const handleSubmit = (e, prompt, setPrompt) => {
         // prevents the page from reloading
         e.preventDefault();
 
@@ -301,37 +297,7 @@ function ChatIdContainer() {
         openaiChat.status,
     ]);
 
-    // useEffect(() => {
-    //     if (llamaChat.status.includes("streaming")) {
-    //         setModelResponse((prev) => ({
-    //             ...prev,
-    //             llama: false,
-    //         }));
-    //     }
-
-    //     if (deepseekChat.status.includes("streaming")) {
-    //         setModelResponse((prev) => ({
-    //             ...prev,
-    //             deepseek: false,
-    //         }));
-    //     }
-
-    //      if (openaiGptOss120bChat.status.includes("streaming")) {
-    //         setModelResponse((prev) => ({
-    //             ...prev,
-    //             openaiGptOss120b: false,
-    //         }));
-    //     }
-    // }, [llamaChat.status, deepseekChat.status])
-
-    // Icons for each LLM model are stored here
-
-    // if (llamaChat.status.includes("streaming") && activeModelNum !== isChatSavedNum) {
-    //     setModelResponse((prev) => ({
-    //         ...prev,
-    //         llama: false,
-    //     }));
-    // }
+    console.log("model", modelResponse);
 
     const modelIcons = {
         openai: (
@@ -427,7 +393,7 @@ function ChatIdContainer() {
 
     return (
         <div className="relative pt-10 rounded-md gap-4 p-2 flex flex-col border-2 border-primary h-full w-full">
-            <div className="flex gap-3 overflow-auto all-model-scrollbar w-full">
+            <div className="flex gap-3 overflow-x-auto all-model-scrollbar w-full h-auto">
                 {activeModel.llama && (
                     <ModelPanel
                         response={modelResponse.llama}
@@ -611,35 +577,7 @@ function ChatIdContainer() {
                     />
                 )}
             </div>
-            <form onSubmit={handleSubmit} className="flex justify-center">
-                <div className="absolute bg-background bottom-3 border border-primary left-1/2 transform -translate-x-1/2 shadow-lg w-[90%] rounded-xl flex flex-col items-end p-2 gap-2 justify-center">
-                    <TextareaAutosize
-                        rows={1}
-                        minRows={1}
-                        maxRows={3}
-                        className="w-full p-2 focus:outline-none resize-none text-base"
-                        placeholder="Ask me anything..."
-                        value={prompt}
-                        onChange={(e) => setPrompt(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter" && !e.shiftKey) {
-                                e.preventDefault();
-                                handleSubmit(e);
-                            }
-                        }}
-                    />
-                    <button
-                        type="submit"
-                        className={`border w-20 p-1.5 flex justify-center items-center rounded-lg text-gray-300 ${!prompt
-                            ? "bg-[#7585a2] cursor-not-allowed"
-                            : "bg-primary text-white cursor-pointer"
-                            }`}
-                        disabled={disabledButton}
-                    >
-                        {!prompt ? "Disabled" : "Enter"}
-                    </button>
-                </div>
-            </form>
+            <PromptBar handleSubmit={handleSubmit} disabledButton={disabledButton} />
         </div>
     );
 }

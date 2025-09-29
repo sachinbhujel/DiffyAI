@@ -70,3 +70,13 @@ body {
     background-color: #9d9d9d;
     border-radius: 20px;
 }
+
+pre::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background-color: #ca3f51;
+    border-radius: 10px;
+}
