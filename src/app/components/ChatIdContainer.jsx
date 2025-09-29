@@ -391,13 +391,37 @@ function ChatIdContainer() {
         document.title = `${chatName} | DiffyAI`;
     });
 
+    const [models, setModels] = useState({
+        openai: false,
+        claude: false,
+        gemini: false,
+        llama: false,
+        deepseek: false,
+        openaiGptOss120b: false,
+    });
+
+    useEffect(() => {
+        setModels({
+            llama: localStorage.getItem("llama") === "true" || false,
+            openai: localStorage.getItem("openai") === "true" || false,
+
+            deepseek: localStorage.getItem("deepseek") === "true" || false,
+            openaiGptOss120b:
+                localStorage.getItem("openaiGptOss120b") === "true" || false,
+
+            claude: localStorage.getItem("claude") === "true" || false,
+            gemini: localStorage.getItem("gemini") === "true" || false,
+        });
+    }, []);
+
+
     return (
         <div className="relative pt-10 rounded-md gap-4 p-2 flex flex-col border-2 border-primary h-full w-full">
             <div className="flex gap-3 overflow-x-auto all-model-scrollbar w-full h-auto">
-                {activeModel.llama && (
+                {models.llama && (
                     <ModelPanel
-                        response={modelResponse.llama}
                         messages={llamaChat.messages}
+                        llamaResponse={modelResponse.llama}
                         model="llama"
                         modelIcons={modelIcons.llama}
                         isActive={activeModel.llama}
@@ -425,9 +449,8 @@ function ChatIdContainer() {
                     />
                 )}
 
-                {activeModel.openaiGptOss120b && (
+                {models.openaiGptOss120b && (
                     <ModelPanel
-                        response={modelResponse.openaiGptOss120b}
                         messages={openaiGptOss120bChat.messages}
                         model="GPT OSS"
                         modelIcons={modelIcons.openai}
@@ -456,9 +479,8 @@ function ChatIdContainer() {
                     />
                 )}
 
-                {activeModel.deepseek && (
+                {models.deepseek && (
                     <ModelPanel
-                        response={modelResponse.deepseek}
                         messages={deepseekChat.messages}
                         model="deepseek"
                         isActive={activeModel.deepseek}
@@ -487,7 +509,7 @@ function ChatIdContainer() {
                     />
                 )}
 
-                {activeModel.openai && (
+                {models.openai && (
                     <ModelPanel
                         messages={openaiChat.messages}
                         model="Openai"
@@ -517,7 +539,7 @@ function ChatIdContainer() {
                     />
                 )}
 
-                {activeModel.claude && (
+                {models.claude && (
                     <ModelPanel
                         messages={claudeChat.messages}
                         model="Claude"
@@ -547,7 +569,7 @@ function ChatIdContainer() {
                     />
                 )}
 
-                {activeModel.gemini && (
+                {models.gemini && (
                     <ModelPanel
                         messages={geminiChat.messages}
                         model="Gemini"
