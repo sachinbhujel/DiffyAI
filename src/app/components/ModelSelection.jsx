@@ -306,8 +306,7 @@ function ModelSelection() {
                     <div className="flex items-center gap-2">
                         {modelIcons.gemini}
                         <h3 className="font-bold">Gemini
-                            <span className="text-xs font-medium"> (Using Google
-                                Gemini API)</span>
+                            <span className="text-xs font-medium"> (Using Gemini API)</span>
                         </h3>
                     </div>
                     <div>

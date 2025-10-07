@@ -20,6 +20,8 @@ import { usePathname } from "next/navigation";
 // useParams for handling URL IDs
 import { useParams } from "next/navigation";
 
+import { decryptData } from "../actions/decrypt";
+
 function ChatIdContainer() {
     // A state to track how many chat messages have been received
     const [isChatSavedNum, setIsChatSavedNum] = useState(0);
@@ -78,6 +80,29 @@ function ChatIdContainer() {
             });
         }
     }, [pathname]);
+
+    const [groqDecryptedKey, setGroqDecryptedKey] = useState(false);
+    const [openaiDecryptedKey, setOpenaiDecryptedKey] = useState(false);
+    const [openrouterDecryptedKey, setOpenrouterDecryptedKey] = useState(false);
+    const [geminiDecryptedKey, setGeminiDecryptedKey] = useState(false);
+
+    useEffect(() => {
+        async function fetchKeys() {
+            const sendEncryptKeyData = await decryptData({
+                groqEncryptKey: localStorage.getItem("groqkey"),
+                geminiEncryptKey: localStorage.getItem("geminikey"),
+                openrouterEncryptKey: localStorage.getItem("openrouterkey"),
+                openaiEncryptKey: localStorage.getItem("openaikey"),
+            }
+            );
+            setGroqDecryptedKey(sendEncryptKeyData.groqDecryptKey || "");
+            setGeminiDecryptedKey(sendEncryptKeyData.geminiDecryptKey || "");
+            setOpenaiDecryptedKey(sendEncryptKeyData.openaiDecryptKey || "");
+            setOpenrouterDecryptedKey(sendEncryptKeyData.openrouterDecryptKey || "");
+        }
+
+        fetchKeys();
+    }, []);
 
     // Check if localstorage has a key or not and, then update the activeModel state
     useEffect(() => {
@@ -198,37 +223,61 @@ function ChatIdContainer() {
         if (prompt.trim()) {
             // Only runs when openai model is open
             if (activeModel.openai) {
-                openaiChat.sendMessage({ text: prompt }); // Send message to the Api router
+                openaiChat.sendMessage({ text: prompt }, {
+                    headers: {
+                        "X-OPENAI-API-KEY": openaiDecryptedKey,
+                    },
+                }); // Send message to the Api router
                 setActiveModelNum((prev) => prev + 1); // After sending the message, increase the number by 1 value
             }
 
             // Only runs when claude model is open
             if (activeModel.claude) {
-                claudeChat.sendMessage({ text: prompt });
+                claudeChat.sendMessage({ text: prompt }, {
+                    headers: {
+                        "X-OPENROUTER-API-KEY": openrouterDecryptedKey,
+                    },
+                });
                 setActiveModelNum((prev) => prev + 1);
             }
 
             // Only runs when gemini model is open
             if (activeModel.gemini) {
-                geminiChat.sendMessage({ text: prompt });
+                geminiChat.sendMessage({ text: prompt }, {
+                    headers: {
+                        "X-GEMINI-API-KEY": geminiDecryptedKey,
+                    },
+                });
                 setActiveModelNum((prev) => prev + 1);
             }
 
             // Only runs when llama model is open
             if (activeModel.llama) {
-                llamaChat.sendMessage({ text: prompt });
+                llamaChat.sendMessage({ text: prompt }, {
+                    headers: {
+                        "X-GROQ-API-KEY": groqDecryptedKey,
+                    },
+                });
                 setActiveModelNum((prev) => prev + 1);
             }
 
             // Only runs when deepseek model is open
             if (activeModel.deepseek) {
-                deepseekChat.sendMessage({ text: prompt });
+                deepseekChat.sendMessage({ text: prompt }, {
+                    headers: {
+                        "X-GROQ-API-KEY": groqDecryptedKey,
+                    },
+                });
                 setActiveModelNum((prev) => prev + 1);
             }
 
             // Only runs when openaiGptOss120b model is open
             if (activeModel.openaiGptOss120b) {
-                openaiGptOss120bChat.sendMessage({ text: prompt });
+                openaiGptOss120bChat.sendMessage({ text: prompt }, {
+                    headers: {
+                        "X-GROQ-API-KEY": groqDecryptedKey,
+                    },
+                });
                 setActiveModelNum((prev) => prev + 1);
             }
         } else {

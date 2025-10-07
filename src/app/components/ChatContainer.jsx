@@ -1,6 +1,5 @@
 "use client";
 
-
 import TextareaAutosize from "react-textarea-autosize";
 import React, { useEffect, useState, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
@@ -13,17 +12,13 @@ import { createGroq } from "@ai-sdk/groq";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { createOpenAI } from "@ai-sdk/openai";
+import { decryptData } from "../actions/decrypt";
 
 function ChatContainer() {
     const [prompt, setPrompt] = useState("");
     const [disabledButton, setDisabledButton] = useState(false);
     const [isChatSavedNum, setIsChatSavedNum] = useState(0);
     const [activeModelNum, setActiveModelNum] = useState(0);
-    const [modelResponse, setModelResponse] = useState({
-        llama: false,
-        openai: false,
-        deepseek: false,
-    });
     const [chatTitle, setChatTitle] = useState("");
     const [activeModel, setActiveModel] = useState({
         openai: false,
@@ -35,6 +30,29 @@ function ChatContainer() {
     });
 
     const uniqueId = useRef(crypto.randomUUID());
+
+    const [groqDecryptedKey, setGroqDecryptedKey] = useState(false);
+    const [openaiDecryptedKey, setOpenaiDecryptedKey] = useState(false);
+    const [openrouterDecryptedKey, setOpenrouterDecryptedKey] = useState(false);
+    const [geminiDecryptedKey, setGeminiDecryptedKey] = useState(false);
+
+    useEffect(() => {
+        async function fetchKeys() {
+            const sendEncryptKeyData = await decryptData({
+                groqEncryptKey: localStorage.getItem("groqkey"),
+                geminiEncryptKey: localStorage.getItem("geminikey"),
+                openrouterEncryptKey: localStorage.getItem("openrouterkey"),
+                openaiEncryptKey: localStorage.getItem("openaikey"),
+            }
+            );
+            setGroqDecryptedKey(sendEncryptKeyData.groqDecryptKey || "");
+            setGeminiDecryptedKey(sendEncryptKeyData.geminiDecryptKey || "");
+            setOpenaiDecryptedKey(sendEncryptKeyData.openaiDecryptKey || "");
+            setOpenrouterDecryptedKey(sendEncryptKeyData.openrouterDecryptKey || "");
+        }
+
+        fetchKeys();
+    }, []);
 
     useEffect(() => {
         setActiveModel({
@@ -66,7 +84,9 @@ function ChatContainer() {
         transport: new DefaultChatTransport({
             api: "/api/deepseek",
             headers: () => ({
-                "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
+                "X-GROQ-API-KEY":
+                    localStorage.getItem("groqkey")
+                ,
             }),
         }),
         onFinish: () => {
@@ -78,7 +98,9 @@ function ChatContainer() {
         transport: new DefaultChatTransport({
             api: "/api/gemini",
             headers: () => ({
-                "X-GEMINI-API-KEY": localStorage.getItem("geminikey"),
+                "X-GEMINI-API-KEY":
+                    localStorage.getItem("geminikey")
+                ,
             }),
         }),
         onFinish: () => {
@@ -90,16 +112,11 @@ function ChatContainer() {
         transport: new DefaultChatTransport({
             api: "/api/llama",
             headers: () => ({
-                "X-GROQ-API-KEY": localStorage.getItem("groqkey"),
+                "X-GROQ-API-KEY": groqDecryptedKey,
             }),
         }),
         onFinish: () => {
             setIsChatSavedNum((prev) => prev + 1);
-            setModelResponse((prev) => ({
-                ...prev,
-                llama: true,
-                openai: false,
-            }));
         },
     });
 
@@ -127,39 +144,47 @@ function ChatContainer() {
         },
     });
 
+
     let groqApiKey = false;
+    let groq;
     if (typeof window !== "undefined") {
-        groqApiKey = localStorage.getItem("groqkey") || false;
+        groqApiKey = groqDecryptedKey || false;
+        console.log("groqApiKey", groqApiKey)
+        groq = createGroq({
+            apiKey: groqApiKey,
+        });
     }
-    const groq = createGroq({
-        apiKey: groqApiKey,
-    });
 
 
     let googleApiKey = false;
+    let google;
     if (typeof window !== "undefined") {
-        localStorage.getItem("geminikey") || false;
+        googleApiKey = geminiDecryptedKey || false;
+        console.log("googleApiKey", googleApiKey);
+        google = createGoogleGenerativeAI({
+            apiKey: googleApiKey,
+        });
     }
-    const google = createGoogleGenerativeAI({
-        apiKey: googleApiKey,
-    });
 
     let openrouterApiKey = false;
+    let openrouter;
     if (typeof window !== "undefined") {
-        localStorage.getItem("openrouterkey") || false;
+        openrouterApiKey = openrouterDecryptedKey || false;
+        console.log("openrouterApiKey", openrouterApiKey)
+        openrouter = createOpenRouter({
+            apiKey: openrouterApiKey,
+        });
     }
-    const openrouter = createOpenRouter({
-        apiKey: openrouterApiKey,
-    });
 
     let openaiApiKey = false;
+    let openai;
     if (typeof window !== "undefined") {
-        localStorage.getItem("openaikey") || false;
+        openaiApiKey = openaiDecryptedKey || false;
+        console.log("openaiApiKey", openaiApiKey)
+        openai = createOpenAI({
+            apiKey: openaiApiKey,
+        });
     }
-    const openai = createOpenAI({
-        apiKey: openaiApiKey,
-    });
-
 
     const handleTextGenerate = async () => {
         if (
@@ -167,15 +192,19 @@ function ChatContainer() {
             activeModel.openaiGptOss120b ||
             activeModel.gemini || activeModel.openai || activeModel.claude || activeModel.openaiGptOss120b
         ) {
-            let keyModel = groqApiKey ? groq("llama-3.1-8b-instant") : googleApiKey ? google("gemini-2.0-flash") : openaiKey ? openai("gpt-5-nano") : openrouterApiKey ? openrouter.chat("anthropic/claude-3.7-sonnet") : "";
+            let keyModel = groqApiKey ? groq("llama-3.1-8b-instant") : googleApiKey ? google("gemini-2.0-flash") : openaiApiKey ? openai("gpt-5-nano") : openrouterApiKey ? openrouter.chat("anthropic/claude-3.7-sonnet") : "";
+            console.log("test", googleApiKey)
+            console.log("keyModel", keyModel);
             try {
                 const { text } = await generateText({
                     model: keyModel,
-                    prompt: `You are an assistant that creates short, descriptive titles for chat conversations. Summarize the following conversation into a title of no more than 3 words.
-      Conversation: ${prompt}`,
+                    system: `You are an assistant that creates short, descriptive titles for chat conversations. Summarize the following conversation into a title of no more than 3 words. If you didn't understand the user question then give me "New Chat" message as a title
+      Conversation`,
+                    prompt: prompt,
                 });
 
                 let cleanText = text.replace(/^"|"$/g, "").trim();
+                console.log(cleanText);
 
                 setChatTitle(cleanText);
                 localStorage.setItem("chatname", cleanText);
@@ -185,40 +214,80 @@ function ChatContainer() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         handleTextGenerate();
         if (disabledButton) return;
         if (prompt.trim()) {
             if (activeModel.openai) {
-                openaiChat.sendMessage({ text: prompt });
+                openaiChat.sendMessage(
+                    { text: prompt },
+                    {
+                        headers: {
+                            "X-OPENAI-API-KEY": openaiDecryptedKey,
+                        },
+                    }
+                );
                 setActiveModelNum((prev) => prev + 1);
-            };
+            }
 
             if (activeModel.claude) {
-                claudeChat.sendMessage({ text: prompt });
+                claudeChat.sendMessage(
+                    { text: prompt },
+                    {
+                        headers: {
+                            "X-OPENROUTER-API-KEY": openrouterDecryptedKey,
+                        },
+                    }
+                );
                 setActiveModelNum((prev) => prev + 1);
-            };
+            }
 
             if (activeModel.gemini) {
-                geminiChat.sendMessage({ text: prompt });
+                geminiChat.sendMessage({ text: prompt }, {
+                    headers: {
+                        "X-GEMINI-API-KEY": geminiDecryptedKey,
+                    },
+                }
+                );
                 setActiveModelNum((prev) => prev + 1);
-            };
+            }
 
             if (activeModel.llama) {
-                llamaChat.sendMessage({ text: prompt });
+                llamaChat.sendMessage(
+                    { text: prompt },
+                    {
+                        headers: {
+                            "X-GROQ-API-KEY": groqDecryptedKey,
+                        },
+                    }
+                );
                 setActiveModelNum((prev) => prev + 1);
-            };
+            }
 
             if (activeModel.deepseek) {
-                deepseekChat.sendMessage({ text: prompt });
+                deepseekChat.sendMessage(
+                    { text: prompt },
+                    {
+                        headers: {
+                            "X-GROQ-API-KEY": groqDecryptedKey,
+                        },
+                    }
+                );
                 setActiveModelNum((prev) => prev + 1);
-            };
+            }
 
             if (activeModel.openaiGptOss120b) {
-                openaiGptOss120bChat.sendMessage({ text: prompt });
+                openaiGptOss120bChat.sendMessage(
+                    { text: prompt },
+                    {
+                        headers: {
+                            "X-GROQ-API-KEY": groqDecryptedKey,
+                        },
+                    }
+                );
                 setActiveModelNum((prev) => prev + 1);
-            };
+            }
         } else {
             alert("Write something!!");
         }
@@ -379,7 +448,6 @@ function ChatContainer() {
                 {models.llama && (
                     <ModelPanel
                         messages={llamaChat.messages}
-                        llamaResponse={modelResponse.llama}
                         model="llama"
                         modelIcons={modelIcons.llama}
                         isActive={activeModel.llama}
@@ -587,7 +655,7 @@ function ChatContainer() {
                 </div>
             </form>
         </div>
-    )
+    );
 }
 
-export default ChatContainer
+export default ChatContainer;

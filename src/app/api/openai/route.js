@@ -6,8 +6,8 @@ export async function POST(request) {
         const data = await request.json();
         const apiKey = await request.headers.get("x-openai-api-key");
 
-        if(!apiKey){
-            return new Response("Missing Api Key", {status: 401});
+        if (!apiKey) {
+            return new Response("Missing Api Key", { status: 401 });
         }
 
         const openai = createOpenAI({

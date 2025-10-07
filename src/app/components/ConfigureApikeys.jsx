@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { encryptData } from "../actions/encrypt";
 
 function ConfigureApikeys() {
     const [keys, setKeys] = useState({
@@ -10,6 +11,14 @@ function ConfigureApikeys() {
         gemini: "",
     });
 
+    const [localKeys, setLocalKeys] = useState({
+        groq: "",
+        openai: "",
+        openrouter: "",
+        gemini: "",
+    });
+
+
     useEffect(() => {
         const savedApi = {
             groq: localStorage.getItem("groqkey") || "",
@@ -18,6 +27,7 @@ function ConfigureApikeys() {
             gemini: localStorage.getItem("geminikey") || "",
         };
         setKeys(savedApi);
+        setLocalKeys(savedApi);
     }, []);
 
     const handleChange = (model_name, value) => {
@@ -27,19 +37,34 @@ function ConfigureApikeys() {
         }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
 
-        localStorage.setItem("groqkey", keys.groq);
-        localStorage.setItem("openaikey", keys.openai);
-        localStorage.setItem("openrouterkey", keys.openrouter);
-        localStorage.setItem("geminikey", keys.gemini);
+    async function encryptText(keyData) {
+        const result = await encryptData(keyData);
+        console.log(result);
+
+        if (result.groqEncrypted) {
+            localStorage.setItem("groqkey", result.groqEncrypted);
+        }
+
+        if (result.openaiEncrypted) {
+            localStorage.setItem("openaikey", result.openaiEncrypted);
+        }
+
+        if (result.openrouterEncrypted) {
+            localStorage.setItem("openrouterkey", result.openrouterEncrypted);
+        }
+
+        if (result.geminiEncrypted) {
+            localStorage.setItem("geminikey", result.geminiEncrypted);
+        }
+
 
         if (!!localStorage.getItem("groqkey")) {
             localStorage.setItem("llama", true);
             localStorage.setItem("deepseek", true);
             localStorage.setItem("openaiGptOss120b", true);
         } else {
+            console.log(false);
             localStorage.setItem("llama", false);
             localStorage.setItem("deepseek", false);
             localStorage.setItem("openaiGptOss120b", false);
@@ -62,6 +87,58 @@ function ConfigureApikeys() {
         } else {
             localStorage.setItem("claude", false);
         }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        let groqSet = false;
+        let openaiSet = false;
+        let openrouterSet = false;
+        let geminiSet = false;
+
+        if (keys.groq === localKeys.groq) {
+            groqSet = true;
+        }
+
+        if (keys.groq === "") {
+            localStorage.removeItem("groqkey")
+        }
+
+        if (keys.openai === "") {
+            localStorage.removeItem("openaikey")
+        }
+
+        if (keys.gemini === "") {
+            localStorage.removeItem("geminikey")
+        }
+
+        if (keys.openrouter === "") {
+            localStorage.removeItem("openrouterkey")
+        }
+
+        if (keys.openai === localKeys.openai) {
+            openaiSet = true;
+        }
+
+        if (keys.openrouter === localKeys.openrouter) {
+            openrouterSet = true;
+        }
+
+        if (keys.gemini === localKeys.gemini) {
+            geminiSet = true;
+        }
+
+        encryptText({
+            "groqkey": keys.groq,
+            "groqSet": groqSet,
+            "openaiSet": openaiSet,
+            "openrouterSet": openrouterSet,
+            "geminiSet": geminiSet,
+            "openaikey": keys.openai,
+            "openrouterkey": keys.openrouter,
+            "geminikey": keys.gemini,
+        });
     };
 
 

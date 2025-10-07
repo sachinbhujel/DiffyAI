@@ -5,6 +5,7 @@ export async function POST(request) {
     try {
         const data = await request.json();
         const apiKey = await request.headers.get("x-groq-api-key");
+        console.log("API KEY LLAMA", apiKey);
 
         if (!apiKey) {
             return new Response("Missing Api Key", { status: 401 });
