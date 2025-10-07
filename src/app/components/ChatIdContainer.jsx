@@ -35,6 +35,8 @@ function ChatIdContainer() {
         openai: true,
         deepseek: true,
         openaiGptOss120b: true,
+        claude: true,
+        gemini: true,
     });
     const pathname = usePathname();
     const params = useParams();
@@ -468,7 +470,7 @@ function ChatIdContainer() {
                 {models.llama && (
                     <ModelPanel
                         messages={llamaChat.messages}
-                        llamaResponse={modelResponse.llama}
+                        response={modelResponse.llama}
                         model="llama"
                         modelIcons={modelIcons.llama}
                         isActive={activeModel.llama}
@@ -499,6 +501,7 @@ function ChatIdContainer() {
                 {models.openaiGptOss120b && (
                     <ModelPanel
                         messages={openaiGptOss120bChat.messages}
+                        response={modelResponse.openaiGptOss120b}
                         model="GPT OSS"
                         modelIcons={modelIcons.openai}
                         isActive={activeModel.openaiGptOss120b}
@@ -529,6 +532,7 @@ function ChatIdContainer() {
                 {models.deepseek && (
                     <ModelPanel
                         messages={deepseekChat.messages}
+                        response={modelResponse.deepseek}
                         model="deepseek"
                         isActive={activeModel.deepseek}
                         modelIcons={modelIcons.deepseek}
@@ -559,6 +563,7 @@ function ChatIdContainer() {
                 {models.openai && (
                     <ModelPanel
                         messages={openaiChat.messages}
+                        response={modelResponse.openai}
                         model="Openai"
                         modelIcons={modelIcons.openai}
                         isActive={activeModel.openai}
@@ -589,6 +594,7 @@ function ChatIdContainer() {
                 {models.claude && (
                     <ModelPanel
                         messages={claudeChat.messages}
+                        response={modelResponse.claude}
                         model="Claude"
                         modelIcons={modelIcons.claude}
                         isActive={activeModel.claude}
@@ -619,6 +625,7 @@ function ChatIdContainer() {
                 {models.gemini && (
                     <ModelPanel
                         messages={geminiChat.messages}
+                        response={modelResponse.gemini}
                         model="Gemini"
                         modelIcons={modelIcons.gemini}
                         isActive={activeModel.gemini}
