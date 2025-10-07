@@ -67,7 +67,7 @@ function Sidebar({ isVisible, setIsVisible }) {
                 } border ${sidebarWidth ? "w-max" : "w-[250px]"
                 } overflow-y-auto custom-scrollbar`}
         >
-            <div className="flex flex-col justify-between h-full gap-10">
+            <div className={`flex flex-col justify-between h-full ${sidebarWidth ? "gap-0" : "gap-10"}`}>
                 <div>
                     <div
                         className={`items-center justify-between ${sidebarWidth ? "flex-col" : "flex"
