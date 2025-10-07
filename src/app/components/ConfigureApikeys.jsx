@@ -40,7 +40,6 @@ function ConfigureApikeys() {
 
     async function encryptText(keyData) {
         const result = await encryptData(keyData);
-        console.log(result);
 
         if (result.groqEncrypted) {
             localStorage.setItem("groqkey", result.groqEncrypted);
@@ -64,7 +63,6 @@ function ConfigureApikeys() {
             localStorage.setItem("deepseek", true);
             localStorage.setItem("openaiGptOss120b", true);
         } else {
-            console.log(false);
             localStorage.setItem("llama", false);
             localStorage.setItem("deepseek", false);
             localStorage.setItem("openaiGptOss120b", false);

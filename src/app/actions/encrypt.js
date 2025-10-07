@@ -3,7 +3,6 @@
 import CryptoJS from "crypto-js";
 
 export async function encryptData(keyData) {
-    console.log(keyData);
     let groqEncrypted, openaiEncrypted, openrouterEncrypted, geminiEncrypted;
     const secretKey = process.env.SECRET_KEY;
 

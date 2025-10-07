@@ -25,7 +25,6 @@ export async function POST(request) {
 
         return result.toUIMessageStreamResponse();
     } catch (error) {
-        console.log(error);
         return new Response("Failed", { status: 500 });
     }
 }

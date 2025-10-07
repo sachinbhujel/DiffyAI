@@ -149,7 +149,6 @@ function ChatContainer() {
     let groq;
     if (typeof window !== "undefined") {
         groqApiKey = groqDecryptedKey || false;
-        console.log("groqApiKey", groqApiKey)
         groq = createGroq({
             apiKey: groqApiKey,
         });
@@ -160,7 +159,6 @@ function ChatContainer() {
     let google;
     if (typeof window !== "undefined") {
         googleApiKey = geminiDecryptedKey || false;
-        console.log("googleApiKey", googleApiKey);
         google = createGoogleGenerativeAI({
             apiKey: googleApiKey,
         });
@@ -170,7 +168,6 @@ function ChatContainer() {
     let openrouter;
     if (typeof window !== "undefined") {
         openrouterApiKey = openrouterDecryptedKey || false;
-        console.log("openrouterApiKey", openrouterApiKey)
         openrouter = createOpenRouter({
             apiKey: openrouterApiKey,
         });
@@ -180,7 +177,6 @@ function ChatContainer() {
     let openai;
     if (typeof window !== "undefined") {
         openaiApiKey = openaiDecryptedKey || false;
-        console.log("openaiApiKey", openaiApiKey)
         openai = createOpenAI({
             apiKey: openaiApiKey,
         });
@@ -193,8 +189,6 @@ function ChatContainer() {
             activeModel.gemini || activeModel.openai || activeModel.claude || activeModel.openaiGptOss120b
         ) {
             let keyModel = groqApiKey ? groq("llama-3.1-8b-instant") : googleApiKey ? google("gemini-2.0-flash") : openaiApiKey ? openai("gpt-5-nano") : openrouterApiKey ? openrouter.chat("anthropic/claude-3.7-sonnet") : "";
-            console.log("test", googleApiKey)
-            console.log("keyModel", keyModel);
             try {
                 const { text } = await generateText({
                     model: keyModel,
@@ -204,7 +198,6 @@ function ChatContainer() {
                 });
 
                 let cleanText = text.replace(/^"|"$/g, "").trim();
-                console.log(cleanText);
 
                 setChatTitle(cleanText);
                 localStorage.setItem("chatname", cleanText);
