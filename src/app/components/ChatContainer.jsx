@@ -35,6 +35,7 @@ function ChatContainer() {
     const [openaiDecryptedKey, setOpenaiDecryptedKey] = useState(false);
     const [openrouterDecryptedKey, setOpenrouterDecryptedKey] = useState(false);
     const [geminiDecryptedKey, setGeminiDecryptedKey] = useState(false);
+    const [bestModelClicked, setBestModelClicked] = useState(false);
 
     useEffect(() => {
         async function fetchKeys() {
@@ -207,9 +208,27 @@ function ChatContainer() {
         }
     };
 
+    useEffect(() => {
+        if (bestModelClicked) {
+            const activeModels = Object.keys(activeModel).filter(name => activeModel[name]);
+            console.log(activeModels);
+            const randomModel =
+                activeModels[Math.floor(Math.random() * activeModels.length)];
+
+            const updatedModels = Object.keys(activeModel).reduce((acc, name) => {
+                acc[name] = name === randomModel;
+                return acc;
+            }, {});
+
+            setActiveModel(updatedModels);
+        }
+
+    }, [bestModelClicked])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         handleTextGenerate();
+
         if (disabledButton) return;
         if (prompt.trim()) {
             if (activeModel.openai) {
@@ -286,6 +305,10 @@ function ChatContainer() {
         }
         setPrompt("");
     };
+
+    const handleBestModel = () => {
+        setBestModelClicked(true);
+    }
 
     useEffect(() => {
         if (isChatSavedNum === activeModelNum && activeModelNum > 0) {
@@ -635,16 +658,50 @@ function ChatContainer() {
                             }
                         }}
                     />
-                    <button
-                        type="submit"
-                        className={`border w-20 p-1.5 flex justify-center items-center rounded-lg text-gray-300 ${!prompt
-                            ? "bg-[#7585a2] cursor-not-allowed"
-                            : "bg-primary text-white cursor-pointer"
-                            }`}
-                        disabled={disabledButton}
-                    >
-                        {!prompt ? "Disabled" : "Enter"}
-                    </button>
+                    <div className="flex items-center gap-2">
+
+                        <div className="cursor-pointer relative flex items-center p-[6px] px-2 gap-1 rounded-md overflow-hidden group">
+                            <div className={`p-1.5 bg-gradient-to-r from-red-500 via-orange-500 via-green-500 via-blue-500 to-pink-500 animate-rainbow opacity-80 rounded-md flex items-center gap-1 
+                            ${!prompt
+                                    ? "cursor-not-allowed"
+                                    : ""
+                                }`} disabled={disabledButton} onClick={!prompt ? "" : handleBestModel}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="lucide lucide-brain text-white"
+                                >
+                                    <path d="M12 18V5" />
+                                    <path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" />
+                                    <path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" />
+                                    <path d="M17.997 5.125a4 4 0 0 1 2.526 5.77" />
+                                    <path d="M18 18a4 4 0 0 0 2-7.464" />
+                                    <path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" />
+                                    <path d="M6 18a4 4 0 0 1-2-7.464" />
+                                    <path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" />
+                                </svg>
+                                <p className="text-white font-medium">SuperDiffy</p>
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className={`border w-20 p-1.5 flex justify-center items-center rounded-lg text-gray-300 ${!prompt
+                                ? "bg-[#7585a2] cursor-not-allowed"
+                                : "bg-primary text-white cursor-pointer"
+                                }`}
+                            disabled={disabledButton}
+                        >
+                            {!prompt ? "Disabled" : "Enter"}
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
