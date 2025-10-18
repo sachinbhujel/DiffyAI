@@ -87,6 +87,8 @@ function ChatIdContainer() {
     const [openaiDecryptedKey, setOpenaiDecryptedKey] = useState(false);
     const [openrouterDecryptedKey, setOpenrouterDecryptedKey] = useState(false);
     const [geminiDecryptedKey, setGeminiDecryptedKey] = useState(false);
+    const [bestModelClicked, setBestModelClicked] = useState(false);
+    const [modelShown, setModelShown] = useState(false);
 
     useEffect(() => {
         async function fetchKeys() {
@@ -212,6 +214,22 @@ function ChatIdContainer() {
             }));
         },
     });
+
+    useEffect(() => {
+        if (bestModelClicked) {
+            const activeModels = Object.keys(activeModel).filter(name => activeModel[name]);
+            const randomModel =
+                activeModels[Math.floor(Math.random() * activeModels.length)];
+
+            const updatedModels = Object.keys(activeModel).reduce((acc, name) => {
+                acc[name] = name === randomModel;
+                return acc;
+            }, {});
+
+            setActiveModel(updatedModels);
+        }
+
+    }, [bestModelClicked])
 
     // This runs only when clicking the enter button or clicking the button
     const handleSubmit = (e, prompt, setPrompt) => {
@@ -463,6 +481,27 @@ function ChatIdContainer() {
         });
     }, []);
 
+    const handleBestModel = () => {
+        setBestModelClicked(true);
+    }
+
+    const handleModelShown = () => {
+        setModelShown(!modelShown);
+    }
+
+    const handleMultiChat = () => {
+        setActiveModel({
+            llama: localStorage.getItem("llama") === "true" || false,
+            openai: localStorage.getItem("openai") === "true" || false,
+
+            deepseek: localStorage.getItem("deepseek") === "true" || false,
+            openaiGptOss120b:
+                localStorage.getItem("openaiGptOss120b") === "true" || false,
+
+            claude: localStorage.getItem("claude") === "true" || false,
+            gemini: localStorage.getItem("gemini") === "true" || false,
+        });
+    }
 
     return (
         <div className="relative pt-10 rounded-md gap-4 p-2 flex flex-col border-2 border-primary h-full w-full">
@@ -653,7 +692,10 @@ function ChatIdContainer() {
                     />
                 )}
             </div>
-            <PromptBar handleSubmit={handleSubmit} disabledButton={disabledButton} />
+            <PromptBar handleSubmit={handleSubmit} disabledButton={disabledButton} modelShown={modelShown}
+                handleBestModel={handleBestModel}
+                handleMultiChat={handleMultiChat}
+                bestModelClicked={bestModelClicked} handleModelShown={handleModelShown} setBestModelClicked={setBestModelClicked} />
         </div>
     );
 }
