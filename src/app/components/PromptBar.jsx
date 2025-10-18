@@ -120,8 +120,8 @@ function PromptBar({ handleSubmit, disabledButton, modelShown, bestModelClicked,
                     )}
                     <div>
                         {bestModelClicked ? (
-                            <div className="flex items-center gap-2 rounded-md cursor-pointer" onClick={handleModelShown}>
-                                <div className="text-white p-[6.8px] px-3 rounded-lg flex items-center gap-2 font-semibold bg-gradient-to-r from-[#ca3f51] via-orange-400 to-yellow-400 hover:from-yellow-400 hover:via-orange-400 hover:to-[#ca3f51] transition-all duration-700 shadow-lg" disabled={disabledButton} onClick={handleBestModel}>
+                            <div className="flex items-center gap-2 cursor-pointer" onClick={handleModelShown}>
+                                <div className="text-white p-[6.8px] px-3 rounded-md flex items-center gap-2 font-semibold bg-gradient-to-r from-[#ca3f51] via-orange-400 to-yellow-400 hover:from-yellow-400 hover:via-orange-400 hover:to-[#ca3f51] transition-all duration-700 shadow-lg" disabled={disabledButton} onClick={handleBestModel}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="20"
