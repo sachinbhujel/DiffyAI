@@ -255,7 +255,10 @@ function Sidebar({ isVisible, setIsVisible }) {
                                                             } px-2 py-2 flex items-center justify-between text-sm font-medium group`}
                                                     >
                                                         {chat}
-                                                        <button className="cursor-pointer opacity-0 group-hover:opacity-100" onClick={() => del(`${id[index]}`)}>
+                                                        <button className="cursor-pointer opacity-0 group-hover:opacity-100" onClick={() => {
+                                                            window.location.reload();
+                                                            del(`${id[index]}`)
+                                                        }}>
                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                 width="18"
                                                                 height="18"
