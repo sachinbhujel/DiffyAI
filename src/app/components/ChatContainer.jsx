@@ -211,7 +211,6 @@ function ChatContainer() {
     useEffect(() => {
         if (bestModelClicked) {
             const activeModels = Object.keys(activeModel).filter(name => activeModel[name]);
-            console.log(activeModels);
             const randomModel =
                 activeModels[Math.floor(Math.random() * activeModels.length)];
 
