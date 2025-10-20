@@ -14,7 +14,7 @@ export async function POST(request) {
         });
 
         const result = streamText({
-            model: groq("deepseek-r1-distill-llama-70b"),
+            model: groq("llama-3.3-70b-versatile"),
             providerOptions: {
                 groq: {
                     reasoningFormat: "hidden",
