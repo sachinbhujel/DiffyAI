@@ -22,6 +22,7 @@ export async function POST(request) {
             },
             messages: convertToModelMessages(data.messages),
         });
+        console.log(result);
 
         return result.toUIMessageStreamResponse();
     } catch (error) {
