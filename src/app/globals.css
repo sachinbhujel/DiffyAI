@@ -80,3 +80,9 @@ pre::-webkit-scrollbar-thumb {
     background-color: #ca3f51;
     border-radius: 10px;
 }
+
+@media (width < 640px) {
+    .selectOptionInMobile {
+        display: hidden;
+    }
+}

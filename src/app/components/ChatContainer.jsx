@@ -678,7 +678,7 @@ function ChatContainer() {
                     />
                     <div className="flex items-center gap-2 relative">
                         {modelShown && (
-                            <div className={`border p-2 text-white bg-black absolute ${bestModelClicked ? "-top-39" : "-top-43"} rounded-md flex flex-col gap-3`}>
+                            <div className={`border p-2 text-white bg-black absolute ${bestModelClicked ? "sm:-top-42 -top-46" : "sm:-top-43 -top-46"} rounded-md flex flex-col gap-3`}>
                                 <h2 className="font-semibold text-sm">Choose a mode</h2>
                                 <div className="flex items-center cursor-pointer gap-4 p-1 justify-between" onClick={() => {
                                     setBestModelClicked(false);
@@ -694,7 +694,7 @@ function ChatContainer() {
                                             strokeWidth="2"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
-                                            className="lucide lucide-bot-icon lucide-bot">
+                                            className="lucide selectOptionInMobile lucide-bot-icon lucide-bot">
                                             <path d="M12 8V4H8" />
                                             <rect width="16" height="12" x="4" y="8" rx="2" />
                                             <path d="M2 14h2" /><path d="M20 14h2" />
@@ -735,7 +735,7 @@ function ChatContainer() {
                                             strokeWidth="2"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
-                                            className="lucide lucide-brain-icon lucide-brain">
+                                            className="lucide selectOptionInMobile lucide-brain-icon lucide-brain">
                                             <path d="M12 18V5" />
                                             <path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" />
                                             <path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" />
@@ -772,7 +772,7 @@ function ChatContainer() {
                         <div>
                             {bestModelClicked ? (
                                 <div className="flex items-center gap-2 cursor-pointer" onClick={handleModelShown}>
-                                    <div className="text-white p-[6.8px] px-3 rounded-md flex items-center gap-2 font-semibold bg-gradient-to-r from-[#ca3f51] via-orange-400 to-yellow-400 hover:from-yellow-400 hover:via-orange-400 hover:to-[#ca3f51] transition-all duration-700 shadow-lg" disabled={disabledButton} onClick={handleBestModel}>
+                                    <div className="text-white p-[6.8px] px-1.5 rounded-md flex items-center gap-2 font-semibold bg-gradient-to-r from-[#ca3f51] via-orange-400 to-yellow-400 hover:from-yellow-400 hover:via-orange-400 hover:to-[#ca3f51] transition-all duration-700 shadow-lg" disabled={disabledButton} onClick={handleBestModel}>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="20"
@@ -794,8 +794,8 @@ function ChatContainer() {
                                             <path d="M6 18a4 4 0 0 1-2-7.464" />
                                             <path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" />
                                         </svg>
-                                        <div className="flex items-center gap-1">
-                                            <p>SuperDiffy</p>
+                                        <div className="flex items-center gap-1 text-sm">
+                                            <p className="selectOptionInMobile">SuperDiffy</p>
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 width="20"
                                                 height="20"
@@ -829,7 +829,7 @@ function ChatContainer() {
                                         <path d="M15 13v2" /><path d="M9 13v2" />
                                     </svg>
                                     <div className="flex items-center gap-1">
-                                        <p>Multi Chat</p>
+                                        <p className="selectOptionInMobile">Multi Chat</p>
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             width="20"
                                             height="20"
